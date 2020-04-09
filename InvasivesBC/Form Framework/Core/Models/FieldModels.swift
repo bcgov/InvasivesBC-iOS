@@ -51,28 +51,24 @@ protocol FieldConfig {
     var type: FieldType { get }
 }
 
-class BaseFieldViewModel: FieldConfig {
+
+
+
+// General Field View Model Class
+class FieldViewModel<T>: FieldConfig  {
+    
     // ViewConfig
     var width: FieldWidthClass = .Fill
     var height: CGFloat = kStandardCellHeight
     var header: String = ""
     var key: String = ""
     var editable: Bool = false
-    var type: FieldType {
-        return .Text
-    }
-}
-
-
-// General Field View Model Class
-class FieldViewModel<T>: BaseFieldViewModel  {
     // Data
     var data: DynamicValue<T>
     
     // Constructor
     init(header: String, key: String, editable: Bool, width: FieldWidthClass = .Fill, data: T) {
         self.data = DynamicValue<T>(data)
-        super.init()
         self.header = header
         self.key = key
         self.editable = editable
@@ -88,7 +84,7 @@ class FieldViewModel<T>: BaseFieldViewModel  {
         }
     }
     
-    override var type: FieldType {
+   var type: FieldType {
         if T.self == Int.self || T.self == Int?.self {
             return .Int
         } else if T.self == Double.self || T.self == Double?.self {
@@ -110,7 +106,11 @@ class ReadOnlyFieldViewModel: FieldViewModel<String> {}
 class TextFieldViewModel: FieldViewModel<String> {}
 
 // TextAreaInput
-class TextAreaFieldViewModel: FieldViewModel<String> {}
+class TextAreaFieldViewModel: FieldViewModel<String> {
+    override var type: FieldType {
+        return .TextArea
+    }
+}
 
 // Switch: Boolean Field
 class SwitchFieldViewModel: FieldViewModel<Bool> {}

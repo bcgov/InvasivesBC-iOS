@@ -46,6 +46,7 @@
 		5CAE6049243E67BC00E4744E /* SwitchFieldCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CAE6047243E67BB00E4744E /* SwitchFieldCollectionViewCell.xib */; };
 		5CAE604D243E6E6500E4744E /* DateFieldCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CAE604B243E6E6500E4744E /* DateFieldCollectionViewCell.xib */; };
 		5CAE604E243E6E6500E4744E /* DateFieldCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE604C243E6E6500E4744E /* DateFieldCollectionViewCell.swift */; };
+		5CAE6050243F8D9800E4744E /* FieldGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE604F243F8D9800E4744E /* FieldGroupTests.swift */; };
 		D7658CBF16D2EBA8CA95964B /* Pods_InvasivesBC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4C207FA6A9E731E1565C66 /* Pods_InvasivesBC.framework */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +109,7 @@
 		5CAE6047243E67BB00E4744E /* SwitchFieldCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwitchFieldCollectionViewCell.xib; sourceTree = "<group>"; };
 		5CAE604B243E6E6500E4744E /* DateFieldCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateFieldCollectionViewCell.xib; sourceTree = "<group>"; };
 		5CAE604C243E6E6500E4744E /* DateFieldCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFieldCollectionViewCell.swift; sourceTree = "<group>"; };
+		5CAE604F243F8D9800E4744E /* FieldGroupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldGroupTests.swift; sourceTree = "<group>"; };
 		D7FBA663E9B29797DC3DFE8D /* Pods-InvasivesBCTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBCTests.release.xcconfig"; path = "Target Support Files/Pods-InvasivesBCTests/Pods-InvasivesBCTests.release.xcconfig"; sourceTree = "<group>"; };
 		F82DAD2914D8DA07F6141680 /* Pods-InvasivesBC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBC.debug.xcconfig"; path = "Target Support Files/Pods-InvasivesBC/Pods-InvasivesBC.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -186,6 +188,7 @@
 				5C64708D243CCBF20013720E /* DynamicValueTest.swift */,
 				5C647093243D17B70013720E /* FieldModelTest.swift */,
 				5CAE603E243E55D100E4744E /* FieldCellTests.swift */,
+				5CAE604F243F8D9800E4744E /* FieldGroupTests.swift */,
 			);
 			path = InvasivesBCTests;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				2944BD242437DD7500826F48 /* InvasivesBCTests.swift in Sources */,
 				5CAE603F243E55D100E4744E /* FieldCellTests.swift in Sources */,
 				5C64708E243CCBF20013720E /* DynamicValueTest.swift in Sources */,
+				5CAE6050243F8D9800E4744E /* FieldGroupTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

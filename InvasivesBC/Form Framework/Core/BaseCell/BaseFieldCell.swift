@@ -20,7 +20,14 @@ protocol FieldAuxViewPresenterDelegate: NSObjectProtocol {
     )
 }
 
-class BaseFieldCell<T, Model: FieldViewModel<T>>: UICollectionViewCell, Theme {
+class FieldCell: UICollectionViewCell, Theme {
+    public func initialize(model: Any, presenter: FieldAuxViewPresenterDelegate? = nil) {}
+}
+
+class BaseFieldCell<T, Model: FieldViewModel<T>>: FieldCell {
+    
+    // Typealias
+    typealias ModelType = Model
     
     // Header
     weak var header: UILabel? {
@@ -51,6 +58,12 @@ class BaseFieldCell<T, Model: FieldViewModel<T>>: UICollectionViewCell, Theme {
     }
     
     // Initialize
+    override  public func initialize(model: Any, presenter: FieldAuxViewPresenterDelegate? = nil) {
+        guard let modelData: ModelType = model as? ModelType else {
+            return
+        }
+        self.initialize(model: modelData, presenter: presenter)
+    }
     internal func initialize(model: Model, presenter: FieldAuxViewPresenterDelegate? = nil) {
         self.model = model
         self.presenter = presenter
