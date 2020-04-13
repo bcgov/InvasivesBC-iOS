@@ -73,7 +73,7 @@ class DynamicValue<T> {
     }
     
     // Clear
-    public func clear() {
+    public func removeAllObservers() {
         observers.removeAll()
     }
 

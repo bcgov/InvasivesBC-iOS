@@ -29,6 +29,8 @@
 		5C718454243B896700BF131C /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C71844E243B896600BF131C /* Promise.swift */; };
 		5C718455243B896700BF131C /* ApplicationErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C71844F243B896600BF131C /* ApplicationErrorConst.swift */; };
 		5C718456243B896700BF131C /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C718450243B896600BF131C /* UIViewControllerExtensions.swift */; };
+		5CA312962444A1660005AC75 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA312952444A1660005AC75 /* Validator.swift */; };
+		5CA312982444C5130005AC75 /* FieldGroupModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA312972444C5130005AC75 /* FieldGroupModels.swift */; };
 		5CAE6029243E14A100E4744E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE6025243E14A100E4744E /* Colors.swift */; };
 		5CAE602A243E14A100E4744E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE6026243E14A100E4744E /* Theme.swift */; };
 		5CAE602B243E14A100E4744E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE6027243E14A100E4744E /* Fonts.swift */; };
@@ -92,6 +94,8 @@
 		5C71844E243B896600BF131C /* Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
 		5C71844F243B896600BF131C /* ApplicationErrorConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationErrorConst.swift; sourceTree = "<group>"; };
 		5C718450243B896600BF131C /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
+		5CA312952444A1660005AC75 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		5CA312972444C5130005AC75 /* FieldGroupModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldGroupModels.swift; sourceTree = "<group>"; };
 		5CAE6025243E14A100E4744E /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		5CAE6026243E14A100E4744E /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		5CAE6027243E14A100E4744E /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -216,7 +220,7 @@
 		5C64708A243CC50F0013720E /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				5CAE6031243E180700E4744E /* FormGroup */,
+				5CAE6031243E180700E4744E /* FieldGroup */,
 				5C647096243D1EC00013720E /* BaseCell */,
 				5C647095243D1E8E0013720E /* Models */,
 			);
@@ -229,6 +233,8 @@
 				5C64708B243CC52F0013720E /* DynamicValue.swift */,
 				5C64708F243CDB630013720E /* FieldModels.swift */,
 				5C647091243D0A190013720E /* Time.swift */,
+				5CA312952444A1660005AC75 /* Validator.swift */,
+				5CA312972444C5130005AC75 /* FieldGroupModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -311,13 +317,13 @@
 			path = Theme;
 			sourceTree = "<group>";
 		};
-		5CAE6031243E180700E4744E /* FormGroup */ = {
+		5CAE6031243E180700E4744E /* FieldGroup */ = {
 			isa = PBXGroup;
 			children = (
 				5CAE6032243E182B00E4744E /* FieldGroup.swift */,
 				5CAE6034243E2D2B00E4744E /* FieldGroup+CollectionView.swift */,
 			);
-			path = FormGroup;
+			path = FieldGroup;
 			sourceTree = "<group>";
 		};
 		5CAE6036243E2E1200E4744E /* Shared Cells */ = {
@@ -542,6 +548,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C647090243CDB630013720E /* FieldModels.swift in Sources */,
+				5CA312962444A1660005AC75 /* Validator.swift in Sources */,
 				5CAE604E243E6E6500E4744E /* DateFieldCollectionViewCell.swift in Sources */,
 				5CAE6029243E14A100E4744E /* Colors.swift in Sources */,
 				2944BD112437DD7200826F48 /* ViewController.swift in Sources */,
@@ -558,6 +565,7 @@
 				5CAE602A243E14A100E4744E /* Theme.swift in Sources */,
 				5C71844A243B892A00BF131C /* UtilityObjC.m in Sources */,
 				5C647098243D20E70013720E /* BaseFieldCell.swift in Sources */,
+				5CA312982444C5130005AC75 /* FieldGroupModels.swift in Sources */,
 				5C718451243B896700BF131C /* FoundationExtension.swift in Sources */,
 				2944BD0F2437DD7200826F48 /* SceneDelegate.swift in Sources */,
 				5CAE602E243E166F00E4744E /* StringConstants.swift in Sources */,

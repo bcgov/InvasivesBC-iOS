@@ -49,20 +49,81 @@ protocol FieldConfig {
     var key: String { set get }
     var editable: Bool { get set }
     var type: FieldType { get }
+    var isValid: ValidationResult { get }
+}
+
+struct FieldDependency {
+    enum Condition {
+        case showOn
+    }
+    typealias ConditionValue = (condition: Condition, values: [Any])
+    var field: Field
+    var conditions: [ConditionValue] = []
+}
+
+protocol Field: FieldConfig {
+    var fieldValue: Any? { set get }
+    var dependencies: [FieldDependency] { set get }
+    var dependents: [FieldDependency]  { set get }
+    var ignore: Bool { set get }
+    func add(observer: NSObject, callback: @escaping (Field) -> Void)
+    func remove(observer: NSObject)
+    func removeAllObserver()
+    func updateDependents()
+}
+
+extension Field {
+    var valid: Bool {
+        return self.isValid.success
+    }
 }
 
 
-
-
 // General Field View Model Class
-class FieldViewModel<T>: FieldConfig  {
+class FieldViewModel<T>: Field  {
     
-    // ViewConfig
+    // FieldConfig
     var width: FieldWidthClass = .Fill
     var height: CGFloat = kStandardCellHeight
     var header: String = ""
     var key: String = ""
     var editable: Bool = false
+    var ignore: Bool = false
+    
+    var dependencies: [FieldDependency] = []
+    var dependents: [FieldDependency] = []
+    
+    // Observer
+    private var _observers: [WeakObject] = []
+    
+    var validators: [BaseValidator<T>] = [BaseValidator<T>]()
+    
+    // Validation
+    var isValid: ValidationResult {
+        let result = (true, "")
+        for validator in validators {
+            let validationResult = validator.validate(data: self.value)
+            if !validationResult.success {
+                return validationResult
+            }
+        }
+        return result
+    }
+    
+    // Field
+    var fieldValue: Any? {
+        set {
+            if let input: T = newValue as? T {
+                self.value = input
+            }
+        }
+        
+        get {
+            return self.value
+        }
+    }
+    
+    
     // Data
     var data: DynamicValue<T>
     
@@ -96,6 +157,37 @@ class FieldViewModel<T>: FieldConfig  {
         } else {
             return .Text
         }
+    }
+    
+    func add(observer: NSObject, callback: @escaping (Field) -> Void) {
+        if self._observers.lastIndex(where: { $0.ref == observer }) == nil {
+            self._observers.append(WeakObject(ref: observer))
+            self.data.addObserver(observer) { change in
+                callback(self)
+            }
+        }
+    }
+    
+    func remove(observer: NSObject) {
+        if let weakRefIndex = self._observers.lastIndex(where: { $0.ref == observer }) {
+            self.data.remove(observer: observer)
+            self._observers.remove(at: weakRefIndex)
+        }
+    }
+    
+    func removeAllObserver() {
+        self.data.removeAllObservers()
+        self._observers = []
+    }
+    
+    func updateDependents() {
+        
+    }
+    
+    deinit {
+        self.data.removeAllObservers()
+        self._observers = []
+        DebugLog("\(self)")
     }
 }
 
