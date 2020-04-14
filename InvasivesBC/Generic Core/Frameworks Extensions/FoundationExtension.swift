@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// Various Action Types
 public typealias Action = () -> Void
 public typealias InfoAction = (_ info: Any?) -> Void
 public typealias BooleanAction = (_ success: Bool) -> Void
@@ -18,6 +19,7 @@ public typealias VarInfoAction = (_ info:Any?...) -> Void
 public typealias RemoteAction = VarInfoAction
 
 
+// Null Check
 func isNil(_ variable: Any?) -> Bool {
     if let _ = variable {
         return false
@@ -25,14 +27,31 @@ func isNil(_ variable: Any?) -> Bool {
     return true
 }
 
+// Associated Date: Temporal object
 protocol AssociatedDate {
     var date: Date { get }
 }
 
+// Protocol to return class/ type name
 public protocol ClassNameDescription {
     var className: String {get}
 }
 
+// WeakRef: Wrapper of weak object
+public struct WeakRef<T: AnyObject> {
+    weak var ref: T?
+}
+
+// WeakObject: Wrapper of week NSObject
+public struct WeakObject: Equatable {
+    weak var ref: NSObject?
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.ref == rhs.ref
+    }
+}
+
+// Extension: NSObject conforming ClassNameDescription
 extension NSObject: ClassNameDescription {
     public var className: String {
         return String(describing: type(of: self))
