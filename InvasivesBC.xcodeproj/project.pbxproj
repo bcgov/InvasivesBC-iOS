@@ -41,6 +41,7 @@
 		5CA312962444A1660005AC75 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA312952444A1660005AC75 /* Validator.swift */; };
 		5CA312982444C5130005AC75 /* FieldGroupModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA312972444C5130005AC75 /* FieldGroupModels.swift */; };
 		5CA6E05A24474F8900774A28 /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA6E05924474F8900774A28 /* BaseObject.swift */; };
+		5CA6E06B24475A2400774A28 /* BaseObjectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA6E06A24475A2400774A28 /* BaseObjectExtension.swift */; };
 		5CAE6029243E14A100E4744E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE6025243E14A100E4744E /* Colors.swift */; };
 		5CAE602A243E14A100E4744E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE6026243E14A100E4744E /* Theme.swift */; };
 		5CAE602B243E14A100E4744E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAE6027243E14A100E4744E /* Fonts.swift */; };
@@ -116,6 +117,7 @@
 		5CA312952444A1660005AC75 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		5CA312972444C5130005AC75 /* FieldGroupModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldGroupModels.swift; sourceTree = "<group>"; };
 		5CA6E05924474F8900774A28 /* BaseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
+		5CA6E06A24475A2400774A28 /* BaseObjectExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseObjectExtension.swift; sourceTree = "<group>"; };
 		5CAE6025243E14A100E4744E /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		5CAE6026243E14A100E4744E /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		5CAE6027243E14A100E4744E /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -381,6 +383,7 @@
 			isa = PBXGroup;
 			children = (
 				5CA6E05924474F8900774A28 /* BaseObject.swift */,
+				5CA6E06A24475A2400774A28 /* BaseObjectExtension.swift */,
 			);
 			path = BaseModel;
 			sourceTree = "<group>";
@@ -663,6 +666,7 @@
 				5CAE602C243E14A100E4744E /* GradiantView.swift in Sources */,
 				5CAE6048243E67BB00E4744E /* SwitchFieldCollectionViewCell.swift in Sources */,
 				5C718455243B896700BF131C /* ApplicationErrorConst.swift in Sources */,
+				5CA6E06B24475A2400774A28 /* BaseObjectExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
