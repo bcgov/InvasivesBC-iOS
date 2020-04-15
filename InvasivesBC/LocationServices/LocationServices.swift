@@ -8,6 +8,7 @@
 
 import Foundation
 import MapKit
+import SwiftyJSON
 
 class LocationServices {
     public static let shared = LocationServices()
@@ -50,7 +51,7 @@ extension CLLocationCoordinate2D {
 
 extension LocationServices {
     
-    public func convertToUTM(coordinates: CLLocationCoordinate2D) -> UTMCoordinate? {
+    fileprivate func convertToUTM(coordinates: CLLocationCoordinate2D) -> UTMCoordinate? {
         guard let utmZone = getUTMZone(longitude: coordinates.longitude) else {return nil}
         guard let angleP = getAngleP(longitude: coordinates.longitude) else {return nil}
         
@@ -127,7 +128,7 @@ extension UTMCoordinate {
 }
 
 extension LocationServices {
-    public func convertToLatLong(utm: UTMCoordinate) -> CLLocationCoordinate2D? {
+    fileprivate func convertToLatLong(utm: UTMCoordinate) -> CLLocationCoordinate2D? {
         let y = utm.northings
         let x = utm.eastings
         var g1: Double = 0;
@@ -186,7 +187,7 @@ extension CLLocationCoordinate2D {
 }
 extension LocationServices {
     
-    public func convertToAlbers(coordinates: CLLocationCoordinate2D) -> AlbersCoordinate {
+    fileprivate func convertToAlbers(coordinates: CLLocationCoordinate2D) -> AlbersCoordinate {
         let a = b
         let e2 = 2 * (1 / 298.257) - pow(1 / 298.257, 2)
         let offsetX: Double = 1000000
@@ -226,7 +227,7 @@ extension AlbersCoordinate {
     }
 }
 extension LocationServices {
-    public func convertToLatLong(albers: AlbersCoordinate) -> CLLocationCoordinate2D {
+    fileprivate func convertToLatLong(albers: AlbersCoordinate) -> CLLocationCoordinate2D {
         let x = albers.x
         let y = albers.y
         let a = b
@@ -264,3 +265,78 @@ extension LocationServices {
     }
 }
 
+// MARK: Inside / Outside
+extension CLLocationCoordinate2D {
+    public func isInBC() -> Bool {
+        return LocationServices.shared.isInsideBC(coordinates: self)
+    }
+}
+extension LocationServices {
+    private func getBCAlbersBoundry() -> [AlbersCoordinate] {
+        guard let path = Bundle.main.path(forResource: "bcAlbersBoundry", ofType: "json") else { return []}
+        do {
+            let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+            let jsonResult = try JSON(data: data)
+            var returnValue: [AlbersCoordinate] = []
+            for item in jsonResult.arrayValue {
+                if let x = item["x"].double, let y = item["y"].double {
+                    returnValue.append(AlbersCoordinate(x: x, y: y))
+                }
+            }
+            return returnValue
+        } catch {
+            print(error)
+        }
+        return []
+    }
+    
+    fileprivate func isInsideBC(coordinates: CLLocationCoordinate2D) -> Bool {
+        let boundry = getBCAlbersBoundry()
+        let albers = coordinates.toAlbers()
+        var intersections: Int = 0
+        for index in 0..<(boundry.count - 1)  {
+            let found = intersect(_x10: 1200000, y10: 900000, x20: albers.x, y20: albers.y, x30: boundry[index].x, y30: boundry[index].y, _x40: boundry[index + 1].x, y40: boundry[index + 1].y)
+            
+            if (found) {
+                intersections += 1
+            }
+        }
+        return intersections % 2 == 0
+    }
+    
+    private func intersect(_x10: Double, y10: Double, x20: Double, y20: Double, x30: Double, y30: Double, _x40: Double, y40: Double) -> Bool {
+        var x10 = _x10
+        var x40 = _x40
+        if (x10 == x20) {
+            x10 = x10 + 1
+        }
+        
+        if (x40 == x30) {
+            x40 = x40 + 1
+        }
+        
+        let m10 = (y20 - y10) / (x20 - x10)
+        let b10 = y10 - (m10 * x10)
+        let m20 = (y40 - y30) / (x40 - x30)
+        let b20 = y30 - (m20 * x30)
+        
+        var x50: Double = 0
+        var y50: Double = 0
+        
+        if ((m10 - m20) != 0) {
+            x50 = (b20 - b10) / (m10 - m20)
+            y50 = m10 * x50 + b10
+        } else {
+            x50 = 0
+            y50 = m10 * x50 + b10
+        }
+        if (
+            ((x50 >= x30 && x50 <= x40) || (x50 >= x40 && x50 <= x30)) &&
+                ((x50 >= x10 && x50 <= x20) || (x50 >= x20 && x50 <= x10))
+            ) {
+            return true
+        } else {
+            return false
+        }
+    }
+}

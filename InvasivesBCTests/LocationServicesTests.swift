@@ -70,6 +70,22 @@ class LocationServicesTests: XCTestCase {
         XCTAssertEqual(converted?.longitude.rounded(toPlaces: 6), expectedResult.longitude, "Conversion from UTM to Long")
     }
     
-    
+    func testInsideOutside() {
+        let one = CLLocationCoordinate2D(latitude: 49.905577, longitude: -119.472548)
+        let two = CLLocationCoordinate2D(latitude: 57.166618, longitude: -120.585487)
+        let three = CLLocationCoordinate2D(latitude: 54.915275, longitude: -126.026107)
+        
+        let four = CLLocationCoordinate2D(latitude: 47.848960, longitude: -105.389280)
+        let five = CLLocationCoordinate2D(latitude: 55.858886, longitude: -108.916926)
+        let six = CLLocationCoordinate2D(latitude: 61.694234, longitude: -145.369272)
+
+        XCTAssertTrue(one.isInBC(), "Is Inside BC")
+        XCTAssertTrue(two.isInBC(), "Is Inside BC")
+        XCTAssertTrue(three.isInBC(), "Is Inside BC")
+        
+        XCTAssertFalse(four.isInBC(), "Is Outside BC")
+        XCTAssertFalse(five.isInBC(), "Is Outside BC")
+        XCTAssertFalse(six.isInBC(), "Is Outside BC")
+    }
     
 }
