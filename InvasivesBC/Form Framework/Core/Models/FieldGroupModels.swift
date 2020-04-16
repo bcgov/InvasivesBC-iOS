@@ -8,14 +8,14 @@
 
 import Foundation
 
-class FieldGroupModel<Target: NSObject>: NSObject {
+class FieldGroupModel: NSObject {
     // MARK: Properties
     var fields: [Field] = [] {
         willSet {
-            removeObserver()
+            stopObserving()
         }
         didSet {
-            addObserver()
+            observeFields()
         }
     }
     
@@ -29,9 +29,14 @@ class FieldGroupModel<Target: NSObject>: NSObject {
     // Change: Reciver method to get changes in field value
     public func change(in field: Field, with index: Int) {}
     
+    // Dict Convert
+    public func toDict() -> [String : Any?] {
+        return fieldMap.mapValues { $0.fieldValue }
+    }
+    
     // MARK: Private methods
     // Adding observer to fields
-    private func addObserver() {
+    private func observeFields() {
         for index in 0...fields.count {
             let field = fields[index]
             field.add(observer: self) {[weak self] field in
@@ -44,7 +49,7 @@ class FieldGroupModel<Target: NSObject>: NSObject {
     }
     
     // Remving Observer
-    private func removeObserver() {
+    private func stopObserving() {
         for field in fields {
             field.remove(observer: self)
         }
@@ -60,11 +65,13 @@ class FieldGroupModel<Target: NSObject>: NSObject {
     }
     
     
-    
-    
-    
     // MARK: Destroy
     deinit {
-        removeObserver()
+        stopObserving()
     }
+}
+
+class MultipleFieldGroupModel: NSObject {
+    
+    
 }

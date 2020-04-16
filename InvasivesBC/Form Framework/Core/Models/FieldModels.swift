@@ -42,7 +42,7 @@ enum FieldWidthClass {
 }
 
 // ViewConfig: Visual Config of field cell
-protocol FieldConfig {
+protocol FieldConfig: NSCopying {
     var width: FieldWidthClass { set get }
     var height: CGFloat { set get }
     var header: String { set get }
@@ -159,6 +159,13 @@ class FieldViewModel<T>: Field  {
         }
     }
     
+    // NSCopying
+    func copy(with zone: NSZone? = nil) -> Any {
+        let newObject: FieldViewModel<T> = FieldViewModel<T>(header: self.header, key: self.key, editable: self.editable, data: self.data.value)
+        return newObject
+    }
+    
+    // Observer
     func add(observer: NSObject, callback: @escaping (Field) -> Void) {
         if self._observers.lastIndex(where: { $0.ref == observer }) == nil {
             self._observers.append(WeakObject(ref: observer))
