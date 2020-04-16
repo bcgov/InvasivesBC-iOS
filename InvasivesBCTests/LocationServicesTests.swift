@@ -8,7 +8,20 @@
 
 import XCTest
 import MapKit
+import SwiftyJSON
 @testable import InvasivesBC
+
+struct BCHexTest {
+    var latitude: Double
+    var longitude: Double
+    var CC: Int
+    var UR: Int
+    var CR: Int
+    var LR: Int
+    var LL: Int
+    var CL: Int
+    var UL: Int
+}
 
 extension Double {
     /// Rounds the double to decimal places value
@@ -78,7 +91,7 @@ class LocationServicesTests: XCTestCase {
         let four = CLLocationCoordinate2D(latitude: 47.848960, longitude: -105.389280)
         let five = CLLocationCoordinate2D(latitude: 55.858886, longitude: -108.916926)
         let six = CLLocationCoordinate2D(latitude: 61.694234, longitude: -145.369272)
-
+        
         XCTAssertTrue(one.isInBC(), "Is Inside BC")
         XCTAssertTrue(two.isInBC(), "Is Inside BC")
         XCTAssertTrue(three.isInBC(), "Is Inside BC")
@@ -86,6 +99,51 @@ class LocationServicesTests: XCTestCase {
         XCTAssertFalse(four.isInBC(), "Is Outside BC")
         XCTAssertFalse(five.isInBC(), "Is Outside BC")
         XCTAssertFalse(six.isInBC(), "Is Outside BC")
+    }
+    
+    func testHexID() {
+        let testItems = getHexTests()
+        for item in testItems {
+            let coordinate = CLLocationCoordinate2D(latitude: item.latitude, longitude: item.longitude)
+            let hex: HexLocation? = coordinate.hex()
+            XCTAssertNotNil(hex, "Hex is found for location")
+            if hex != nil {
+                XCTAssertEqual(hex?.cc, item.CC)
+                XCTAssertEqual(hex?.ur, item.UR)
+                XCTAssertEqual(hex?.cr, item.CR)
+                XCTAssertEqual(hex?.lr, item.LR)
+                XCTAssertEqual(hex?.ll, item.LL)
+                XCTAssertEqual(hex?.cl, item.CL)
+                XCTAssertEqual(hex?.ul, item.UL)
+            }
+            
+        }
+    }
+    
+    func getHexTests() -> [BCHexTest] {
+        guard let path = Bundle.main.path(forResource: "bcHexTest", ofType: "json") else { return []}
+        do {
+            let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+            let jsonResult = try JSON(data: data)
+            var returnValue: [BCHexTest] = []
+            for item in jsonResult.arrayValue {
+                guard let longitude = item["longitude"].double else {continue}
+                guard let latitude = item["latitude"].double else {continue}
+                guard let CC = item["CC"].int else {continue}
+                guard let UR = item["UR"].int else {continue}
+                guard let CR = item["CR"].int else {continue}
+                guard let LR = item["LR"].int else {continue}
+                guard let LL = item["LL"].int else {continue}
+                guard let CL = item["CL"].int else {continue}
+                guard let UL = item["UL"].int else {continue}
+                let item = BCHexTest(latitude: latitude, longitude: longitude, CC: CC, UR: UR, CR: CR, LR: LR, LL: LL, CL: CL, UL: UL)
+                returnValue.append(item)
+            }
+            return returnValue
+        } catch {
+            print(error)
+        }
+        return []
     }
     
 }

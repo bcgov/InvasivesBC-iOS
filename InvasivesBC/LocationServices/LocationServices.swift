@@ -340,3 +340,425 @@ extension LocationServices {
         }
     }
 }
+
+// MARK: Hex
+
+extension CLLocationCoordinate2D {
+    public func hex() -> HexLocation? {
+        return LocationServices.shared.getHexLocation(for: self)
+    }
+}
+
+extension LocationServices {
+    
+    fileprivate class Target {
+        var hexID: Int
+        var xAlb0: Double
+        var yAlb0: Double
+        var xLon0: Double
+        var yLat0: Double
+        
+        var keep = false
+        var index = -1
+        var xLon1: Double = 0
+        var xLat1: Double = 0
+        var yLon1: Double = 0
+        var yLat1: Double = 0
+        
+        var xLon2: Double = 0
+        var xLat2: Double = 0
+        var yLon2: Double = 0
+        var yLat2: Double = 0
+        
+        var xLon3: Double = 0
+        var xLat3: Double = 0
+        var yLon3: Double = 0
+        var yLat3: Double = 0
+        
+        var xLon4: Double = 0
+        var xLat4: Double = 0
+        var yLon4: Double = 0
+        var yLat4: Double = 0
+        
+        var xLon5: Double = 0
+        var xLat5: Double = 0
+        var yLon5: Double = 0
+        var yLat5: Double = 0
+        
+        var xLon6: Double = 0
+        var xLat6: Double = 0
+        var yLon6: Double = 0
+        var yLat6: Double = 0
+        
+        
+        init(hexID: Int, xAlb0: Double, yAlb0: Double, xLon0: Double, yLat0: Double) {
+            self.hexID = hexID
+            self.yAlb0 = yAlb0
+            self.xAlb0 = xAlb0
+            self.xLon0 = xLon0
+            self.yLat0 = yLat0
+        }
+    }
+    
+    fileprivate struct NeighborOffset {
+        var offX: Int
+        var offY: Int
+        init(offX: Int, offY: Int) {
+            self.offX = offX
+            self.offY = offY
+        }
+    }
+    
+    fileprivate func getHexLocation(for coordinates: CLLocationCoordinate2D) -> HexLocation? {
+        let r3 = pow(3, 0.5)
+        let radiusO = pow(((10000 * 2) / (3 * (r3))), 0.5)
+        let radiusI = radiusO / 2 * r3
+        let yheight = radiusO / 2
+        let yheight2 = radiusO + yheight
+        let xWidth2 = radiusO * r3
+        let hexPTS = getHexRules()
+        
+        // Local variables
+        var gridID = 0
+        var hexagons: [Target] = []
+        var target: Target?
+        var target7: [Target] = [] //
+        // Center of the province
+        let startX: Double = -126
+        let startY: Double = 54
+        let provinceCenter = CLLocationCoordinate2D(latitude: startY, longitude: startX)
+        // Convert center to albers
+        let albersResult = provinceCenter.toAlbers()
+        var albersX0 = albersResult.x
+        var albersY0 = albersResult.y
+        
+        // Convert target lat long to albers
+        let albersTargetResult = coordinates.toAlbers()
+        let albersX0new = albersTargetResult.x
+        let albersY0new = albersTargetResult.y
+        
+        // Find Target relative to center
+        let deltaX = albersX0new - albersX0
+        let deltaY = albersY0new - albersY0
+        
+        let ticX: Int = Int(floor(deltaX / xWidth2))
+        var ticY: Int = Int(round(deltaY / yheight2))
+        
+        if ((ticY % 2) != 0) {
+            ticY = ticY - 1
+        }
+        
+        let ticXlow = ticX - 4
+        let ticXhigh = ticX + 8
+        var ticYlow = 0
+        var ticYhigh = 0
+        if (ticY > 0) {
+            ticYlow = -2
+            ticYhigh = 6
+        } else {
+            ticYlow = -4
+            ticYhigh = 4
+        }
+        
+        /* Part 1 Create set of hexagons cells centered around the target (patch) */
+        albersX0 = albersX0 + Double(ticX) * radiusI
+        albersY0 = albersY0 + Double(ticY) * yheight2
+        
+        let sequenceY = stride(from: ticYlow, to: ticYhigh, by: 2)
+        let sequenceX = stride(from: ticXlow, to: ticXhigh, by: 2)
+        for iy in sequenceY {
+            for ix in sequenceX {
+                let tempx = albersX0 + (Double(ix) * radiusI)
+                let tempy = albersY0 + (Double(iy) * yheight2)
+                let albers = AlbersCoordinate(x: tempx, y: tempy)
+                gridID = gridID + 1
+                hexagons.append(Target(hexID: gridID, xAlb0: tempx, yAlb0: tempy, xLon0: albers.toLatLong().longitude, yLat0: albers.toLatLong().latitude))
+            }
+        }
+        
+        let sequenceY2 = stride(from: ticYlow + 1, to: ticYhigh, by: 2)
+        let sequenceX2 = stride(from: ticXlow - 1, to: ticXhigh, by: 2)
+        for iy in sequenceY2 {
+            for ix in sequenceX2 {
+                let tempx = albersX0 + (Double(ix) * radiusI)
+                let tempy = albersY0 + (Double(iy) * yheight2)
+                let albers = AlbersCoordinate(x: tempx, y: tempy)
+                gridID = gridID + 1
+                hexagons.append(Target(hexID: gridID, xAlb0: tempx, yAlb0: tempy, xLon0: albers.toLatLong().longitude, yLat0: albers.toLatLong().latitude))
+            }
+        }
+        
+        let totalHEX = gridID
+        
+        /* Part 2 Cycle through the patch and find the cell center closest to the raw target */
+        var dxyOLD: Double = 999999
+        var targetID: Int = 0
+        for i in 1...totalHEX {
+            let _hexagon = hexagons.first { (item) -> Bool in
+                return item.hexID == i
+            }
+            guard let hexagon = _hexagon else {continue}
+            let dxy = pow((pow((hexagon.xAlb0 - albersX0new), 2) + pow((hexagon.yAlb0 - albersY0new), 2)), 0.5)
+            if (dxy < dxyOLD) {
+                dxyOLD = dxy
+                targetID = i
+            }
+        }
+        
+        /*
+         Populate the target(1) array with the key attibutes
+         Target(1) is the key element determined from this entire application.
+         */
+        let _hexagonTarget = hexagons.first { (item) -> Bool in
+            return item.hexID == targetID
+        }
+        guard let hexagonTarget = _hexagonTarget else {
+            print("Error while finding target hex")
+            return nil
+        }
+        
+        target = Target(hexID: 1, xAlb0: hexagonTarget.xAlb0, yAlb0: hexagonTarget.yAlb0, xLon0: hexagonTarget.xLon0, yLat0: hexagonTarget.yLat0)
+        
+        /* determine HexID as a composite of the lat/long */
+        
+        guard let targetLat = target?.yLat0, var targetLong = target?.xLon0 else {return nil}
+        targetLong = Double(abs(targetLong))
+        var stringTargetLong = String(targetLong)
+        stringTargetLong = stringTargetLong.replacingOccurrences(of: ".", with: "")
+        stringTargetLong = String(stringTargetLong.prefix(6))
+        var stringTargetLat = String(targetLat)
+        stringTargetLat = stringTargetLat.replacingOccurrences(of: ".", with: "")
+        stringTargetLat = String(stringTargetLat.prefix(6))
+        
+        let stringTargetId = "\(stringTargetLat)\(stringTargetLong)"
+        guard let targetIdInt: Int = Int(stringTargetId) else {return nil}
+        target?.hexID = targetIdInt
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /* Part 3 find the 18 surrounding cells to the target (optional)
+         The closest 19 hexagon cells fall with 230m of the ceter of the target cell
+         Assign “keep=1” to those patch cells proximal to the target */
+        
+        for i in 1...totalHEX {
+            let _hexagon = hexagons.first { (item) -> Bool in
+                return item.hexID == i
+            }
+            guard var hexagon = _hexagon, let target = target else {continue}
+            let dxy = pow((pow((hexagon.xAlb0 - target.xAlb0), 2) + pow((hexagon.yAlb0 - target.yAlb0), 2)), 0.5)
+            if (dxy < 130) {
+                hexagon.keep = true
+            }
+        }
+        var kk = 0
+        for i in 1...totalHEX {
+            let _hexagon = hexagons.first { (item) -> Bool in
+                return item.hexID == i
+            }
+            guard var hexagon = _hexagon else {continue}
+            var newTarget: Target = Target(hexID: 0, xAlb0: 0, yAlb0: 0, xLon0: 0, yLat0: 0)
+            newTarget.index = i
+            guard hexagon.keep else {continue}
+            kk = kk + 1
+            newTarget.hexID = kk
+            newTarget.xAlb0 = hexagon.xAlb0
+            newTarget.yAlb0 = hexagon.yAlb0
+            newTarget.xLon0 = hexagon.xLon0
+            newTarget.yLat0 = hexagon.yLat0
+            for j in 1...6 {
+                let nx: Double = 30 + (Double(j) - 1) * 60
+                var xC1 = cos(nx / 180 * pi) * radiusO
+                var yC1 = sin(nx / 180 * pi) * radiusO
+                let xC0 = xC1
+                let yC0 = yC1
+                xC1 = xC0 * cos((-60) / 180 * pi) - yC0 * sin((-60) / 180 * pi)
+                yC1 = xC0 * sin((-60) / 180 * pi) + yC0 * cos((-60) / 180 * pi)
+                
+                let tempAlbers = AlbersCoordinate(x: hexagon.xAlb0 + xC1, y: hexagon.yAlb0 + yC1)
+                let coordinates = tempAlbers.toLatLong()
+                switch (j) {
+                case 1:
+                    newTarget.xLon1 = coordinates.longitude
+                    newTarget.yLat1 = coordinates.latitude
+                    hexagon.xLon1 = coordinates.longitude
+                    hexagon.yLat1 = coordinates.latitude
+                case 2:
+                    newTarget.xLon2 = coordinates.longitude
+                    newTarget.yLat2 = coordinates.latitude
+                    hexagon.xLon2 = coordinates.longitude
+                    hexagon.yLat2 = coordinates.latitude
+                    
+                case 3:
+                    newTarget.xLon3 = coordinates.longitude
+                    newTarget.yLat3 = coordinates.latitude
+                    hexagon.xLon3 = coordinates.longitude
+                    hexagon.yLat3 = coordinates.latitude
+                    
+                case 4:
+                    newTarget.xLon4 = coordinates.longitude
+                    newTarget.yLat4 = coordinates.latitude
+                    hexagon.xLon4 = coordinates.longitude
+                    hexagon.yLat4 = coordinates.latitude
+                    
+                case 5:
+                    newTarget.xLon5 = coordinates.longitude
+                    newTarget.yLat5 = coordinates.latitude
+                    hexagon.xLon5 = coordinates.longitude
+                    hexagon.yLat5 = coordinates.latitude
+                    
+                case 6:
+                    newTarget.xLon6 = coordinates.longitude
+                    newTarget.yLat6 = coordinates.latitude
+                    hexagon.xLon6 = coordinates.longitude
+                    hexagon.yLat6 = coordinates.latitude
+                default:
+                    continue
+                }
+            }
+            target7.append(newTarget)
+        }
+        
+        /* Part 3 Determine the StrataID of the raw within the hexagon */
+//        for _ in 1...7 {
+//            for i in 1...157 {
+//                let _currentTarget = target7.first { (item) -> Bool in
+//                    return item.index == i
+//                }
+//                let _hexaPoint = hexPTS.first { (item) -> Bool in
+//                    item.index == i
+//                }
+//                guard let currentTarget = _currentTarget, var hexaPoint = _hexaPoint  else {continue}
+//
+//                hexaPoint.absX = currentTarget.xAlb0 + hexaPoint.offX
+//                hexaPoint.absY = currentTarget.yAlb0 + hexaPoint.offY
+//            }
+//        }
+//
+//        for i in 1...157 {
+//            let _hexaPoint = hexPTS.first { (item) -> Bool in
+//                item.index == i
+//            }
+//            guard var hexaPoint = _hexaPoint, let target = target else {continue}
+//            hexaPoint.absX = target.xAlb0 + hexaPoint.offX
+//            hexaPoint.absY = target.yAlb0 + hexaPoint.offY
+//        }
+//
+//        /* find closest strata point */
+//        dxyOLD = 1000
+//        var dxyID = 0
+//        for i in 62...157 {
+//            let _hexaPoint = hexPTS.first { (item) -> Bool in
+//                item.index == i
+//            }
+//            guard var hexaPoint = _hexaPoint, let target = target else {continue}
+//            hexaPoint.absX = target.xAlb0 + hexaPoint.offX
+//            hexaPoint.absY = target.yAlb0 + hexaPoint.offY
+//
+//            let dxy = pow((pow((hexaPoint.absX - albersX0new), 2) + pow((hexaPoint.absY - albersY0new), 2)), 0.5)
+//            if (dxy < dxyOLD) {
+//                dxyOLD = dxy
+//                dxyID = i
+//            }
+//
+//        }
+//
+//        let _hexaPoint = hexPTS.first { (item) -> Bool in
+//            item.index == dxyID
+//        }
+//        guard let hexaPoint = _hexaPoint else {return nil}
+//        let strataID = hexaPoint.ptID
+        
+        // Clean array so that only objects with a target id exist
+        var cleanTargets: [Target] = []
+        for _target in target7 where _target.hexID != -1 {
+            cleanTargets.append(_target)
+        }
+        guard let _target = target else {return nil}
+        var _neighbors: [Int] = []
+        _neighbors = getNeighbor(offsets: getNeighborOffsets(), target: _target, target7: target7, neighbors: _neighbors)
+        let neighbors = Array(_neighbors.reversed())
+        return HexLocation(cc: neighbors[0], ur: neighbors[1], cr: neighbors[2], lr: neighbors[3], ll: neighbors[4], cl: neighbors[5], ul: neighbors[6])
+    }
+    
+    private func getNeighborOffsets() -> [NeighborOffset] {
+        var neighborOffsets: [NeighborOffset] = []
+        neighborOffsets.append(NeighborOffset(offX: 0, offY: 0))
+        neighborOffsets.append(NeighborOffset(offX: 60, offY: 100))
+        neighborOffsets.append(NeighborOffset(offX: 100, offY: 0))
+        neighborOffsets.append(NeighborOffset(offX: 60, offY: -100))
+        neighborOffsets.append(NeighborOffset(offX: -60, offY: -100))
+        neighborOffsets.append(NeighborOffset(offX: -100, offY: 0))
+        neighborOffsets.append(NeighborOffset(offX: -60, offY: 100))
+        return neighborOffsets
+    }
+    
+    private func getNeighbor(offsets _offsets: [NeighborOffset], target: Target, target7: [Target], neighbors: [Int])-> [Int] {
+        var offsets = _offsets
+      
+        guard let offset: NeighborOffset = offsets.popLast() else {
+            return neighbors
+        }
+        
+         struct Final7 {
+            var xAlb0: Double
+            var yAlb0: Double
+            var xLon0: Double
+            var yLat0: Double
+            
+            init(xAlb0: Double, yAlb0: Double, xLon0: Double, yLat0: Double) {
+                self.xAlb0 = xAlb0
+                self.yAlb0 = yAlb0
+                self.xLon0 = xLon0
+                self.yLat0 = yLat0
+            }
+        }
+       
+        var dxy: Double = 100
+       
+        let offX: Double = Double(offset.offX)
+        let offy: Double = Double(offset.offY)
+        
+        var closestTarget: Target?
+        
+        for targetItem in target7 {
+            dxy = pow((pow((targetItem.xAlb0 - target.xAlb0 - offX), 2) + pow((targetItem.yAlb0 - target.yAlb0 - offy), 2)), 0.5)
+            if (dxy < 50) {
+                closestTarget = targetItem
+            }
+        }
+        
+        guard let _closestTarget = closestTarget else {return []}
+        
+        let final7 = Final7(xAlb0: _closestTarget.xAlb0, yAlb0: _closestTarget.yAlb0, xLon0: _closestTarget.xLon0, yLat0: _closestTarget.yLat0)
+
+        
+        var bchexID = (floor(final7.yLat0) * 10000 + floor((final7.yLat0 - floor(final7.yLat0)) * 10000))
+        bchexID = bchexID * 1000000
+        bchexID = floor(bchexID + ((floor(-1 * final7.xLon0)) - 100) * 10000 + (-1 * final7.xLon0 - floor(-1 * final7.xLon0)) * 10000)
+        var _neighbors = neighbors
+        _neighbors.append(Int(bchexID))
+        return getNeighbor(offsets: offsets, target: target, target7: target7, neighbors: _neighbors)
+    }
+    
+    private func getHexRules() -> [HexRule] {
+        guard let path = Bundle.main.path(forResource: "hexRules", ofType: "json") else { return []}
+        do {
+            let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+            let jsonResult = try JSON(data: data)
+            var returnValue: [HexRule] = []
+            for item in jsonResult.arrayValue {
+                guard let index = item["index"].int else {continue}
+                guard let ptID = item["ptID"].int else {continue}
+                guard let ruleX = item["ruleX"].string else {continue}
+                guard let ruleY = item["ruleY"].string else {continue}
+                guard let ptX = item["ptX"].double else {continue}
+                guard let ptY = item["ptY"].double else {continue}
+                guard let offX = item["offX"].double else {continue}
+                guard let offY = item["offY"].double else {continue}
+                returnValue.append(HexRule(index: index, ptID: ptID, ruleX: ruleX, ruleY: ruleY, ptX: ptX, ptY: ptY, offX: offX, offY: offY))
+            }
+            return returnValue
+        } catch {
+            print(error)
+        }
+        return []
+    }
+}

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-struct HexLocation {
+public struct HexLocation {
     var cc: Int
     var ur: Int
     var cr: Int
