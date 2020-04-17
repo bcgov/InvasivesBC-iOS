@@ -27,15 +27,19 @@ extension FieldConfig {
 
 // Form Specific Extension of CollectionView
 extension UICollectionView {
+    // This method will register cell (FieldCellType) with collection view
+    // Need to call this method while configuring collection view
     func register(fieldType: FieldGroup.FieldCellType) {
         let nib: UINib = UINib(nibName: fieldType.rawValue, bundle: nil)
         self.register(nib, forCellWithReuseIdentifier: fieldType.rawValue)
     }
     
+    // Get reusable FieldCellType CollectionViewCell
     func dequeueReusableCell(withFieldType field: FieldGroup.FieldCellType, for path: IndexPath) ->  UICollectionViewCell {
         return self.dequeueReusableCell(withReuseIdentifier: field.rawValue, for: path)
     }
     
+    // This method will Register all FieldCellType with CollectionView
     func registerFieldTypes() {
         for fieldType in FieldGroup.FieldCellType.allCases {
             self.register(fieldType: fieldType)
@@ -49,6 +53,7 @@ extension UICollectionView {
 // FormGroup: View Class to arrnage and view field elements
 class  FieldGroup: UIView {
     
+    // Different FieldCell type associated with CollectionView (Form specific CollectionView)
     enum FieldCellType: String, CaseIterable {
         case text = "TextFieldCollectionViewCell"
         case textArea = "TextAreaFieldCollectionViewCell"

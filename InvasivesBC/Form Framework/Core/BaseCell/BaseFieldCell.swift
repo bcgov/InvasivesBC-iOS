@@ -57,13 +57,15 @@ class BaseFieldCell<T, Model: FieldViewModel<T>>: FieldCell {
         }
     }
     
-    // Initialize
+    // Initialize: Override FieldCell
     override  public func initialize(model: Any, presenter: FieldAuxViewPresenterDelegate? = nil) {
         guard let modelData: ModelType = model as? ModelType else {
             return
         }
         self.initialize(model: modelData, presenter: presenter)
     }
+    
+    // initialize: With Model and Aux view delegate
     internal func initialize(model: Model, presenter: FieldAuxViewPresenterDelegate? = nil) {
         self.model = model
         self.presenter = presenter
@@ -86,6 +88,7 @@ class BaseFieldCell<T, Model: FieldViewModel<T>>: FieldCell {
     public func update(value: T) {}
     
     // MARK: UICollectionViewCell
+    // Layout attributes
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         let autoLayoutAttributes = super.preferredLayoutAttributesFitting(layoutAttributes)
 

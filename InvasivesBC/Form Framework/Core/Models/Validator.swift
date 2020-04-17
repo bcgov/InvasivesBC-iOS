@@ -8,20 +8,24 @@
 
 import Foundation
 
+// Validation Result Tuple
 typealias ValidationResult = (success: Bool, message: String)
 
+// Validator
+// Validate any data with type T
 protocol Validator {
     associatedtype T
     func validate(data: T?) -> ValidationResult
 }
 
+// Generic Base Validator
 class BaseValidator<T>: Validator {
     func validate(data: T?) -> ValidationResult {
         return (true, "")
     }
 }
 
-
+// PasswordValidator: Validate password string
 class PasswordValidator: BaseValidator<String> {
     let message = "Please enter a valid password"
     override func validate(data: String?) -> ValidationResult {
@@ -30,6 +34,7 @@ class PasswordValidator: BaseValidator<String> {
     }
 }
 
+// EmailValidator: Validate email string
 class EmailValidator: BaseValidator<String> {
     let message = "Invalid email"
     override func validate(data: String?) -> ValidationResult {

@@ -8,6 +8,7 @@
 
 import Foundation
 
+// ViewModel for FieldGroup
 class FieldGroupModel: NSObject {
     // MARK: Properties
     var fields: [Field] = [] {

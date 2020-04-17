@@ -175,6 +175,7 @@ class FieldViewModel<T>: Field  {
         }
     }
     
+    // Remove Observer
     func remove(observer: NSObject) {
         if let weakRefIndex = self._observers.lastIndex(where: { $0.ref == observer }) {
             self.data.remove(observer: observer)
@@ -182,15 +183,17 @@ class FieldViewModel<T>: Field  {
         }
     }
     
+    // Remove all observer
     func removeAllObserver() {
         self.data.removeAllObservers()
         self._observers = []
     }
     
-    func updateDependents() {
-        
-    }
     
+    // Update Dependent FieldModel Objects
+    func updateDependents() {}
+    
+    // MARK: Destroy
     deinit {
         self.data.removeAllObservers()
         self._observers = []

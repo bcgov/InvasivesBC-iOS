@@ -17,16 +17,22 @@ extension UICollectionView {
         return self.dequeueReusableCell(withFieldType: type, for: index) as! FieldCell
     }
     
+    // Method to obtain TextFieldType
     func dequeueReusableTextFieldCell(for indexPath: IndexPath) -> TextFieldCollectionViewCell {
         return self.dequeueReusableFieldCell(type: .text, for: indexPath) as! TextFieldCollectionViewCell
     }
 }
 
+// CollectionView related extension of FielGroup View
 extension FieldGroup: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    
+    // MARK: UICollectionViewDataSource
+    // No of Item in section
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return fields.count
     }
     
+    // Cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let config = fields[indexPath.row]
         let cell = collectionView.dequeueReusableFieldCell(type: config.fieldCellType, for: indexPath)
@@ -34,6 +40,8 @@ extension FieldGroup: UICollectionViewDataSource, UICollectionViewDelegate, UICo
        return cell
     }
     
+    // MARK: UICollectionViewDelegateFlowLayout
+    // Cell Size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
            let assumedCellSpacing: CGFloat = 10
            var cellSpacing = assumedCellSpacing
