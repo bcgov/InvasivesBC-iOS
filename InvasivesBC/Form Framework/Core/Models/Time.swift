@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Time: Store Day Time information
 public struct Time {
     var hour: Int
     var minute: Int
