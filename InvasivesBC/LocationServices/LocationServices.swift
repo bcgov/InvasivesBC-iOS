@@ -44,6 +44,9 @@ class LocationServices {
 
 // MARK: Lat Long -> UTM
 extension CLLocationCoordinate2D {
+    
+    /// Convert to UTM coordinates
+    /// - Returns: UTM Coordinates
     public func toUTM() -> UTMCoordinate? {
         return LocationServices.shared.convertToUTM(coordinates: self)
     }
@@ -51,6 +54,9 @@ extension CLLocationCoordinate2D {
 
 extension LocationServices {
     
+    /// Concert given coordinates to UTM Coordinates
+    /// - Parameter coordinates: Lat Long Coordinates to convert
+    /// - Returns: UTM Coordinates
     fileprivate func convertToUTM(coordinates: CLLocationCoordinate2D) -> UTMCoordinate? {
         guard let utmZone = getUTMZone(longitude: coordinates.longitude) else {return nil}
         guard let angleP = getAngleP(longitude: coordinates.longitude) else {return nil}
@@ -122,12 +128,19 @@ extension LocationServices {
 // MARK: UTM -> Lat Long
 
 extension UTMCoordinate {
+    
+    /// Convert to Lat Long Coordinates
+    /// - Returns: Lat Long Coordinates
     public func toLatLong() -> CLLocationCoordinate2D? {
         return LocationServices.shared.convertToLatLong(utm: self)
     }
 }
 
 extension LocationServices {
+    
+    /// Convert given UTM coordinates to Lat Long Coordinates
+    /// - Parameter utm: UTM Coordinates
+    /// - Returns: Lat Long Coordinates
     fileprivate func convertToLatLong(utm: UTMCoordinate) -> CLLocationCoordinate2D? {
         let y = utm.northings
         let x = utm.eastings
@@ -181,12 +194,18 @@ extension LocationServices {
 
 // MARK: Lat Long -> Albers
 extension CLLocationCoordinate2D {
+    
+    /// Convert to Albers Coordinate
+    /// - Returns: Albers Coordinate
     public func toAlbers() -> AlbersCoordinate {
         return LocationServices.shared.convertToAlbers(coordinates: self)
     }
 }
 extension LocationServices {
     
+    /// Convert given Lat Long Coordinates to Albers
+    /// - Parameter coordinates: Lat Long coordinates to convert
+    /// - Returns: Albers Coordinate
     fileprivate func convertToAlbers(coordinates: CLLocationCoordinate2D) -> AlbersCoordinate {
         let a = b
         let e2 = 2 * (1 / 298.257) - pow(1 / 298.257, 2)
@@ -222,11 +241,18 @@ extension LocationServices {
 
 // MARK: Albers -> Lat Long
 extension AlbersCoordinate {
+    
+    /// Convert to Lat Long coordinates
+    /// - Returns: Lat Long coordinates
     public func toLatLong() -> CLLocationCoordinate2D {
         return LocationServices.shared.convertToLatLong(albers: self)
     }
 }
 extension LocationServices {
+    
+    /// Convert given Albers coordinates to lat long
+    /// - Parameter albers: Albers to convert
+    /// - Returns: Lat Long coordinates
     fileprivate func convertToLatLong(albers: AlbersCoordinate) -> CLLocationCoordinate2D {
         let x = albers.x
         let y = albers.y
@@ -267,6 +293,9 @@ extension LocationServices {
 
 // MARK: Inside / Outside
 extension CLLocationCoordinate2D {
+    
+    /// Check if this location is in BC
+    /// - Returns: Boolean indicating weather coordinates are in bc
     public func isInBC() -> Bool {
         return LocationServices.shared.isInsideBC(coordinates: self)
     }
@@ -290,6 +319,9 @@ extension LocationServices {
         return []
     }
     
+    /// Check if given coordinates are in bc
+    /// - Parameter coordinates: Coordinates to check
+    /// - Returns: Boolean indicating weather coordinates are in bc
     fileprivate func isInsideBC(coordinates: CLLocationCoordinate2D) -> Bool {
         let boundry = getBCAlbersBoundry()
         let albers = coordinates.toAlbers()
@@ -344,6 +376,9 @@ extension LocationServices {
 // MARK: Hex
 
 extension CLLocationCoordinate2D {
+    
+    /// Get a Hex object for this location
+    /// - Returns: HexLocation
     public func hex() -> HexLocation? {
         return LocationServices.shared.getHexLocation(for: self)
     }
@@ -409,6 +444,9 @@ extension LocationServices {
         }
     }
     
+    /// Get a Hex object for the current coordinates
+    /// - Parameter coordinates: CLLocationCoordinate2D
+    /// - Returns: HexLocation
     fileprivate func getHexLocation(for coordinates: CLLocationCoordinate2D) -> HexLocation? {
         let r3 = pow(3, 0.5)
         let radiusO = pow(((10000 * 2) / (3 * (r3))), 0.5)
@@ -416,7 +454,8 @@ extension LocationServices {
         let yheight = radiusO / 2
         let yheight2 = radiusO + yheight
         let xWidth2 = radiusO * r3
-        let hexPTS = getHexRules()
+        // Used for strata calculation
+        //let hexPTS = getHexRules()
         
         // Local variables
         var gridID = 0
@@ -542,7 +581,7 @@ extension LocationServices {
             let _hexagon = hexagons.first { (item) -> Bool in
                 return item.hexID == i
             }
-            guard var hexagon = _hexagon, let target = target else {continue}
+            guard let hexagon = _hexagon, let target = target else {continue}
             let dxy = pow((pow((hexagon.xAlb0 - target.xAlb0), 2) + pow((hexagon.yAlb0 - target.yAlb0), 2)), 0.5)
             if (dxy < 130) {
                 hexagon.keep = true
@@ -553,8 +592,8 @@ extension LocationServices {
             let _hexagon = hexagons.first { (item) -> Bool in
                 return item.hexID == i
             }
-            guard var hexagon = _hexagon else {continue}
-            var newTarget: Target = Target(hexID: 0, xAlb0: 0, yAlb0: 0, xLon0: 0, yLat0: 0)
+            guard let hexagon = _hexagon else {continue}
+            let newTarget: Target = Target(hexID: 0, xAlb0: 0, yAlb0: 0, xLon0: 0, yLat0: 0)
             newTarget.index = i
             guard hexagon.keep else {continue}
             kk = kk + 1
