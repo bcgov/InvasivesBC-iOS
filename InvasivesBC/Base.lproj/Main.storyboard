@@ -14,7 +14,21 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Suk-AC-6Ju">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <connections>
+                                    <segue destination="akK-WU-Qg4" kind="embed" id="4Fy-zr-3Yk"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Suk-AC-6Ju" secondAttribute="bottom" id="Zmk-XO-7iS"/>
+                            <constraint firstItem="Suk-AC-6Ju" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bKw-kV-9FU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Suk-AC-6Ju" secondAttribute="trailing" id="fqV-mI-jlt"/>
+                            <constraint firstItem="Suk-AC-6Ju" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="n4g-Ls-JvR"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
@@ -24,6 +38,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="139" y="119"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="7EQ-dB-rfO">
+            <objects>
+                <navigationController id="akK-WU-Qg4" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qjs-xu-dO0">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DKQ-k4-JjI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="906" y="119"/>
+        </scene>
+        <!--Storyboard Reference-->
+        <scene sceneID="jaT-lK-k8O">
+            <objects>
+                <viewControllerPlaceholder id="yYs-iW-k45" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sbz-kv-AmI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1434" y="131"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="QCQ-t0-7vg">

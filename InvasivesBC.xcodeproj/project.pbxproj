@@ -89,6 +89,7 @@
 		29DADFA1244F7AD60060628F /* AwaitingAccessResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DADF9F244F7AD60060628F /* AwaitingAccessResponse.swift */; };
 		29DADFA3244F80D60060628F /* UserRoleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DADFA2244F80D60060628F /* UserRoleModel.swift */; };
 		29DADFA5244F84F10060628F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DADFA4244F84F10060628F /* UserModel.swift */; };
+		29DADFA8244F9F390060628F /* ViewControllerAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DADFA7244F9F390060628F /* ViewControllerAuthentication.swift */; };
 		5C64708C243CC52F0013720E /* DynamicValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C64708B243CC52F0013720E /* DynamicValue.swift */; };
 		5C64708E243CCBF20013720E /* DynamicValueTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C64708D243CCBF20013720E /* DynamicValueTest.swift */; };
 		5C647090243CDB630013720E /* FieldModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C64708F243CDB630013720E /* FieldModels.swift */; };
@@ -226,6 +227,7 @@
 		29DADF9F244F7AD60060628F /* AwaitingAccessResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AwaitingAccessResponse.swift; sourceTree = "<group>"; };
 		29DADFA2244F80D60060628F /* UserRoleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRoleModel.swift; sourceTree = "<group>"; };
 		29DADFA4244F84F10060628F /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		29DADFA7244F9F390060628F /* ViewControllerAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerAuthentication.swift; sourceTree = "<group>"; };
 		3AE8B657A1C7FEF99FD825DC /* Pods-InvasivesBCTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBCTests.debug.xcconfig"; path = "Target Support Files/Pods-InvasivesBCTests/Pods-InvasivesBCTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3D4C207FA6A9E731E1565C66 /* Pods_InvasivesBC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InvasivesBC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		54F2BB66A64CD65C38EA225C /* Pods-InvasivesBC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBC.release.xcconfig"; path = "Target Support Files/Pods-InvasivesBC/Pods-InvasivesBC.release.xcconfig"; sourceTree = "<group>"; };
@@ -513,7 +515,7 @@
 			isa = PBXGroup;
 			children = (
 				29DADF7B244E173D0060628F /* BaseViewController.swift */,
-				2944BD102437DD7200826F48 /* ViewController.swift */,
+				29DADFA6244F9F1E0060628F /* Home */,
 				29DADF8A244E3CDC0060628F /* Login */,
 			);
 			path = ViewControllers;
@@ -660,6 +662,15 @@
 				29DADF9F244F7AD60060628F /* AwaitingAccessResponse.swift */,
 			);
 			path = AwaitingAccessResponse;
+			sourceTree = "<group>";
+		};
+		29DADFA6244F9F1E0060628F /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2944BD102437DD7200826F48 /* ViewController.swift */,
+				29DADFA7244F9F390060628F /* ViewControllerAuthentication.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		5523EDA1FB016977B69CFAF9 /* Pods */ = {
@@ -1101,6 +1112,7 @@
 				29DADF75244E15F50060628F /* AppRemoteAPIConst.swift in Sources */,
 				29DADF49244E0C130060628F /* DropdownTableViewCell.swift in Sources */,
 				29B1E5C22446522A00C44C78 /* LocationServices.swift in Sources */,
+				29DADFA8244F9F390060628F /* ViewControllerAuthentication.swift in Sources */,
 				5CA6E06F24475DC900774A28 /* User.swift in Sources */,
 				5C718452243B896700BF131C /* ApplicationLogger.swift in Sources */,
 				5CAE602B243E14A100E4744E /* Fonts.swift in Sources */,

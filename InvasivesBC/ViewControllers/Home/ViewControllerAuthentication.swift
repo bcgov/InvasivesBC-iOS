@@ -1,40 +1,27 @@
 //
-//  ViewController.swift
+//  HomeViewControllerAuthentication.swift
 //  InvasivesBC
 //
-//  Created by Amir Shayegh on 2020-04-03.
+//  Created by Amir Shayegh on 2020-04-21.
 //  Copyright © 2020 Amir Shayegh. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import Reachability
 
-class ViewController: UIViewController, Theme {
-    
-    // MARK: ViewController Functions
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // On viewDidLoad, Choose between presenting
-        // Login ViewController
-        // Or Home ViewController
-        presentNext()
-    }
+extension ViewController {
     
     // MARK: Class Functions
     
     /// Show Login - Do not use directly.
     /// Should be only used by showHomePage() after verification
-    private func segueToLoginPage() {
+    internal func segueToLoginPage() {
         performSegue(withIdentifier: "performLogin", sender: nil)
     }
     
     
     /// Show Home page
-    private func segueToHomePage() {
+    internal func segueToHomePage() {
         performSegue(withIdentifier: "showHomePage", sender: nil)
     }
     
@@ -100,7 +87,7 @@ class ViewController: UIViewController, Theme {
     ///   OR
     ///  2- User's token is not expeired (3.2)
     /// - Returns: Boolean indicating if user is Authenticated
-    private func isAuthenticated() -> Bool {
+    internal func isAuthenticated() -> Bool {
         // 1) User has logged in
         if !AuthenticationService.isLoggedIn() {
             return false
