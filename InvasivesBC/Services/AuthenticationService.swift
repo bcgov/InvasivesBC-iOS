@@ -155,7 +155,7 @@ class AuthenticationService {
     }
     
     private static func getCurrentViewController() -> UIViewController? {
-        guard let window = UIApplication.shared.keyWindow else {return nil}
+        guard let window = UIApplication.shared.windows.filter({$0.isKeyWindow}).first else {return nil}
         if var topController = window.rootViewController {
             while let presentedVC = topController.presentedViewController {
                 topController = presentedVC

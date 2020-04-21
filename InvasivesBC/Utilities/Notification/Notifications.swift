@@ -9,6 +9,6 @@
 import Foundation
 
 extension Notification.Name {
-    static let screenOrientationChanged = Notification.Name("screenOrientationChanged")
+    static let ScreenOrientationChanged = Notification.Name("screenOrientationChanged")
     static let TableButtonClicked = Notification.Name("tableButtonClicked")
 }

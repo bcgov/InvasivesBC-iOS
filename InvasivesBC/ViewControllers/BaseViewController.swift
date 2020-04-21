@@ -8,15 +8,7 @@
 
 import UIKit
 import DatePicker
-
-protocol InputDelegate: class {
-    func showDropdownDelegate(items: [DropdownModel], on view: UIView, callback: @escaping (_ selection: DropdownModel?) -> Void)
-    func showDatepickerDelegate(on view: UIView, initialDate: Date?, minDate: Date?, maxDate: Date?, callback: @escaping (_ date: Date?) -> Void)
-    func showTimePickerDelegate(on view: UIView, initialTime: Time?, completion: @escaping (_ time: Time?) -> Void)
-    func showOptionsDelegate(options: [OptionType], on button: UIButton, completion: @escaping (_ option: OptionType) -> Void)
-}
-
-class BaseViewController: UIViewController, Theme ,InputDelegate {
+class BaseViewController: UIViewController, Theme {
     
     // MARK: Constants
     let visibleAlpha: CGFloat = 1
@@ -53,20 +45,6 @@ class BaseViewController: UIViewController, Theme ,InputDelegate {
     }
     
     // MARK: Popover
-    private func showPopOver(on button: UIButton, popOverVC: UIViewController, height: Double, width: Double, arrowColor: UIColor? = nil, direction: UIPopoverArrowDirection? = .any) {
-        self.view.endEditing(true)
-        dismissPopOver()
-        popOverVC.modalPresentationStyle = .popover
-        popOverVC.preferredContentSize = CGSize(width: width, height: height)
-        guard let popover = popOverVC.popoverPresentationController else {return}
-        popover.backgroundColor = arrowColor ?? UIColor.white
-        popover.permittedArrowDirections = .any
-        popover.sourceView = button
-        popover.sourceRect = CGRect(x: button.bounds.midX, y: button.bounds.midY, width: 0, height: 0)
-        self.currentPopOver = popOverVC
-        present(popOverVC, animated: true, completion: nil)
-    }
-    
     private func showPopOver(on view: UIView, popOverVC vc: UIViewController, height: Double, width: Double, arrowColor: UIColor? = nil, direction: UIPopoverArrowDirection? = .any) {
         self.view.endEditing(true)
         dismissPopOver()
@@ -231,7 +209,7 @@ class BaseViewController: UIViewController, Theme ,InputDelegate {
     
     private func notifyOrientationChange() {
         orientationChanged()
-        NotificationCenter.default.post(name: .screenOrientationChanged, object: nil)
+        NotificationCenter.default.post(name: .ScreenOrientationChanged, object: nil)
     }
 }
 
