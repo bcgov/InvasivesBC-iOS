@@ -22,4 +22,6 @@ class User: BaseObject {
     
     // PreferredUsername: User's IDR or BCeID
     @objc dynamic var preferredUsername: String = ""
+    
+    @objc dynamic var role: String = ""
 }
