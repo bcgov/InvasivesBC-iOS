@@ -13,20 +13,20 @@ class UserService {
     public static let shared = UserService()
     private init() {}
     
-    public func getUser(completion: @escaping (User) -> Void) {
-//        fetchUserData { (result) in
-//            guard let userDictionary = result else {return then([])}
-//            guard let roles = userDictionary["roles"]?.arrayValue else {
-//                return then([])
-//            }
-//            var roleModels: [UserRoleModel] = []
-//            for role in roles {
-//                let roleName = role["role"].stringValue
-//                let roleCodeName = role["code"].stringValue
-//                let roleCode = role["role_code_id"].intValue
-//                roleModels.append(UserRoleModel(role: roleName, code: roleCodeName, roleCode: roleCode))
-//            }
-//        }
+    public func getUser(completion: @escaping (UserModel?) -> Void) {
+        fetchUserData { (result) in
+            guard let userDictionary = result else {return completion(nil)}
+            guard let roles = userDictionary["roles"]?.arrayValue else {
+                return completion(nil)
+            }
+            var roleModels: [UserRoleModel] = []
+            for role in roles {
+                let roleName = role["role"].stringValue
+                let roleCodeName = role["code"].stringValue
+                let roleCode = role["role_code_id"].intValue
+                roleModels.append(UserRoleModel(role: roleName, code: roleCodeName, roleCode: roleCode))
+            }
+        }
     }
     
     /// Fetch json data for current user

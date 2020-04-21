@@ -63,7 +63,16 @@ class AccessService {
         if reachability.connection == .unavailable {
 //            return completion(Settings.shared.userHasAppAccess())
         }
-//        APIService.get(endpoint: <#T##URL#>, completion: <#T##(Any?) -> Void#>)
+        UserService.shared.getUser(completion: { (result) in
+            guard let user = result else {
+//                return completion(Settings.shared.userHasAppAccess())
+            }
+            if user.roles.contains(where: { (role) -> Bool in
+                return role.code == AccessService.shared
+            }) {
+                
+            }
+        })
     }
     
     public func sendAccessRequest(completion: ((Bool)->Void)? = nil) {

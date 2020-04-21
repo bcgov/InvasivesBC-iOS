@@ -17,15 +17,18 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <segue destination="EYh-Ti-1cd" kind="show" identifier="performLogin" id="l3l-PL-t4q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="139" y="119"/>
         </scene>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="QCQ-t0-7vg">
             <objects>
-                <viewController id="EYh-Ti-1cd" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="EYh-Ti-1cd" customClass="LoginViewController" customModule="InvasivesBC" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="egK-I3-dGg">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,6 +63,9 @@
                                                 <state key="normal" title="Login with BCeID" image="arrow.up.right.square" catalog="system">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="loginWithBCeIDAction:" destination="EYh-Ti-1cd" eventType="touchUpInside" id="8fU-xt-y8X"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jq4-VE-1tS">
                                                 <rect key="frame" x="0.0" y="62" width="280" height="54"/>
@@ -75,6 +81,9 @@
                                                 <state key="normal" title="Login with IDIR" image="arrow.up.right.square" catalog="system">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="loginWithIdirAction:" destination="EYh-Ti-1cd" eventType="touchUpInside" id="2pw-gl-XDq"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -103,6 +112,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9zT-uq-ubk"/>
                     </view>
+                    <navigationItem key="navigationItem" id="MON-ty-KbX"/>
+                    <connections>
+                        <outlet property="appTitle" destination="R7m-Q4-Z0Z" id="2EF-e0-V6A"/>
+                        <outlet property="loginContainer" destination="cgU-t4-2fr" id="aPf-mz-U9h"/>
+                        <outlet property="loginWithBCeIDButton" destination="8TZ-m5-SOn" id="DEd-nG-QP9"/>
+                        <outlet property="loginWithIdirButton" destination="Jq4-VE-1tS" id="0rH-tt-CQE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="neD-3L-IYQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
