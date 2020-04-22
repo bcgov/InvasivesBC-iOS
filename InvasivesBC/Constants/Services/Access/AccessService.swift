@@ -8,6 +8,7 @@
 
 import Foundation
 import Reachability
+import SwiftyJSON
 
 class AccessService {
     // Superuser
@@ -62,13 +63,18 @@ class AccessService {
         }
     }
     
-    private func setAccess() {
+    /// Verify access when connected
+    fileprivate func setAccess() {
+        hasAccess { (canAccess) in
+            self.hasAppAccess = canAccess
+            SettingsService.shared.setUserHasAppAccess(hasAccess: canAccess)
+        }
     }
     
     /// Check if a role id can access this app
     /// - Parameter id: Role id
     /// - Returns: Boolean
-    private func canAccessWith(role id: Int) -> Bool {
+    fileprivate func canAccessWith(role id: Int) -> Bool {
         return AccessService.allowedRoleIds.contains(id)
     }
 
@@ -83,11 +89,17 @@ class AccessService {
             guard let user = result else {
                 return completion(SettingsService.shared.userHasAppAccess())
             }
+            
             if user.roles.contains(where: { (role) -> Bool in
                 return self.canAccessWith(role: role.roleCode)
             }) {
+                SettingsService.shared.setUserHasAppAccess(hasAccess: true)
+                self.hasAppAccess = true
                 return completion(true)
             } else {
+                SettingsService.shared.setUserHasAppAccess(hasAccess: false)
+                self.sendAccessRequest(completion: {_ in })
+                self.hasAppAccess = false
                 return completion(false)
             }
         })
@@ -96,8 +108,25 @@ class AccessService {
     
     /// Send a request for elevated access (Data Editor)
     /// - Parameter completion: Boolean indicating if request was created successfully
-    public func sendAccessRequest(completion: ((Bool)->Void)? = nil) {
-//        APIService.post(endpoint: <#T##URL#>, params: <#T##[String : Any]#>, completion: <#T##(Any?) -> Void#>)
+    public func sendAccessRequest(completion: @escaping (Bool)->Void) {
+        guard let url = URL(string: APIURL.assessRequest) else {return completion(false)}
+        let body: [String : Any] = [
+            "requestedAccessCode": AccessService.DataEditorRoleId,
+            "requestNote": "Mobile Access"
+        ]
+        APIService.post(endpoint: url, params: body) { (_response) in
+            guard let response = _response as? JSON else {return completion(false)}
+            print(response)
+            let errors = response["errors"].arrayValue
+            if errors.count > 0 {
+                return completion(false)
+            } else {
+                let data = response["data"].dictionaryValue
+                if (data["requestedAccessCode"]?.dictionaryValue) != nil {
+                    return completion(true)
+                }
+            }
+            return completion(false)
+        }
     }
-    
 }

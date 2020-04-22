@@ -14,7 +14,6 @@ import RealmSwift
 class SyncService {
     internal static let shared = SyncService()
     
-    
     private var isEnabled: Bool = true
     private var isAutoSyncEnabled: Bool = true
     private var realmNotificationToken: NotificationToken?

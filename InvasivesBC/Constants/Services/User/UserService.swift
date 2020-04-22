@@ -13,6 +13,9 @@ class UserService {
     public static let shared = UserService()
     private init() {}
     
+    
+    /// Get user information from backend
+    /// - Parameter completion: UserModel
     public func getUser(completion: @escaping (UserModel?) -> Void) {
         fetchUserData { (result) in
             guard let userDictionary = result else {return completion(nil)}
@@ -50,7 +53,7 @@ class UserService {
     
     /// Fetch json data for current user
     /// - Parameter then: call back with dictionary result
-    private func fetchUserData(then: @escaping([String: JSON]?)->Void) {
+    fileprivate func fetchUserData(then: @escaping([String: JSON]?)->Void) {
         guard let url = URL(string: APIURL.user) else {return then(nil)}
         APIService.get(endpoint: url) { (_response) in
             guard let response = _response as? JSON else {return then(nil)}

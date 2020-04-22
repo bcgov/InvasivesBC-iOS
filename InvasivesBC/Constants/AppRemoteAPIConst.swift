@@ -90,6 +90,10 @@ struct APIURL {
     static let user: String = {
         return Self.baseURL + EndPoints.user.rawValue
     }()
+    
+    static let assessRequest: String = {
+        return Self.baseURL + EndPoints.accessRequest.rawValue
+    }()
 }
 
 
