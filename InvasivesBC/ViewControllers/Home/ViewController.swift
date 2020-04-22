@@ -11,6 +11,8 @@ import Reachability
 
 class ViewController: UIViewController, Theme {
     
+    @IBOutlet weak var containerView: UIView!
+    
     // MARK: ViewController Functions
     override func viewDidLoad() {
         super.viewDidLoad()

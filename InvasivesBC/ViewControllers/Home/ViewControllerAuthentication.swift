@@ -11,8 +11,6 @@ import Reachability
 
 extension ViewController {
     
-    // MARK: Class Functions
-    
     /// Show Login - Do not use directly.
     /// Should be only used by showHomePage() after verification
     internal func segueToLoginPage() {
@@ -21,6 +19,7 @@ extension ViewController {
     
     /// Determines  if login or home page should be presented
     internal func presentNext() {
+        self.containerView.isHidden = true
         if (!isAuthenticated()) {
             segueToLoginPage()
             return
@@ -46,13 +45,12 @@ extension ViewController {
         })
     }
     
-    
     /// Show Home page & perform initial sync if necessary
     /// If initial sync is necessary and is failed,
     /// onFailedLogin() will be called
     private func showHomePage() {
         if !SyncService.shared.shouldPerformInitialSync() {
-            // TODO: unhide embedded landingpage nav
+            self.containerView.isHidden = false
             return
         }
         SyncService.shared.performInitialSync { [weak self] (success) in
@@ -60,11 +58,10 @@ extension ViewController {
             if !success {
                 _self.onFailedLogin()
             } else {
-                // TODO: unhide embedded landingpage nav
+                _self.containerView.isHidden = false
             }
         }
     }
-    
     
     /// Handle Authentication failure
     private func onFailedLogin() {
