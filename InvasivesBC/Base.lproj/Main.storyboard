@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -47,18 +47,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <connections>
+                        <segue destination="yYs-iW-k45" kind="relationship" relationship="rootViewController" id="M2b-Vj-Dxd"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DKQ-k4-JjI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="906" y="119"/>
         </scene>
-        <!--Storyboard Reference-->
+        <!--LandingPage-->
         <scene sceneID="jaT-lK-k8O">
             <objects>
-                <viewControllerPlaceholder id="yYs-iW-k45" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardIdentifier="LandingPage" storyboardName="LandingPage" referencedIdentifier="LandingPage" id="yYs-iW-k45" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="18n-Se-D66"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sbz-kv-AmI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1434" y="131"/>
+            <point key="canvasLocation" x="1458" y="119"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="QCQ-t0-7vg">

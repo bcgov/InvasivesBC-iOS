@@ -103,6 +103,8 @@
 		5C718453243B896700BF131C /* GenericConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C71844D243B896600BF131C /* GenericConst.swift */; };
 		5C718454243B896700BF131C /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C71844E243B896600BF131C /* Promise.swift */; };
 		5C718455243B896700BF131C /* ApplicationErrorConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C71844F243B896600BF131C /* ApplicationErrorConst.swift */; };
+		5C9066142450B5A100E2A8CA /* LandingPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C9066132450B5A100E2A8CA /* LandingPage.storyboard */; };
+		5C9066172450B61300E2A8CA /* LandingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9066162450B61300E2A8CA /* LandingPageViewController.swift */; };
 		5CA312962444A1660005AC75 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA312952444A1660005AC75 /* Validator.swift */; };
 		5CA312982444C5130005AC75 /* FieldGroupModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA312972444C5130005AC75 /* FieldGroupModels.swift */; };
 		5CA6E05A24474F8900774A28 /* BaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA6E05924474F8900774A28 /* BaseObject.swift */; };
@@ -247,6 +249,8 @@
 		5C71844D243B896600BF131C /* GenericConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericConst.swift; sourceTree = "<group>"; };
 		5C71844E243B896600BF131C /* Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
 		5C71844F243B896600BF131C /* ApplicationErrorConst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationErrorConst.swift; sourceTree = "<group>"; };
+		5C9066132450B5A100E2A8CA /* LandingPage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LandingPage.storyboard; sourceTree = "<group>"; };
+		5C9066162450B61300E2A8CA /* LandingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingPageViewController.swift; sourceTree = "<group>"; };
 		5CA312952444A1660005AC75 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		5CA312972444C5130005AC75 /* FieldGroupModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldGroupModels.swift; sourceTree = "<group>"; };
 		5CA6E05924474F8900774A28 /* BaseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseObject.swift; sourceTree = "<group>"; };
@@ -329,6 +333,7 @@
 		2944BD0B2437DD7200826F48 /* InvasivesBC */ = {
 			isa = PBXGroup;
 			children = (
+				5C9066132450B5A100E2A8CA /* LandingPage.storyboard */,
 				2944BD122437DD7200826F48 /* Main.storyboard */,
 				29DADF65244E14480060628F /* ViewControllers */,
 				29DADEF5244E095E0060628F /* Views */,
@@ -514,6 +519,7 @@
 		29DADF65244E14480060628F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				5C9066152450B5E600E2A8CA /* LandingPage */,
 				29DADF7B244E173D0060628F /* BaseViewController.swift */,
 				29DADFA6244F9F1E0060628F /* Home */,
 				29DADF8A244E3CDC0060628F /* Login */,
@@ -788,6 +794,14 @@
 			path = Promise;
 			sourceTree = "<group>";
 		};
+		5C9066152450B5E600E2A8CA /* LandingPage */ = {
+			isa = PBXGroup;
+			children = (
+				5C9066162450B61300E2A8CA /* LandingPageViewController.swift */,
+			);
+			path = LandingPage;
+			sourceTree = "<group>";
+		};
 		5CA6E05724474ED200774A28 /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -997,6 +1011,7 @@
 				29DADF4E244E0C130060628F /* TableView.xib in Resources */,
 				29B1E5C72446522A00C44C78 /* hexRules.json in Resources */,
 				29DADF4C244E0C130060628F /* TableRowTableViewCell.xib in Resources */,
+				5C9066142450B5A100E2A8CA /* LandingPage.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1107,6 +1122,7 @@
 				5CAE603B243E2E4F00E4744E /* TextFieldCollectionViewCell.swift in Sources */,
 				29DADF64244E0C130060628F /* SwitcherCollectionViewCell.swift in Sources */,
 				29DADF46244E0C130060628F /* DropdownViewController.swift in Sources */,
+				5C9066172450B61300E2A8CA /* LandingPageViewController.swift in Sources */,
 				29DADF81244E1E200060628F /* TimePicker.swift in Sources */,
 				29DADF53244E0C130060628F /* Alert.swift in Sources */,
 				29DADF75244E15F50060628F /* AppRemoteAPIConst.swift in Sources */,
