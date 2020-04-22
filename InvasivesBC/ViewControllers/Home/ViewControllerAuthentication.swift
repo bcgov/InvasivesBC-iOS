@@ -19,12 +19,6 @@ extension ViewController {
         performSegue(withIdentifier: "performLogin", sender: nil)
     }
     
-    
-    /// Show Home page
-    internal func segueToHomePage() {
-        performSegue(withIdentifier: "showHomePage", sender: nil)
-    }
-    
     /// Determines  if login or home page should be presented
     internal func presentNext() {
         if (!isAuthenticated()) {
@@ -58,15 +52,15 @@ extension ViewController {
     /// onFailedLogin() will be called
     private func showHomePage() {
         if !SyncService.shared.shouldPerformInitialSync() {
-            segueToHomePage()
+            // TODO: unhide embedded landingpage nav
             return
         }
         SyncService.shared.performInitialSync { [weak self] (success) in
             guard let _self = self else {return}
-            if success {
-                _self.segueToHomePage()
-            } else {
+            if !success {
                 _self.onFailedLogin()
+            } else {
+                // TODO: unhide embedded landingpage nav
             }
         }
     }
