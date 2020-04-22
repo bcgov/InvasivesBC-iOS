@@ -26,7 +26,7 @@ extension ViewController {
     }
     
     /// Determines  if login or home page should be presented
-    private func presentNext() {
+    internal func presentNext() {
         if (!isAuthenticated()) {
             segueToLoginPage()
             return

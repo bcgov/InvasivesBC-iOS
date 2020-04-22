@@ -26,6 +26,25 @@ class UserService {
                 let roleCode = role["role_code_id"].intValue
                 roleModels.append(UserRoleModel(role: roleName, code: roleCodeName, roleCode: roleCode))
             }
+            var lastName: String = ""
+            var firstName: String = ""
+            var email: String = ""
+            var preferredUsername: String = ""
+            if let last = userDictionary["lastName"]?.string {
+                lastName = last
+            }
+            if let first = userDictionary["firstName"]?.string {
+                firstName = first
+            }
+            
+            if let mail = userDictionary["email"]?.string {
+                email = mail
+            }
+            if let preferredName = userDictionary["preferredUsername"]?.string {
+                preferredUsername = preferredName
+            }
+            return completion(UserModel(firstName: firstName, lastName: lastName, email: email, preferredUsername: preferredUsername, roles: roleModels))
+            
         }
     }
     

@@ -18,14 +18,7 @@ class ViewController: UIViewController, Theme {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-      
-        self.view.isUserInteractionEnabled = false
-        if (!isAuthenticated()) {
-            segueToLoginPage()
-            self.view.isUserInteractionEnabled = true
-            return
-        }
-        self.view.isUserInteractionEnabled = true
+        presentNext()
     }
    
 }
