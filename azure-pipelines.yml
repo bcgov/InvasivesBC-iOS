@@ -29,9 +29,9 @@ pool:
 variables:
 - group: CertsAndKeys
 - name: 'ProfileFileName'
-  value: 'Invasive_Species.mobileprovision'
+  value: 'Range_Invasive_Species_2.mobileprovision'
 - name: 'ProfileUUID'
-  value: '2102259a-ce94-4a64-a594-6df94ad87a63'
+  value: '6acc2ab9-46f4-4551-b1a5-5cf6a0c2cc49'
 - name: 'CertificateFileName'
   value: 'itunes-store.p12'
 - name: 'WorkspacePath'
@@ -44,7 +44,7 @@ variables:
   value: 'app-store'
   # Variables below are used for ITC uploads
 - name: 'BundleID'
-  value: 'ca.bc.gov.InvasivesBC'
+  value: 'ca.bc.gov.invasive-species'
 - name: 'AppStoreServiceConnectionName'
   value: 'BCDevX'
 - name: 'ITCTeamID'

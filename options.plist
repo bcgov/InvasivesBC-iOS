@@ -16,8 +16,8 @@
 	<true/>
 	<key>provisioningProfiles</key>
 	<dict>
-		<key>ca.bc.gov.InvasivesBC</key>
-		<string>2102259a-ce94-4a64-a594-6df94ad87a63</string>
+		<key>ca.bc.gov.invasive-species</key>
+		<string>6acc2ab9-46f4-4551-b1a5-5cf6a0c2cc49</string>
 	</dict>
 </dict>
 </plist>
