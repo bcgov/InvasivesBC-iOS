@@ -35,7 +35,7 @@ variables:
 - name: 'CertificateFileName'
   value: 'itunes-store.p12'
 - name: 'WorkspacePath'
-  value: '**/ipad.xcworkspace'
+  value: '**/InvasivesBC.xcworkspace'
 - name: 'SchemaName'
   value: 'InvasivesBC'
 - name: 'ExportOptionsFileName'
