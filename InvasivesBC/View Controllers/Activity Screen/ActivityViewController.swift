@@ -83,6 +83,7 @@ extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let cell = getSessionDefaultCell(indexPath: indexPath)
+            cell.setup(delegate: self)
             return cell
         case 1:
             let cell = getFormTypeCell(indexPath: indexPath)

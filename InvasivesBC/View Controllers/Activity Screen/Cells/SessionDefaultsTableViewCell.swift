@@ -10,12 +10,36 @@ import UIKit
 
 class SessionDefaultsTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var container: UIView!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
-    func setup() {
-        let inputGroup = InputGroupView()
-//        inputGroup.initialize(with: getFields(), delegate: <#T##InputDelegate#>, in: <#T##UIView#>)
+    var delegate: InputDelegate?
+    
+    deinit {
+        removeListeners()
     }
     
+    func setup(delegate: InputDelegate) {
+        addListeners()
+        self.delegate = delegate
+        let inputGroup = InputGroupView()
+        inputGroup.initialize(with: getFields(), delegate: delegate, in: container)
+        heightConstraint.constant = InputGroupView.estimateContentHeight(for: getFields())
+    }
+    
+    private func removeListeners() {
+        NotificationCenter.default.removeObserver(self, name: .InputItemValueChanged, object: nil)
+    }
+    
+    private func addListeners() {
+        NotificationCenter.default.removeObserver(self, name: .InputItemValueChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.inputItemValueChanged(notification:)), name: .InputItemValueChanged, object: nil)
+    }
+    
+    @objc func inputItemValueChanged(notification: Notification) {
+        guard let item: InputItem = notification.object as? InputItem else {return}
+        print(item.value.get(type: item.type) as Any)
+    }
     
     func getFields() -> [InputItem] {
         var items: [InputItem] = []
@@ -51,6 +75,8 @@ class SessionDefaultsTableViewCell: UITableViewCell {
             width: .Half
         )
         items.append(agency)
+        
+        
         
         return items
     }
