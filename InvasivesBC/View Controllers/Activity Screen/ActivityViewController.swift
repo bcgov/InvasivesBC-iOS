@@ -21,6 +21,30 @@ class ActivityViewController: BaseViewController {
         super.viewDidLoad()
         setUpTable()
         style()
+        addListeners()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView.reloadData()
+    }
+    
+    deinit {
+        removeListeners()
+    }
+    
+    private func removeListeners() {
+        NotificationCenter.default.removeObserver(self, name: .InputItemValueChanged, object: nil)
+    }
+    
+    private func addListeners() {
+        NotificationCenter.default.removeObserver(self, name: .InputItemValueChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.inputItemValueChanged(notification:)), name: .InputItemValueChanged, object: nil)
+    }
+    
+    @objc func inputItemValueChanged(notification: Notification) {
+        guard let item: InputItem = notification.object as? InputItem else {return}
+        print(item.value.get(type: item.type) as Any)
     }
     
     @IBAction func closeAction(_ sender: Any) {
@@ -29,6 +53,10 @@ class ActivityViewController: BaseViewController {
     
     func style() {
         tableView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        closeButton.tintColor = UIColor.primary
+        titleLabel.font = UIFont.semibold(size: 22)
+        titleLabel.textColor = UIColor.primary
+        divider.backgroundColor = UIColor.primary
     }
     
 }
@@ -57,18 +85,19 @@ extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
         return tableView.dequeueReusableCell(withIdentifier: "SelectFormTypeTableViewCell", for: indexPath) as! SelectFormTypeTableViewCell
     }
     
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let customHeader: CustomHeader = UIView.fromNib()
         switch section {
         case 0:
-            return "Session Defaults"
+            customHeader.setup(left: "SessionDefault", right: "", color: .systemPink)
         case 1:
-            return "Plant"
+            customHeader.setup(left: "Plant", right: "Invasive/Terrestrial", color: .systemGreen)
         case 2:
-            return "Animal"
+            customHeader.setup(left: "Aquatic", right: "Invasive/Terrestrial", color:.systemGreen)
         default:
-            return "Uknown"
+            customHeader.setup(left: "", right: "", color: .systemGreen)
         }
+        return customHeader
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

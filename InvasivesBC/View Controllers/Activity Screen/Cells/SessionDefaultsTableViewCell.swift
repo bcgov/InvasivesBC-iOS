@@ -14,38 +14,22 @@ class SessionDefaultsTableViewCell: UITableViewCell {
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     var delegate: InputDelegate?
-    
-    deinit {
-        removeListeners()
-    }
+    weak var inputGroup: UIView?
     
     func setup(delegate: InputDelegate) {
-        addListeners()
+        inputGroup?.removeFromSuperview()
         self.delegate = delegate
         let inputGroup = InputGroupView()
+        self.inputGroup = inputGroup
         inputGroup.initialize(with: getFields(), delegate: delegate, in: container)
         heightConstraint.constant = InputGroupView.estimateContentHeight(for: getFields())
         style()
     }
     
-    private func removeListeners() {
-        NotificationCenter.default.removeObserver(self, name: .InputItemValueChanged, object: nil)
-    }
-    
-    private func addListeners() {
-        NotificationCenter.default.removeObserver(self, name: .InputItemValueChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.inputItemValueChanged(notification:)), name: .InputItemValueChanged, object: nil)
-    }
-    
-    @objc func inputItemValueChanged(notification: Notification) {
-        guard let item: InputItem = notification.object as? InputItem else {return}
-        print(item.value.get(type: item.type) as Any)
-    }
-    
-    
     func style() {
         container.backgroundColor = .clear
         self.backgroundColor = .clear
+        layoutIfNeeded()
     }
     
     func getFields() -> [InputItem] {

@@ -20,6 +20,8 @@
 		2933A89924D0B120003E79F7 /* OptionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2933A89324D0B11F003E79F7 /* OptionsTableViewCell.xib */; };
 		2933A89A24D0B120003E79F7 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2933A89424D0B11F003E79F7 /* OptionsViewController.swift */; };
 		2933A89B24D0B120003E79F7 /* OptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2933A89524D0B11F003E79F7 /* OptionType.swift */; };
+		294927D924D0C8BE006E39EF /* CustomHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294927D824D0C8BE006E39EF /* CustomHeader.swift */; };
+		294927DB24D0C8C6006E39EF /* CustomHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 294927DA24D0C8C5006E39EF /* CustomHeader.xib */; };
 		294CC41C24C9FD980092F478 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294CC41B24C9FD980092F478 /* LaunchViewController.swift */; };
 		296CBBA324CB7AC3002277D0 /* InputGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296CBB6D24CB7AC3002277D0 /* InputGroup.swift */; };
 		296CBBA424CB7AC3002277D0 /* readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 296CBB6E24CB7AC3002277D0 /* readme.md */; };
@@ -122,6 +124,8 @@
 		2933A89324D0B11F003E79F7 /* OptionsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsTableViewCell.xib; sourceTree = "<group>"; };
 		2933A89424D0B11F003E79F7 /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		2933A89524D0B11F003E79F7 /* OptionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionType.swift; sourceTree = "<group>"; };
+		294927D824D0C8BE006E39EF /* CustomHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeader.swift; sourceTree = "<group>"; };
+		294927DA24D0C8C5006E39EF /* CustomHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomHeader.xib; sourceTree = "<group>"; };
 		294CC41B24C9FD980092F478 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		296CBB6D24CB7AC3002277D0 /* InputGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputGroup.swift; sourceTree = "<group>"; };
 		296CBB6E24CB7AC3002277D0 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
@@ -271,6 +275,23 @@
 				2933A89524D0B11F003E79F7 /* OptionType.swift */,
 			);
 			path = Options;
+			sourceTree = "<group>";
+		};
+		294927D624D0C89D006E39EF /* UIViews */ = {
+			isa = PBXGroup;
+			children = (
+				294927D724D0C8A6006E39EF /* Custom Header */,
+			);
+			path = UIViews;
+			sourceTree = "<group>";
+		};
+		294927D724D0C8A6006E39EF /* Custom Header */ = {
+			isa = PBXGroup;
+			children = (
+				294927D824D0C8BE006E39EF /* CustomHeader.swift */,
+				294927DA24D0C8C5006E39EF /* CustomHeader.xib */,
+			);
+			path = "Custom Header";
 			sourceTree = "<group>";
 		};
 		296CBB6C24CB7AC3002277D0 /* Form */ = {
@@ -581,6 +602,7 @@
 			children = (
 				29C88BE124C9FDF3009513BD /* Main.storyboard */,
 				29A8325224CB4EEC00208F5F /* BaseViewController.swift */,
+				294927D624D0C89D006E39EF /* UIViews */,
 				29A8324F24CB4AB600208F5F /* Activity Screen */,
 				29B44E8C24CA1C7E0029E518 /* Launch Screen */,
 			);
@@ -736,6 +758,7 @@
 				296CBBB324CB7AC3002277D0 /* TimeInputCollectionViewCell.xib in Resources */,
 				296CBBA724CB7AC3002277D0 /* DropdownCollectionViewCell.xib in Resources */,
 				296CBBB224CB7AC3002277D0 /* SpacerCollectionViewCell.xib in Resources */,
+				294927DB24D0C8C6006E39EF /* CustomHeader.xib in Resources */,
 				296CBBA524CB7AC3002277D0 /* ViewFieldCollectionViewCell.xib in Resources */,
 				29B577D924C9FBF500AB8365 /* Assets.xcassets in Resources */,
 				296CBBBC24CB7AC3002277D0 /* IntegerInputCollectionViewCell.xib in Resources */,
@@ -901,6 +924,7 @@
 				296CBBA324CB7AC3002277D0 /* InputGroup.swift in Sources */,
 				2933A88024D08E52003E79F7 /* CodeObject.swift in Sources */,
 				296CBBBA24CB7AC3002277D0 /* InputItem.swift in Sources */,
+				294927D924D0C8BE006E39EF /* CustomHeader.swift in Sources */,
 				296CBBA624CB7AC3002277D0 /* ViewFieldCollectionViewCell.swift in Sources */,
 				296CBBC924CB7B67002277D0 /* Theme2.swift in Sources */,
 				296CBBB124CB7AC3002277D0 /* SpacerCollectionViewCell.swift in Sources */,
