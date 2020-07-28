@@ -12,7 +12,7 @@ class CustomHeader: UIView {
     @IBOutlet weak var leftField: UILabel!
     @IBOutlet weak var rightField: UILabel!
     
-    func setup(left: String, right: String, color: UIColor, textColor: UIColor? = UIColor.bodyText) {
+    func setup(left: String, right: String, color: UIColor, textColor: UIColor? = .black) {
         leftField.text = left
         rightField.text = right
         rightField.font = UIFont.bold(size: 14)

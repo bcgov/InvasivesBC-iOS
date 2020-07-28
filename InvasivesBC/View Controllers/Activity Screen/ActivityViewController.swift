@@ -52,7 +52,8 @@ class ActivityViewController: BaseViewController {
     }
     
     func style() {
-        tableView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.3)
+        view.backgroundColor = UIColor(red: 242, green: 242, blue: 242, alpha: 1)
+        tableView.backgroundColor = .clear
         closeButton.tintColor = UIColor.primary
         titleLabel.font = UIFont.semibold(size: 22)
         titleLabel.textColor = UIColor.primary
@@ -89,7 +90,7 @@ extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
         let customHeader: CustomHeader = UIView.fromNib()
         switch section {
         case 0:
-            customHeader.setup(left: "SessionDefault", right: "", color: .systemPink, textColor: .white)
+            customHeader.setup(left: "SessionDefault", right: "", color: .systemRed, textColor: .white)
         case 1:
             customHeader.setup(left: "Plant", right: "Invasive/Terrestrial", color: .systemGreen)
         case 2:
