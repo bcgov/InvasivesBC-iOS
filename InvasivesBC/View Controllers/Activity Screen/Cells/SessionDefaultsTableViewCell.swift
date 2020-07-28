@@ -25,6 +25,7 @@ class SessionDefaultsTableViewCell: UITableViewCell {
         let inputGroup = InputGroupView()
         inputGroup.initialize(with: getFields(), delegate: delegate, in: container)
         heightConstraint.constant = InputGroupView.estimateContentHeight(for: getFields())
+        style()
     }
     
     private func removeListeners() {
@@ -39,6 +40,12 @@ class SessionDefaultsTableViewCell: UITableViewCell {
     @objc func inputItemValueChanged(notification: Notification) {
         guard let item: InputItem = notification.object as? InputItem else {return}
         print(item.value.get(type: item.type) as Any)
+    }
+    
+    
+    func style() {
+        container.backgroundColor = .clear
+        self.backgroundColor = .clear
     }
     
     func getFields() -> [InputItem] {
