@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CAr-x1-tIX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="5Tb-BW-Pv9">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -208,19 +208,38 @@
             </objects>
             <point key="canvasLocation" x="506" y="-406"/>
         </scene>
+        <!--Entry View Controller-->
+        <scene sceneID="Bs2-oV-bMZ">
+            <objects>
+                <viewController id="5Tb-BW-Pv9" customClass="EntryViewController" customModule="InvasivesBC" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aFF-Cw-lIc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="6pP-cR-O2q"/>
+                    </view>
+                    <connections>
+                        <segue destination="CAr-x1-tIX" kind="show" identifier="performLogin" id="GIR-Ba-qfd"/>
+                        <segue destination="QAe-Rq-yJS" kind="show" identifier="enterApp" id="zkq-a2-6sz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vvU-TR-TwE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2647" y="-706"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="NiH-2C-pX8">
             <objects>
-                <viewController id="CAr-x1-tIX" customClass="LoginViewController" customModule="InvasivesBC" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController wantsFullScreenLayout="YES" id="CAr-x1-tIX" customClass="LoginViewController" customModule="InvasivesBC" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Tph-a5-NnR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GaM-NV-iGX">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eoe-pF-TLH">
-                                <rect key="frame" x="8" y="113.5" width="359" height="440"/>
+                                <rect key="frame" x="8" y="103.5" width="359" height="440"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invasives BC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qxn-Ej-IgG">
                                         <rect key="frame" x="8" y="228" width="343" height="41"/>
@@ -306,19 +325,19 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pwp-mw-F0o"/>
                     </view>
+                    <navigationItem key="navigationItem" id="MZg-VJ-axR"/>
                     <connections>
                         <outlet property="container" destination="eoe-pF-TLH" id="m3E-Ni-qB3"/>
-                        <segue destination="QAe-Rq-yJS" kind="show" identifier="enterApp" id="n7n-oX-nYA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HPK-kT-hsk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3002.4000000000001" y="65.217391304347828"/>
+            <point key="canvasLocation" x="-3412" y="81"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="jkg-5A-kdA">
             <objects>
-                <tabBarController id="QAe-Rq-yJS" sceneMemberID="viewController">
+                <tabBarController wantsFullScreenLayout="YES" id="QAe-Rq-yJS" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="HT9-I6-4xG"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="agi-bt-Dqr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>

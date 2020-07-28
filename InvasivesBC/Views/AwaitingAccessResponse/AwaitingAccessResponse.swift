@@ -36,9 +36,10 @@ class AwaitingAccessResponse: UIView, Theme {
     
     // MARK: Style
     func style() {
-        styleAppTitle(label: headerLabel)
+        headerLabel.text = "Invasives BC"
+        headerLabel.font = UIFont.bold(size: 30)
         styleSubHeader(label: messageLabel)
-        headerLabel.textColor = Colors.primary
-        messageLabel.textColor = Colors.primary
+        headerLabel.textColor = UIColor.primary
+        messageLabel.textColor = UIColor.primary
     }
 }

@@ -314,7 +314,7 @@ class TileService {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.timeoutInterval = 3
-        AF.request(request).responseData(queue: queue) { (response) in
+        Alamofire.request(request).responseData(queue: queue) { (response) in
             switch response.result {
             case .success:
                 if let data = response.data {

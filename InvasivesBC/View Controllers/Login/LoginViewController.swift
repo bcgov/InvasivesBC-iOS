@@ -17,9 +17,34 @@ class LoginViewController: BaseViewController {
     }
     
     @IBAction func loginWithBCeIDAction(_ sender: Any) {
+        AuthenticationService.refreshEnviormentConstants(withIdpHint: "bceid")
+        SettingsService.shared.setAuth(type: .BCeID)
+        AuthenticationService.authenticate { (success) in
+            if (!success) {
+                AuthenticationService.logout()
+                return
+            }
+            self.afterLogin()
+        }
+        
+        
     }
     
     @IBAction func loginWithIdirAction(_ sender: Any) {
+        AuthenticationService.refreshEnviormentConstants(withIdpHint: "idir")
+        SettingsService.shared.setAuth(type: .Idir)
+        AuthenticationService.authenticate { (success) in
+            if (!success) {
+                AuthenticationService.logout()
+                return
+            }
+            self.afterLogin()
+        }
+    }
+    
+    func afterLogin() {
+        SettingsService.shared.setUserAuthId()
+        self.dismiss(animated: true, completion: nil)
     }
     
     func style() {

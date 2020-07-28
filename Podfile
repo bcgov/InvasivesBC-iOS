@@ -8,10 +8,12 @@ target 'InvasivesBC' do
   # Pods for InvasivesBC
   pod 'IQKeyboardManagerSwift'
   pod 'ReachabilitySwift'
-  pod 'Alamofire'
+  pod 'Alamofire', '~> 4.7.3'
   pod 'SwiftyJSON'
   pod 'Extended'
   pod 'RealmSwift'
+  # Keycloack login
+  pod 'SingleSignOn', :git => 'https://github.com/bcgov/mobile-authentication-ios.git', :tag => 'v1.0.6'
 
   target 'InvasivesBCTests' do
     inherit! :search_paths
