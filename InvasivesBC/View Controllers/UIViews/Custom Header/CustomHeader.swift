@@ -12,11 +12,13 @@ class CustomHeader: UIView {
     @IBOutlet weak var leftField: UILabel!
     @IBOutlet weak var rightField: UILabel!
     
-    func setup(left: String, right: String, color: UIColor) {
+    func setup(left: String, right: String, color: UIColor, textColor: UIColor? = UIColor.bodyText) {
         leftField.text = left
         rightField.text = right
         rightField.font = UIFont.bold(size: 14)
         leftField.font = UIFont.regular(size: 14)
+        rightField.textColor = textColor
+        leftField.textColor = textColor
         self.backgroundColor = color
         rightField.isHidden = right.isEmpty
     }

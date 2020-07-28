@@ -89,7 +89,7 @@ extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
         let customHeader: CustomHeader = UIView.fromNib()
         switch section {
         case 0:
-            customHeader.setup(left: "SessionDefault", right: "", color: .systemPink)
+            customHeader.setup(left: "SessionDefault", right: "", color: .systemPink, textColor: .white)
         case 1:
             customHeader.setup(left: "Plant", right: "Invasive/Terrestrial", color: .systemGreen)
         case 2:
