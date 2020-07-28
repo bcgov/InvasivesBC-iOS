@@ -9,15 +9,49 @@
 import UIKit
 
 class SessionDefaultsTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var switchfield: UISwitch!
-    @IBOutlet weak var fieldOneHeader: UILabel!
     
-    @IBAction func fieldOneChanged(_ sender: Any) {
+    
+    func setup() {
+        let inputGroup = InputGroupView()
+//        inputGroup.initialize(with: getFields(), delegate: <#T##InputDelegate#>, in: <#T##UIView#>)
+    }
+    
+    
+    func getFields() -> [InputItem] {
+        var items: [InputItem] = []
         
+        let firstName = TextInput(
+            key: "firstName",
+            header: "First Name",
+            editable: true,
+            width: .Half
+        )
+        items.append(firstName)
+        
+        let lastName = TextInput(
+            key: "lastName",
+            header: "Last Name",
+            editable: true,
+            width: .Half
+        )
+        items.append(lastName)
+        
+        let jurisdiction = DropdownInput(
+            key: "jurisdiction",
+            header: "Jurisdiction",
+            editable: true,
+            width: .Half
+        )
+        items.append(jurisdiction)
+        
+        let agency = DropdownInput(
+            key: "agency",
+            header: "Agency",
+            editable: true,
+            width: .Half
+        )
+        items.append(agency)
+        
+        return items
     }
-    
-    @IBAction func switchChanged(_ sender: Any) {
-    }
-    
 }
