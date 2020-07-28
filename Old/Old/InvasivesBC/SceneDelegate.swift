@@ -2,12 +2,13 @@
 //  SceneDelegate.swift
 //  InvasivesBC
 //
-//  Created by Amir Shayegh on 2020-07-23.
-//  Copyright © 2020 Government of British Columbia. All rights reserved.
+//  Created by Amir Shayegh on 2020-04-03.
+//  Copyright © 2020 Amir Shayegh. All rights reserved.
 //
 
 import UIKit
 
+@available(iOS 13.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?

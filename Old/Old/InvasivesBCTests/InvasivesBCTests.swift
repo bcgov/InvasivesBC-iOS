@@ -2,8 +2,8 @@
 //  InvasivesBCTests.swift
 //  InvasivesBCTests
 //
-//  Created by Amir Shayegh on 2020-07-23.
-//  Copyright © 2020 Government of British Columbia. All rights reserved.
+//  Created by Amir Shayegh on 2020-04-03.
+//  Copyright © 2020 Amir Shayegh. All rights reserved.
 //
 
 import XCTest
@@ -11,13 +11,6 @@ import XCTest
 
 class InvasivesBCTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
 
     func testExample() throws {
         // This is an example of a functional test case.
