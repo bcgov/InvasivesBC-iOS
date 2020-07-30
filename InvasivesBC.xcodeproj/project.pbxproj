@@ -615,12 +615,12 @@
 			children = (
 				29B577CF24C9FBF300AB8365 /* AppDelegate.swift */,
 				29B577D124C9FBF300AB8365 /* SceneDelegate.swift */,
+				29B577FF24C9FCDE00AB8365 /* View Controllers */,
 				29BE868A24D0E8AA007D1A02 /* Views */,
 				29BE867624D0E733007D1A02 /* DataModels */,
 				29BE865A24D0D931007D1A02 /* Services */,
 				29B44E8F24CA1F150029E518 /* Utilities */,
 				29B44E8924CA0E550029E518 /* Constants */,
-				29B577FF24C9FCDE00AB8365 /* View Controllers */,
 				29B577D824C9FBF500AB8365 /* Assets.xcassets */,
 				29B577DA24C9FBF500AB8365 /* LaunchScreen.storyboard */,
 				29B577DD24C9FBF500AB8365 /* Info.plist */,

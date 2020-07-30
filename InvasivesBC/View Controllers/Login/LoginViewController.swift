@@ -26,8 +26,6 @@ class LoginViewController: BaseViewController {
             }
             self.afterLogin()
         }
-        
-        
     }
     
     @IBAction func loginWithIdirAction(_ sender: Any) {
