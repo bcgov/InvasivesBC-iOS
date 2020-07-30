@@ -13,6 +13,7 @@ class EntryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        AuthenticationService.logout()
     }
     
     override func viewDidAppear(_ animated: Bool) {
