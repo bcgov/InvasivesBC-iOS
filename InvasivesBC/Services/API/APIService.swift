@@ -44,17 +44,24 @@ class APIService: APIRequest {
             guard response.result.description == "SUCCESS", let value = response.result.value else {
                 return completion(nil)
             }
-            let json = JSON(value)
-            if let error = json["error"].string {
-                print("GET call rejected:")
-                print("Endpoint: \(endpoint)")
-                print("Error: \(error)")
-                return completion(nil)
-            } else {
-                // Success
-                return completion(json)
-            }
             
+            do {
+                guard let json = try JSONSerialization.jsonObject(with: value, options: []) as? [String: Any] else {
+                    return completion(nil)
+                }
+                if let error = json["error"] as? String {
+                    print("GET call rejected:")
+                    print("Endpoint: \(endpoint)")
+                    print("Error: \(error)")
+                    return completion(nil)
+                } else {
+                    // Success
+                    return completion(json)
+                }
+                
+            } catch {
+                return completion(nil)
+            }
         }
     }
     

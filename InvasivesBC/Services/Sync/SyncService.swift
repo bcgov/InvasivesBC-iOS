@@ -41,7 +41,16 @@ class SyncService {
             return false
         }
         // TODO: - Define initial sync criteria
-        return true
+        var should: Bool = false
+        // 1) If code tables are empty, initial sync is needed
+        if CodeTableService.shared.getAll().isEmpty {
+            should = true
+        }
+        // 2) // Other criteria
+        
+        
+        // Finally return
+        return should
     }
     
     // MARK: Initial Sync
@@ -50,6 +59,26 @@ class SyncService {
     /// - Parameter completion: Boolean indidication if initial sync was successful
     public func performInitialSync(completion: @escaping(_ success: Bool) -> Void) {
         // TODO: -
-        return completion(true)
+        var hadErrors: Bool = false
+        print("Performing initial sync...")
+        DispatchQueue.global(qos: .background).async {
+
+            let dispatchGroup = DispatchGroup()
+            
+            dispatchGroup.enter()
+            print("Downloading code tables")
+            CodeTableService.shared.download { (success) in
+                print("Downloaded code tables")
+                if !success {
+                    hadErrors = true
+                }
+                dispatchGroup.leave()
+            }
+            
+            dispatchGroup.notify(queue: .main) {
+                print("Initial Sync Executed.")
+                return completion(!hadErrors)
+            }
+        }
     }
 }

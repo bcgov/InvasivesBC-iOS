@@ -18,8 +18,9 @@ struct RealmRequests {
             try realm.write {
                 realm.add(object)
             }
-        } catch _ {
-           
+        } catch let error as NSError {
+            print("Error while saving realm object")
+            print(error)
         }
     }
     
@@ -29,8 +30,9 @@ struct RealmRequests {
             try realm.write {
                 realm.add(object, update: .modified)
             }
-        } catch _ {
-            
+        } catch let error as NSError {
+            print("Error while upadating realm object")
+            print(error)
         }
     }
 
@@ -40,8 +42,9 @@ struct RealmRequests {
             try realm.write {
                 realm.delete(object)
             }
-        } catch _ {
-            
+        } catch let error as NSError {
+            print("Error while deleting realm object")
+            print(error)
         }
     }
 
@@ -50,8 +53,9 @@ struct RealmRequests {
             let realm = try Realm()
             let objs = realm.objects(object).map { $0 }
             return Array(objs)
-        } catch _ {
-            
+        } catch let error as NSError {
+            print("Error while getting realm object")
+            print(error)
         }
         return nil
     }

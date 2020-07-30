@@ -51,11 +51,13 @@ class SessionDefaultsTableViewCell: UITableViewCell {
         )
         items.append(lastName)
         
+        
         let jurisdiction = DropdownInput(
             key: "jurisdiction",
             header: "Jurisdiction",
             editable: true,
-            width: .Half
+            width: .Half,
+            dropdownItems: CodeTableService.shared.getDropdowns(type: "JurisdictionCode")
         )
         items.append(jurisdiction)
         
@@ -63,7 +65,8 @@ class SessionDefaultsTableViewCell: UITableViewCell {
             key: "agency",
             header: "Agency",
             editable: true,
-            width: .Half
+            width: .Half,
+            dropdownItems: CodeTableService.shared.getDropdowns(type: "SpeciesAgencyCode")
         )
         items.append(agency)
         

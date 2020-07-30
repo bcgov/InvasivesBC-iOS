@@ -107,6 +107,7 @@
 		29BE868E24D0E8AA007D1A02 /* AwaitingAccessResponse.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29BE868C24D0E8AA007D1A02 /* AwaitingAccessResponse.xib */; };
 		29BE868F24D0E8AA007D1A02 /* AwaitingAccessResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE868D24D0E8AA007D1A02 /* AwaitingAccessResponse.swift */; };
 		29BE869124D0E8E1007D1A02 /* CodeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE869024D0E8E1007D1A02 /* CodeObject.swift */; };
+		29C6DE0324D35851004E65D9 /* CodeTableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C6DE0224D35851004E65D9 /* CodeTableService.swift */; };
 		29C88BE224C9FDF3009513BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C88BE124C9FDF3009513BD /* Main.storyboard */; };
 		684D1A9C2B14F4D5B230289B /* Pods_InvasivesBC_InvasivesBCUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CB9DF16CD6D35B2F8736EE /* Pods_InvasivesBC_InvasivesBCUITests.framework */; };
 		8D02A4B5754611E8238D4307 /* Pods_InvasivesBCTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD71B465E1AAB7B79DA86297 /* Pods_InvasivesBCTests.framework */; };
@@ -240,6 +241,7 @@
 		29BE868C24D0E8AA007D1A02 /* AwaitingAccessResponse.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AwaitingAccessResponse.xib; sourceTree = "<group>"; };
 		29BE868D24D0E8AA007D1A02 /* AwaitingAccessResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AwaitingAccessResponse.swift; sourceTree = "<group>"; };
 		29BE869024D0E8E1007D1A02 /* CodeObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodeObject.swift; path = InvasivesBC/DataModels/CodeObject.swift; sourceTree = SOURCE_ROOT; };
+		29C6DE0224D35851004E65D9 /* CodeTableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeTableService.swift; sourceTree = "<group>"; };
 		29C88BE124C9FDF3009513BD /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		31C47DC21598612ECAEF3DB2 /* Pods-InvasivesBC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBC.release.xcconfig"; path = "Target Support Files/Pods-InvasivesBC/Pods-InvasivesBC.release.xcconfig"; sourceTree = "<group>"; };
 		594FC44239AAC7ECB81AAEBD /* Pods-InvasivesBC-InvasivesBCUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBC-InvasivesBCUITests.release.xcconfig"; path = "Target Support Files/Pods-InvasivesBC-InvasivesBCUITests/Pods-InvasivesBC-InvasivesBCUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -615,6 +617,7 @@
 			children = (
 				29B577CF24C9FBF300AB8365 /* AppDelegate.swift */,
 				29B577D124C9FBF300AB8365 /* SceneDelegate.swift */,
+				294927D624D0C89D006E39EF /* UIViews */,
 				29B577FF24C9FCDE00AB8365 /* View Controllers */,
 				29BE868A24D0E8AA007D1A02 /* Views */,
 				29BE867624D0E733007D1A02 /* DataModels */,
@@ -653,9 +656,8 @@
 				29BE866B24D0DE56007D1A02 /* EntryViewController.swift */,
 				29A8325224CB4EEC00208F5F /* BaseViewController.swift */,
 				294927DE24D0D735006E39EF /* Login */,
-				294927D624D0C89D006E39EF /* UIViews */,
-				29A8324F24CB4AB600208F5F /* Activity Screen */,
 				29B44E8C24CA1C7E0029E518 /* Launch Screen */,
+				29A8324F24CB4AB600208F5F /* Activity Screen */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -663,6 +665,7 @@
 		29BE865A24D0D931007D1A02 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				29C6DE0124D35840004E65D9 /* Code Tables */,
 				29BE868524D0E776007D1A02 /* API */,
 				29BE867324D0E6C8007D1A02 /* Sync */,
 				29BE867024D0DF52007D1A02 /* Access */,
@@ -769,6 +772,14 @@
 				29BE868D24D0E8AA007D1A02 /* AwaitingAccessResponse.swift */,
 			);
 			path = AwaitingAccessResponse;
+			sourceTree = "<group>";
+		};
+		29C6DE0124D35840004E65D9 /* Code Tables */ = {
+			isa = PBXGroup;
+			children = (
+				29C6DE0224D35851004E65D9 /* CodeTableService.swift */,
+			);
+			path = "Code Tables";
 			sourceTree = "<group>";
 		};
 		C6DA725B0DDBCAA220073DC5 /* Frameworks */ = {
@@ -1079,6 +1090,7 @@
 				29BE867224D0DF52007D1A02 /* AccessService.swift in Sources */,
 				29BE868424D0E733007D1A02 /* UserExtension.swift in Sources */,
 				29BE865F24D0DA1A007D1A02 /* JWTDecoder.swift in Sources */,
+				29C6DE0324D35851004E65D9 /* CodeTableService.swift in Sources */,
 				29BE869124D0E8E1007D1A02 /* CodeObject.swift in Sources */,
 				296CBBC424CB7AC3002277D0 /* RadioBooleanCollectionViewCell.swift in Sources */,
 				299F842924CA32EA009A13D9 /* Colors.swift in Sources */,
