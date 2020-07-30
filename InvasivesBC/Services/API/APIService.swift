@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import SwiftyJSON
 
 class APIService: APIRequest {
     static func headers() -> [String : String] {
@@ -78,21 +77,29 @@ class APIService: APIRequest {
         }
         
         // Request
-        _ = Alamofire.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers()).responseJSON { response in
+        _ = Alamofire.request(endpoint, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers()).responseData { response in
             completed = true
             if timedOut {return}
             guard response.result.description == "SUCCESS", let value = response.result.value else {
                 return completion(nil)
             }
-            let json = JSON(value)
-            if let error = json["error"].string {
-                print("POST call rejected:")
-                print("Endpoint: \(endpoint)")
-                print("Error: \(error)")
+            
+            do {
+                guard let json = try JSONSerialization.jsonObject(with: value, options: []) as? [String: Any] else {
+                    return completion(nil)
+                }
+                if let error = json["error"] as? String {
+                    print("GET call rejected:")
+                    print("Endpoint: \(endpoint)")
+                    print("Error: \(error)")
+                    return completion(nil)
+                } else {
+                    // Success
+                    return completion(json)
+                }
+                
+            } catch {
                 return completion(nil)
-            } else {
-                // Success
-                return completion(json)
             }
         }
     }

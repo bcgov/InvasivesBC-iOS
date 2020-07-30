@@ -8,7 +8,6 @@
 
 import Foundation
 import Reachability
-import SwiftyJSON
 
 class AccessService {
     // Superuser
@@ -115,14 +114,13 @@ class AccessService {
             "requestNote": "Mobile Access"
         ]
         APIService.post(endpoint: url, params: body) { (_response) in
-            guard let response = _response as? JSON else {return completion(false)}
+            guard let response = _response as? [String: Any] else {return completion(false)}
             print(response)
-            let errors = response["errors"].arrayValue
-            if errors.count > 0 {
+            
+            if let errors = response["errors"] as? [String: Any], errors.count > 0 {
                 return completion(false)
             } else {
-                let data = response["data"].dictionaryValue
-                if (data["requestedAccessCode"]?.dictionaryValue) != nil {
+                if let data = response["data"] as? [String: Any], let requestCode = data["requestedAccessCode"] as? [String: Any] {
                     return completion(true)
                 }
             }

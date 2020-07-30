@@ -9,7 +9,6 @@ target 'InvasivesBC' do
   pod 'IQKeyboardManagerSwift'
   pod 'ReachabilitySwift'
   pod 'Alamofire', '~> 4.7.3'
-  pod 'SwiftyJSON'
   pod 'Extended'
   pod 'RealmSwift'
   # Keycloack login
