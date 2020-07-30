@@ -22,11 +22,17 @@ class ActivityViewController: BaseViewController {
         setUpTable()
         style()
         addListeners()
+        tableView.alpha = 0
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tableView.reloadData()
+        self.view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.2) {
+            self.tableView.alpha = 1
+            self.view.layoutIfNeeded()
+        }
     }
     
     deinit {
