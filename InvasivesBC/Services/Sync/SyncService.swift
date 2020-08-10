@@ -22,8 +22,6 @@ class SyncService {
     
     // private let syncView: SyncView = UIView.fromNib()
     
-    
-    
     // MARK: Criteria
     
     /// Used for checking critieria for initial sync
