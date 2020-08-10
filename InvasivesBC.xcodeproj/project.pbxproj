@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E42B4DE24E1ED07006BACFD /* DefineGeometryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E42B4DD24E1ED07006BACFD /* DefineGeometryViewController.swift */; };
 		1EAEFF5124E1BF3C00CAAD7A /* ToolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAEFF5024E1BF3C00CAAD7A /* ToolsViewController.swift */; };
 		1EAEFF5324E1BF4600CAAD7A /* LayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAEFF5224E1BF4600CAAD7A /* LayersViewController.swift */; };
 		1EAEFF5524E1BF5500CAAD7A /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAEFF5424E1BF5500CAAD7A /* StatusViewController.swift */; };
@@ -136,6 +137,7 @@
 
 /* Begin PBXFileReference section */
 		1BB3CBAFC6EA79517990E6A6 /* Pods_InvasivesBC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InvasivesBC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E42B4DD24E1ED07006BACFD /* DefineGeometryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefineGeometryViewController.swift; sourceTree = "<group>"; };
 		1EAEFF5024E1BF3C00CAAD7A /* ToolsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewController.swift; sourceTree = "<group>"; };
 		1EAEFF5224E1BF4600CAAD7A /* LayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersViewController.swift; sourceTree = "<group>"; };
 		1EAEFF5424E1BF5500CAAD7A /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
@@ -286,6 +288,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E42B4DC24E1EC66006BACFD /* Define Geometry Screen */ = {
+			isa = PBXGroup;
+			children = (
+				1E42B4DD24E1ED07006BACFD /* DefineGeometryViewController.swift */,
+			);
+			path = "Define Geometry Screen";
+			sourceTree = "<group>";
+		};
 		1EAEFF4F24E1BF1D00CAAD7A /* Tools Screen */ = {
 			isa = PBXGroup;
 			children = (
@@ -691,6 +701,7 @@
 				1EAEFF4F24E1BF1D00CAAD7A /* Tools Screen */,
 				1EB9D2AB24E1BA9600BDC6E1 /* Layers Screen */,
 				1EB9D2A924E1BA8400BDC6E1 /* Status Screen */,
+				1E42B4DC24E1EC66006BACFD /* Define Geometry Screen */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1169,6 +1180,7 @@
 				299F842B24CA32F5009A13D9 /* Fonts.swift in Sources */,
 				29BE867524D0E6D1007D1A02 /* SyncService.swift in Sources */,
 				2933A87D24D08DDB003E79F7 /* Notifications.swift in Sources */,
+				1E42B4DE24E1ED07006BACFD /* DefineGeometryViewController.swift in Sources */,
 				296CBBAE24CB7AC3002277D0 /* InputTitleCollectionViewCell.swift in Sources */,
 				296CBBAB24CB7AC3002277D0 /* TextAreaInputCollectionViewCell.swift in Sources */,
 				29BE866F24D0DF49007D1A02 /* UserService.swift in Sources */,
