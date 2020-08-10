@@ -45,7 +45,7 @@ class SelectGeometryTypeTableViewCell: UITableViewCell, Theme {
         case .Polygon:
             button.setTitle("Polygon", for: .normal)
             iconContainer.image = UIImage(named: "Polygon")
-            label.text = "Define 3 or more points along the boundary edge then return to your start point to close the polygon".
+            label.text = "Define 3 or more points along the boundary edge then return to your start point to close the polygon."
         }
     }
     
