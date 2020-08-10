@@ -63,6 +63,8 @@ class LaunchViewController: BaseViewController {
     
     // MARK: Style
     func style() {
+        activityButton.accessibilityLabel = "activity"
+        activityButton.accessibilityIdentifier = "activity"
         styleOnMap(button: layersButton)
         styleOnMap(button: toolsButton)
         styleOnMap(button: activityButton)
