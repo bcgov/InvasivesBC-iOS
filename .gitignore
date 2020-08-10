@@ -1,5 +1,5 @@
 # Created by https://www.gitignore.io/api/xcode,swift
-Old/
+
 # Ignore user workspace data
 ipad.xcworkspace/xcuserdata/
 ipad.xcworkspace/xcshareddata/
