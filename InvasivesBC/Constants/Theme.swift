@@ -20,6 +20,16 @@ extension Theme {
         titleLabel.font = .semibold(size: 17)
         titleLabel.adjustsFontSizeToFitWidth = true
     }
+    
+    func styleNavigation(title: UILabel, divider: UIView, buttons: [UIButton]) {
+        title.font = UIFont.semibold(size: 22)
+        title.textColor = UIColor.primary
+        divider.backgroundColor = UIColor.primary
+        
+        for button in buttons {
+            button.tintColor = UIColor.primary
+        }
+    }
 }
 
 extension Theme {

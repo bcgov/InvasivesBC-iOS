@@ -59,13 +59,9 @@ class ActivityViewController: BaseViewController {
     
     func style() {
         view.backgroundColor = UIColor(red: 242, green: 242, blue: 242, alpha: 1)
+        styleNavigation(title: titleLabel, divider: divider, buttons: [closeButton])
         tableView.backgroundColor = .clear
-        closeButton.tintColor = UIColor.primary
-        titleLabel.font = UIFont.semibold(size: 22)
-        titleLabel.textColor = UIColor.primary
-        divider.backgroundColor = UIColor.primary
     }
-    
 }
 
 extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
@@ -96,11 +92,11 @@ extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
         let customHeader: CustomHeader = UIView.fromNib()
         switch section {
         case 0:
-            customHeader.setup(left: "SessionDefault", right: "", color: .systemRed, textColor: .white)
+            customHeader.setup(left: "Session Default", right: "", color: UIColor.systemRed.withAlphaComponent(0.5))
         case 1:
-            customHeader.setup(left: "Plant", right: "Invasive/Terrestrial", color: .systemGreen)
+            customHeader.setup(left: "Plant", right: "Invasive/Terrestrial", color: UIColor.systemGreen.withAlphaComponent(0.5))
         case 2:
-            customHeader.setup(left: "Aquatic", right: "Invasive/Terrestrial", color:.systemGreen)
+            customHeader.setup(left: "Animal", right: "Invasive/Terrestrial", color: UIColor.systemGreen.withAlphaComponent(0.5))
         default:
             customHeader.setup(left: "", right: "", color: .systemGreen)
         }

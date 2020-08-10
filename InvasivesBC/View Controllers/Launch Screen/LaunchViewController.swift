@@ -11,6 +11,9 @@ import MapKit
 
 private enum Segues: String {
     case showActivity = "showActivity"
+    case showTools = "showTools"
+    case showStatus = "showStatus"
+    case showLayers = "showLayers"
 }
 
 class LaunchViewController: BaseViewController {
@@ -36,10 +39,11 @@ class LaunchViewController: BaseViewController {
     }
     
     @IBAction func layersAction(_ sender: Any) {
-        print("layers clicked")
+        performSegue(withIdentifier: Segues.showLayers.rawValue, sender: self)
     }
     
     @IBAction func toolsAction(_ sender: Any) {
+        performSegue(withIdentifier: Segues.showTools.rawValue, sender: self)
     }
     
     @IBAction func activityAction(_ sender: Any) {
@@ -47,7 +51,7 @@ class LaunchViewController: BaseViewController {
     }
     
     @IBAction func statusAction(_ sender: Any) {
-        
+        performSegue(withIdentifier: Segues.showStatus.rawValue, sender: self)
     }
     
     @IBAction func locationAction(_ sender: Any) {
@@ -59,6 +63,8 @@ class LaunchViewController: BaseViewController {
     
     // MARK: Style
     func style() {
+        activityButton.accessibilityLabel = "activity"
+        activityButton.accessibilityIdentifier = "activity"
         styleOnMap(button: layersButton)
         styleOnMap(button: toolsButton)
         styleOnMap(button: activityButton)

@@ -24,12 +24,51 @@ class InvasivesBCUITests: XCTestCase {
     }
 
     func testExample() throws {
+        
+    }
+    
+    
+    /// Testing Activity Screen
+    /// NOTE: We are not testing the login here! this test assumes user is authenticated
+    /// - Throws:
+    func testActivity() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        
+        // Screen reference to click out of text fields
+        let sessionDefaultTable = app/*@START_MENU_TOKEN@*/.tables.containing(.other, identifier:"Session Default").element/*[[".tables.containing(.staticText, identifier:\"Animal\").element",".tables.containing(.staticText, identifier:\"Invasive\/Terrestrial\").element",".tables.containing(.staticText, identifier:\"Plant\").element",".tables.containing(.other, identifier:\"Animal\").element",".tables.containing(.other, identifier:\"Plant\").element",".tables.containing(.other, identifier:\"Session Default\").element"],[[[-1,5],[-1,4],[-1,3],[-1,2],[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        
+        // Open Activity
+        app.buttons["activity"].tap()
+        let tablesQuery = app.tables
+        
+        
+        // Type First Name
+        let firstNameField = tablesQuery/*@START_MENU_TOKEN@*/.textFields["First Name"]/*[[".cells.textFields[\"First Name\"]",".textFields[\"First Name\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        firstNameField.tap()
+        firstNameField.typeText("test")
+        sessionDefaultTable.tap()
+        
+        // Type Last Name
+        let lastNameField = tablesQuery/*@START_MENU_TOKEN@*/.textFields["Last Name"]/*[[".cells.textFields[\"Last Name\"]",".textFields[\"Last Name\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        lastNameField.tap()
+        lastNameField.typeText("test")
+        
+        sessionDefaultTable.tap()
+        
+        // Dropdowns
+        let dropdown = app.popovers.tables
+        // Agency
+        tablesQuery/*@START_MENU_TOKEN@*/.textFields["agency"]/*[[".cells.textFields[\"agency\"]",".textFields[\"agency\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        dropdown/*@START_MENU_TOKEN@*/.staticTexts["Department of National Defense"]/*[[".cells.staticTexts[\"Department of National Defense\"]",".staticTexts[\"Department of National Defense\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        // Jurisdiction
+        tablesQuery.textFields["jurisdiction"].tap()
+        dropdown/*@START_MENU_TOKEN@*/.staticTexts["Provincial Parks"]/*[[".cells.staticTexts[\"Provincial Parks\"]",".staticTexts[\"Provincial Parks\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        // Close
+        app.buttons["xmark.circle"].tap()
     }
 
     func testLaunchPerformance() throws {

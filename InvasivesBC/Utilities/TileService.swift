@@ -25,7 +25,7 @@ class TileService {
     public static let shared = TileService()
     
     // MARK: Public variables
-    var tileProvider: TileProvider = .GoogleSatellite
+    var tileProvider: TileProvider = .BCGOV
     var cacheVisitedTiles: Bool = false
 
     // MARK: Private variables
