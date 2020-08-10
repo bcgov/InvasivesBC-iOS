@@ -232,15 +232,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nll-aa-LjQ">
-                                <rect key="frame" x="8" y="72" width="359" height="142.5"/>
-                                <string key="text">While the invasives plant/animal are focused on 4 primary geometry types, the TAHSIS group may be considering 8-12 additional geometries including lake boundaries, drone tracks, grids etc so please guide your development methods open to being able to extend this functional set.</string>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nll-aa-LjQ">
+                                <rect key="frame" x="8" y="72" width="359" height="122"/>
+                                <string key="text">The creation of an observation or treatment requires the construction of a geometry (shape) that outlines the visible area of the investation or treatment area. Please use 1 of the 4 options to best define what you see on the ground.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vjc-Go-fgp">
-                                <rect key="frame" x="8" y="230.5" width="359" height="408.5"/>
+                                <rect key="frame" x="8" y="210" width="359" height="429"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                         </subviews>

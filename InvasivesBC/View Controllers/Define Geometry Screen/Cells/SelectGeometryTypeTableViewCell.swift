@@ -33,19 +33,19 @@ class SelectGeometryTypeTableViewCell: UITableViewCell, Theme {
         case .Point:
             button.setTitle("Point Observation", for: .normal)
             iconContainer.image = UIImage(named: "PointObservation")
-            label.text = "As any mobile data editor user, I want to be directed to the \"Define geometry\" page once I've selected I want to create an observation or treatment"
+            label.text = "Click on the approximate centre of your area and extend the radius feature to capture an area up to 100 sq meters."
         case .TwoPoint:
             button.setTitle("2 Point Box", for: .normal)
             iconContainer.image = UIImage(named: "2Point")
-            label.text = "As any mobile data editor user, I want to be directed to the \"Define geometry\" page once I've selected I want to create an observation or treatment"
+            label.text = "Click on the approximate centre of your area then specify a height length and width value."
         case .WayPoint:
             button.setTitle("Waypoint Path", for: .normal)
             iconContainer.image = UIImage(named: "waypoint")
-            label.text = "As any mobile data editor user, I want to be directed to the \"Define geometry\" page once I've selected I want to create an observation or treatment"
+            label.text = "Define 2 or more points along the center of a path then specify a buffer width value."
         case .Polygon:
             button.setTitle("Polygon", for: .normal)
             iconContainer.image = UIImage(named: "Polygon")
-            label.text = "As any mobile data editor user, I want to be directed to the \"Define geometry\" page once I've selected I want to create an observation or treatment"
+            label.text = "Define 3 or more points along the boundary edge then return to your start point to close the polygon".
         }
     }
     
