@@ -1,9 +1,9 @@
 //
-//  Auth.swift
-//  ipad
+//  AuthenticationService.swift
+//  InvasivesBC
 //
-//  Created by Amir Shayegh on 2019-10-28.
-//  Copyright © 2019 Amir Shayegh. All rights reserved.
+//  Created by Amir Shayegh on 2020-07-28.
+//  Copyright © 2020 Government of British Columbia. All rights reserved.
 //
 
 import Foundation
@@ -83,8 +83,7 @@ class AuthenticationService {
                     } else {
                         let title = "Authentication"
                         let message = "Authentication didn't work. Please try again."
-                        
-                        Alert.show(title: title, message: message)
+                        print(title + message)
                         return completion(false)
                     }
                 }
@@ -107,7 +106,7 @@ class AuthenticationService {
             } else {
                 let title = "Authentication"
                 let message = "Authentication didn't work. Please try again."
-                Alert.show(title: title, message: message)
+                print(title + message)
                 return completion(false)
             }
         }

@@ -35,9 +35,3 @@ class BaseObject: Object {
         return ""
     }
 }
-
-// MARK: Generic Code Table
-class CodeObject: BaseObject {
-    // MARK: Remote description
-    @objc dynamic var remoteDescription: String = ""
-}
