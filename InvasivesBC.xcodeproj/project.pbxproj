@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1EAEFF5124E1BF3C00CAAD7A /* ToolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAEFF5024E1BF3C00CAAD7A /* ToolsViewController.swift */; };
+		1EAEFF5324E1BF4600CAAD7A /* LayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAEFF5224E1BF4600CAAD7A /* LayersViewController.swift */; };
+		1EAEFF5524E1BF5500CAAD7A /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAEFF5424E1BF5500CAAD7A /* StatusViewController.swift */; };
 		2933A87D24D08DDB003E79F7 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2933A87C24D08DDB003E79F7 /* Notifications.swift */; };
 		2933A88924D0B005003E79F7 /* Dropdown.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2933A88324D0B005003E79F7 /* Dropdown.storyboard */; };
 		2933A88A24D0B005003E79F7 /* Dropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2933A88424D0B005003E79F7 /* Dropdown.swift */; };
@@ -133,6 +136,9 @@
 
 /* Begin PBXFileReference section */
 		1BB3CBAFC6EA79517990E6A6 /* Pods_InvasivesBC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InvasivesBC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1EAEFF5024E1BF3C00CAAD7A /* ToolsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewController.swift; sourceTree = "<group>"; };
+		1EAEFF5224E1BF4600CAAD7A /* LayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersViewController.swift; sourceTree = "<group>"; };
+		1EAEFF5424E1BF5500CAAD7A /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		25CB9DF16CD6D35B2F8736EE /* Pods_InvasivesBC_InvasivesBCUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InvasivesBC_InvasivesBCUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2933A87C24D08DDB003E79F7 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		2933A88324D0B005003E79F7 /* Dropdown.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Dropdown.storyboard; sourceTree = "<group>"; };
@@ -280,6 +286,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1EAEFF4F24E1BF1D00CAAD7A /* Tools Screen */ = {
+			isa = PBXGroup;
+			children = (
+				1EAEFF5024E1BF3C00CAAD7A /* ToolsViewController.swift */,
+			);
+			path = "Tools Screen";
+			sourceTree = "<group>";
+		};
+		1EB9D2A924E1BA8400BDC6E1 /* Status Screen */ = {
+			isa = PBXGroup;
+			children = (
+				1EAEFF5424E1BF5500CAAD7A /* StatusViewController.swift */,
+			);
+			path = "Status Screen";
+			sourceTree = "<group>";
+		};
+		1EB9D2AB24E1BA9600BDC6E1 /* Layers Screen */ = {
+			isa = PBXGroup;
+			children = (
+				1EAEFF5224E1BF4600CAAD7A /* LayersViewController.swift */,
+			);
+			path = "Layers Screen";
+			sourceTree = "<group>";
+		};
 		2933A88124D0B005003E79F7 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -658,6 +688,9 @@
 				294927DE24D0D735006E39EF /* Login */,
 				29B44E8C24CA1C7E0029E518 /* Launch Screen */,
 				29A8324F24CB4AB600208F5F /* Activity Screen */,
+				1EAEFF4F24E1BF1D00CAAD7A /* Tools Screen */,
+				1EB9D2AB24E1BA9600BDC6E1 /* Layers Screen */,
+				1EB9D2A924E1BA8400BDC6E1 /* Status Screen */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1103,6 +1136,7 @@
 				296CBBD324CB7BE6002277D0 /* StringExtension.swift in Sources */,
 				2933A88B24D0B005003E79F7 /* DropdownViewController.swift in Sources */,
 				2933A88E24D0B005003E79F7 /* DropdownTableViewCell.swift in Sources */,
+				1EAEFF5524E1BF5500CAAD7A /* StatusViewController.swift in Sources */,
 				296CBBBF24CB7AC3002277D0 /* IntegerStepperInputCollectionViewCell.swift in Sources */,
 				296CBBC724CB7AC3002277D0 /* BaseInputCell.swift in Sources */,
 				296CBBB624CB7AC3002277D0 /* TimePickerViewController.swift in Sources */,
@@ -1117,12 +1151,14 @@
 				294927DD24D0D72F006E39EF /* LoginViewController.swift in Sources */,
 				29BE866124D0DA56007D1A02 /* SSOConstants.swift in Sources */,
 				296CBBA624CB7AC3002277D0 /* ViewFieldCollectionViewCell.swift in Sources */,
+				1EAEFF5324E1BF4600CAAD7A /* LayersViewController.swift in Sources */,
 				296CBBC924CB7B67002277D0 /* Theme2.swift in Sources */,
 				296CBBB124CB7AC3002277D0 /* SpacerCollectionViewCell.swift in Sources */,
 				29BE866824D0DCCA007D1A02 /* SettingsModel.swift in Sources */,
 				296CBBC624CB7AC3002277D0 /* DoubleInputCollectionViewCell.swift in Sources */,
 				29A8325B24CB519900208F5F /* SelectFormTypeTableViewCell.swift in Sources */,
 				2933A89A24D0B120003E79F7 /* OptionsViewController.swift in Sources */,
+				1EAEFF5124E1BF3C00CAAD7A /* ToolsViewController.swift in Sources */,
 				29B44E8B24CA0E7D0029E518 /* Theme.swift in Sources */,
 				29A8325124CB4B8500208F5F /* ActivityViewController.swift in Sources */,
 				296CBBBE24CB7AC3002277D0 /* ConditionalInputCollectionViewCell.swift in Sources */,
