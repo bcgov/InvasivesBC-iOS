@@ -231,10 +231,36 @@
                     <view key="view" contentMode="scaleToFill" id="ssH-nY-oRA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nll-aa-LjQ">
+                                <rect key="frame" x="8" y="72" width="359" height="142.5"/>
+                                <string key="text">While the invasives plant/animal are focused on 4 primary geometry types, the TAHSIS group may be considering 8-12 additional geometries including lake boundaries, drone tracks, grids etc so please guide your development methods open to being able to extend this functional set.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vjc-Go-fgp">
+                                <rect key="frame" x="8" y="230.5" width="359" height="408.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Vjc-Go-fgp" firstAttribute="leading" secondItem="Y3X-Py-GMh" secondAttribute="leading" constant="8" id="Dza-q0-eUf"/>
+                            <constraint firstItem="Vjc-Go-fgp" firstAttribute="top" secondItem="Nll-aa-LjQ" secondAttribute="bottom" constant="16" id="XfD-pF-Y3g"/>
+                            <constraint firstItem="Y3X-Py-GMh" firstAttribute="trailing" secondItem="Nll-aa-LjQ" secondAttribute="trailing" constant="8" id="Zc7-38-VUo"/>
+                            <constraint firstItem="Nll-aa-LjQ" firstAttribute="top" secondItem="Y3X-Py-GMh" secondAttribute="top" constant="16" id="eAD-Ip-Kh5"/>
+                            <constraint firstItem="Y3X-Py-GMh" firstAttribute="trailing" secondItem="Vjc-Go-fgp" secondAttribute="trailing" constant="8" id="iea-Uv-Qbw"/>
+                            <constraint firstItem="Y3X-Py-GMh" firstAttribute="bottom" secondItem="Vjc-Go-fgp" secondAttribute="bottom" constant="8" id="vnx-0n-FO8"/>
+                            <constraint firstItem="Nll-aa-LjQ" firstAttribute="leading" secondItem="Y3X-Py-GMh" secondAttribute="leading" constant="8" id="xJE-aW-nCK"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Y3X-Py-GMh"/>
                     </view>
                     <navigationItem key="navigationItem" id="UN8-m8-pMW"/>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="Nll-aa-LjQ" id="vOM-OU-zKS"/>
+                        <outlet property="tableView" destination="Vjc-Go-fgp" id="vGu-zi-NfB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FEn-f9-0ti" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

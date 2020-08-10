@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1E42B4DE24E1ED07006BACFD /* DefineGeometryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E42B4DD24E1ED07006BACFD /* DefineGeometryViewController.swift */; };
+		1E42B4E224E1F444006BACFD /* SelectGeometryTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E42B4E024E1F444006BACFD /* SelectGeometryTypeTableViewCell.swift */; };
+		1E42B4E324E1F444006BACFD /* SelectGeometryTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E42B4E124E1F444006BACFD /* SelectGeometryTypeTableViewCell.xib */; };
 		1EAEFF5124E1BF3C00CAAD7A /* ToolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAEFF5024E1BF3C00CAAD7A /* ToolsViewController.swift */; };
 		1EAEFF5324E1BF4600CAAD7A /* LayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAEFF5224E1BF4600CAAD7A /* LayersViewController.swift */; };
 		1EAEFF5524E1BF5500CAAD7A /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAEFF5424E1BF5500CAAD7A /* StatusViewController.swift */; };
@@ -138,6 +140,8 @@
 /* Begin PBXFileReference section */
 		1BB3CBAFC6EA79517990E6A6 /* Pods_InvasivesBC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InvasivesBC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E42B4DD24E1ED07006BACFD /* DefineGeometryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefineGeometryViewController.swift; sourceTree = "<group>"; };
+		1E42B4E024E1F444006BACFD /* SelectGeometryTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGeometryTypeTableViewCell.swift; sourceTree = "<group>"; };
+		1E42B4E124E1F444006BACFD /* SelectGeometryTypeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectGeometryTypeTableViewCell.xib; sourceTree = "<group>"; };
 		1EAEFF5024E1BF3C00CAAD7A /* ToolsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsViewController.swift; sourceTree = "<group>"; };
 		1EAEFF5224E1BF4600CAAD7A /* LayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayersViewController.swift; sourceTree = "<group>"; };
 		1EAEFF5424E1BF5500CAAD7A /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
@@ -292,8 +296,18 @@
 			isa = PBXGroup;
 			children = (
 				1E42B4DD24E1ED07006BACFD /* DefineGeometryViewController.swift */,
+				1E42B4DF24E1F428006BACFD /* Cells */,
 			);
 			path = "Define Geometry Screen";
+			sourceTree = "<group>";
+		};
+		1E42B4DF24E1F428006BACFD /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1E42B4E024E1F444006BACFD /* SelectGeometryTypeTableViewCell.swift */,
+				1E42B4E124E1F444006BACFD /* SelectGeometryTypeTableViewCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		1EAEFF4F24E1BF1D00CAAD7A /* Tools Screen */ = {
@@ -964,6 +978,7 @@
 				296CBBBD24CB7AC3002277D0 /* ConditionalInputCollectionViewCell.xib in Resources */,
 				296CBBAC24CB7AC3002277D0 /* TextAreaInputCollectionViewCell.xib in Resources */,
 				296CBBB524CB7AC3002277D0 /* TimePicker.storyboard in Resources */,
+				1E42B4E324E1F444006BACFD /* SelectGeometryTypeTableViewCell.xib in Resources */,
 				296CBBA924CB7AC3002277D0 /* DateInputCollectionViewCell.xib in Resources */,
 				29A8325824CB514700208F5F /* SessionDefaultsTableViewCell.xib in Resources */,
 				29B577DC24C9FBF500AB8365 /* LaunchScreen.storyboard in Resources */,
@@ -1171,6 +1186,7 @@
 				2933A89A24D0B120003E79F7 /* OptionsViewController.swift in Sources */,
 				1EAEFF5124E1BF3C00CAAD7A /* ToolsViewController.swift in Sources */,
 				29B44E8B24CA0E7D0029E518 /* Theme.swift in Sources */,
+				1E42B4E224E1F444006BACFD /* SelectGeometryTypeTableViewCell.swift in Sources */,
 				29A8325124CB4B8500208F5F /* ActivityViewController.swift in Sources */,
 				296CBBBE24CB7AC3002277D0 /* ConditionalInputCollectionViewCell.swift in Sources */,
 				296CBBB724CB7AC3002277D0 /* TimeInputCollectionViewCell.swift in Sources */,
