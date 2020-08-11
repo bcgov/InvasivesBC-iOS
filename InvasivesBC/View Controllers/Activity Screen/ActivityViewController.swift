@@ -19,6 +19,8 @@ enum ActivityFormType {
 
 class ActivityViewController: BaseViewController {
     
+    
+    var selectedFormType: ActivityFormType?
     var tableCells: [String] = ["SessionDefaultsTableViewCell", "SelectFormTypeTableViewCell"]
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -50,6 +52,13 @@ class ActivityViewController: BaseViewController {
         }
     }
     
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destination = segue.destination as? DefineGeometryViewController, let type = self.selectedFormType else {return}
+        destination.setup(type: type)
+        isModalInPresentation = true
+    }
+    
     deinit {
         removeListeners()
     }
@@ -73,6 +82,7 @@ class ActivityViewController: BaseViewController {
     }
     
     func showDefineGeometry(for type: ActivityFormType) {
+        self.selectedFormType = type
         performSegue(withIdentifier: "showDefineGeometry", sender: self)
     }
     

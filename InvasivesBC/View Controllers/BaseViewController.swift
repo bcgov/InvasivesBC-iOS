@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DatePicker
 
 class BaseViewController: UIViewController, Theme ,InputDelegate {
     
@@ -130,6 +131,16 @@ class BaseViewController: UIViewController, Theme ,InputDelegate {
     // MARK: Datepicker Popover
     func showDatepicker(on view: UIView, initialDate: Date?, minDate: Date?, maxDate: Date?, completion: @escaping (Date?) -> Void) {
         // TODO
+        let picker = DatePicker()
+        let min = DatePickerHelper.shared.dateFrom(day: 1, month: 1, year: 2000)!
+        let max = DatePickerHelper.shared.dateFrom(day: 1, month: 1, year: 2030)!
+        picker.setup(min: min, max: max) { (selected, selectedDate) in
+            if selected {completion(selectedDate)}
+        }
+        
+        picker.displayPopOver(on: view, in: self) {
+            
+        }
     }
     
     // MARK: Delegates

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9qE-j3-Hwf">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Plant Observation View Controller-->
+        <scene sceneID="zaL-6R-6AW">
+            <objects>
+                <viewController id="9qE-j3-Hwf" customClass="PlantObservationViewController" customModule="InvasivesBC" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zrH-Kl-vJU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZFq-yB-KgM">
+                                <rect key="frame" x="0.0" y="44" width="414" height="756"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jt0-Fk-NS5">
+                                <rect key="frame" x="16" y="816" width="382" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LHD-Ep-BRF">
+                                        <rect key="frame" x="0.0" y="0.0" width="183" height="30"/>
+                                        <state key="normal" title="Edit"/>
+                                        <connections>
+                                            <action selector="leftButtonAction:" destination="9qE-j3-Hwf" eventType="touchUpInside" id="Odl-KO-JkW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u2u-KC-7iy">
+                                        <rect key="frame" x="199" y="0.0" width="183" height="30"/>
+                                        <state key="normal" title="Proceed to review"/>
+                                        <connections>
+                                            <action selector="rightButtonAction:" destination="9qE-j3-Hwf" eventType="touchUpInside" id="lte-sH-NYB"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ZFq-yB-KgM" firstAttribute="top" secondItem="HuS-Kg-YJi" secondAttribute="top" id="05j-iD-Mrt"/>
+                            <constraint firstItem="jt0-Fk-NS5" firstAttribute="leading" secondItem="HuS-Kg-YJi" secondAttribute="leading" constant="16" id="0sO-pe-3E6"/>
+                            <constraint firstItem="ZFq-yB-KgM" firstAttribute="leading" secondItem="HuS-Kg-YJi" secondAttribute="leading" id="3w2-qE-CEo"/>
+                            <constraint firstItem="HuS-Kg-YJi" firstAttribute="trailing" secondItem="ZFq-yB-KgM" secondAttribute="trailing" id="4nf-i5-NlI"/>
+                            <constraint firstItem="HuS-Kg-YJi" firstAttribute="bottom" secondItem="jt0-Fk-NS5" secondAttribute="bottom" constant="16" id="ARq-bE-dqV"/>
+                            <constraint firstItem="HuS-Kg-YJi" firstAttribute="trailing" secondItem="jt0-Fk-NS5" secondAttribute="trailing" constant="16" id="KUN-H9-all"/>
+                            <constraint firstItem="jt0-Fk-NS5" firstAttribute="top" secondItem="ZFq-yB-KgM" secondAttribute="bottom" constant="16" id="PRw-Jf-OnW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="HuS-Kg-YJi"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="rGo-m3-ZDR"/>
+                    <connections>
+                        <outlet property="leftButton" destination="LHD-Ep-BRF" id="FDU-Oq-frH"/>
+                        <outlet property="rightButton" destination="u2u-KC-7iy" id="Q7e-W4-pIn"/>
+                        <outlet property="tableView" destination="ZFq-yB-KgM" id="Sri-IB-ZcR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Um-Jl-Thc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5750.7246376811599" y="-2005.5803571428571"/>
+        </scene>
+    </scenes>
+</document>

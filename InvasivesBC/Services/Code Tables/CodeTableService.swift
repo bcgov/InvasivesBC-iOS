@@ -85,4 +85,9 @@ class CodeTableService {
         }
         return objects
     }
+    
+    func getAllDropdownNames() -> [String] {
+        let all = getAll()
+        return all.map({$0.type})
+    }
 }

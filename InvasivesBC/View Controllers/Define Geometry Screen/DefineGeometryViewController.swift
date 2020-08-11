@@ -18,6 +18,8 @@ enum DefineGeometryType: Int, CaseIterable {
 
 class DefineGeometryViewController: UIViewController {
     
+    var formType: ActivityFormType?
+    var selectedGeometry: DefineGeometryType?
     var tableCells: [String] = ["SelectGeometryTypeTableViewCell"]
 
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -32,12 +34,21 @@ class DefineGeometryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
-        
     }
     
+    func setup(type: ActivityFormType) {
+        self.formType = type
+    }
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let type = formType, let geometryType = selectedGeometry , let destination = segue.destination as? GeometryPickerViewController else {return}
+        destination.setup(form: type, geometry: geometryType)
+    }
+    
+    func showGeometryPicker(for type: DefineGeometryType) {
+        selectedGeometry = type
+        performSegue(withIdentifier: "showGeometryPicker", sender: self)
     }
     
     func style() {
@@ -79,7 +90,7 @@ extension DefineGeometryViewController: UITableViewDataSource, UITableViewDelega
         let cell = getCell(indexPath: indexPath)
         cell.setup(type: type, onTap: {[weak self] in
             guard let _self = self else {return}
-            print("\(type) was tapped")
+            _self.showGeometryPicker(for: type)
         })
         return cell
     }
