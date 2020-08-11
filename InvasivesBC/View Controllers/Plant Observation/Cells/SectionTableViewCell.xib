@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHu-iM-ZgT">
-                        <rect key="frame" x="8" y="8" width="401" height="20"/>
+                        <rect key="frame" x="16" y="16" width="385" height="20"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="VpH-FO-IYN"/>
@@ -25,10 +25,10 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="aHu-iM-ZgT" secondAttribute="trailing" constant="8" id="4af-Uj-QBL"/>
-                    <constraint firstItem="aHu-iM-ZgT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="CRo-X3-Q0M"/>
-                    <constraint firstItem="aHu-iM-ZgT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="POd-Q1-d0m"/>
-                    <constraint firstAttribute="bottom" secondItem="aHu-iM-ZgT" secondAttribute="bottom" constant="8" id="hht-Lz-gwk"/>
+                    <constraint firstAttribute="trailing" secondItem="aHu-iM-ZgT" secondAttribute="trailing" constant="16" id="4af-Uj-QBL"/>
+                    <constraint firstItem="aHu-iM-ZgT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="CRo-X3-Q0M"/>
+                    <constraint firstItem="aHu-iM-ZgT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="POd-Q1-d0m"/>
+                    <constraint firstAttribute="bottom" secondItem="aHu-iM-ZgT" secondAttribute="bottom" constant="16" id="hht-Lz-gwk"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

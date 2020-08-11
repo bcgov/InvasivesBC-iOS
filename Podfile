@@ -11,6 +11,7 @@ target 'InvasivesBC' do
   pod 'Alamofire', '~> 4.7.3'
   pod 'Extended'
   pod 'RealmSwift'
+  pod 'DatePicker'
   # Keycloack login
   pod 'SingleSignOn', :git => 'https://github.com/bcgov/mobile-authentication-ios.git', :tag => 'v1.0.6'
 

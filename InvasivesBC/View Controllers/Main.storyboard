@@ -280,11 +280,14 @@
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WPQ-5y-VPM">
                                 <rect key="frame" x="127.5" y="573" width="120" height="42"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="Gvl-bb-qEd"/>
                                     <constraint firstAttribute="height" constant="42" id="WWi-UZ-1yX"/>
                                 </constraints>
-                                <state key="normal" title="Looks Goo!!"/>
+                                <state key="normal" title="NEXT">
+                                    <color key="titleColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="tempButtonAction:" destination="enB-G1-lJ9" eventType="touchUpInside" id="sky-DY-XND"/>
                                 </connections>
@@ -304,43 +307,22 @@
                     <navigationItem key="navigationItem" id="5vv-Yd-0MJ"/>
                     <connections>
                         <outlet property="tempButton" destination="WPQ-5y-VPM" id="kdT-xP-m4o"/>
-                        <segue destination="ha1-gr-iZJ" kind="show" identifier="showPlantObservationForm" id="79v-RZ-h5o"/>
+                        <segue destination="i9r-1S-blZ" kind="show" identifier="showPlantObservationForm" id="fqc-t9-PY7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sRY-Iy-pKk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4957.6000000000004" y="-1231.0344827586207"/>
         </scene>
-        <!--Plant Observation View Controller-->
-        <scene sceneID="MzT-88-5mO">
+        <!--PlantObservation-->
+        <scene sceneID="rgt-TU-jXB">
             <objects>
-                <viewController id="ha1-gr-iZJ" customClass="PlantObservationViewController" customModule="InvasivesBC" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="eRK-f1-ptU">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Z21-Oj-Nyv">
-                                <rect key="frame" x="0.0" y="56" width="375" height="591"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="Z21-Oj-Nyv" firstAttribute="top" secondItem="hHb-LE-vql" secondAttribute="top" id="377-7Q-IwP"/>
-                            <constraint firstItem="hHb-LE-vql" firstAttribute="trailing" secondItem="Z21-Oj-Nyv" secondAttribute="trailing" id="Hk0-dW-ciu"/>
-                            <constraint firstItem="hHb-LE-vql" firstAttribute="bottom" secondItem="Z21-Oj-Nyv" secondAttribute="bottom" id="gz9-ju-CRJ"/>
-                            <constraint firstItem="Z21-Oj-Nyv" firstAttribute="leading" secondItem="hHb-LE-vql" secondAttribute="leading" id="qc8-wV-34K"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="hHb-LE-vql"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="qA9-Pv-qnV"/>
-                    <connections>
-                        <outlet property="tableView" destination="Z21-Oj-Nyv" id="cF6-Jn-4rf"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="InM-8g-zQ6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="PlantObservation" id="i9r-1S-blZ" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="sD0-Ii-wuk"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fvr-2i-Fi7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5751" y="-2005"/>
+            <point key="canvasLocation" x="5585" y="-1668"/>
         </scene>
         <!--Status View Controller-->
         <scene sceneID="yWg-8M-szx">

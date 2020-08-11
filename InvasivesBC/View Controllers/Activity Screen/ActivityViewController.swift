@@ -56,6 +56,7 @@ class ActivityViewController: BaseViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destination = segue.destination as? DefineGeometryViewController, let type = self.selectedFormType else {return}
         destination.setup(type: type)
+        isModalInPresentation = true
     }
     
     deinit {

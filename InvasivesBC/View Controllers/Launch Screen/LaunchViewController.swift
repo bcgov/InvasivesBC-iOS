@@ -36,6 +36,14 @@ class LaunchViewController: BaseViewController {
         super.viewDidLoad()
         style()
         setupMap()
+        
+         print("***")
+        let allDrodowns = CodeTableService.shared.getAllDropdownNames()
+        for each in allDrodowns {
+            print(each)
+        }
+        
+        print("***")
     }
     
     @IBAction func layersAction(_ sender: Any) {
