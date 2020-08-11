@@ -9,16 +9,31 @@
 import UIKit
 
 class SectionTableViewCell: UITableViewCell {
+    
+    
+    @IBOutlet weak var containerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var container: UIView!
+    
+    weak var inputGroup: InputGroupView?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func setup(fields: [InputItem], delegagte: InputDelegate) {
+        let group = InputGroupView()
+        if let current = inputGroup {
+            current.removeFromSuperview()
+             inputGroup = nil
+        }
+        self.inputGroup = group
+        self.inputGroup?.initialize(with: fields, delegate: delegagte, in: self)
+        containerHeightConstraint.constant = InputGroupView.estimateContentHeight(for: fields)
+        style()
     }
     
+    func style() {
+        container.backgroundColor = .clear
+    }
 }
