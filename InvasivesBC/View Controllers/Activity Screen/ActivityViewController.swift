@@ -8,6 +8,15 @@
 
 import UIKit
 
+enum ActivityFormType {
+    case PlantObservation
+    case PlantTreatment
+    case PlantMonitoring
+    case AnimalObservation
+    case AnimalTreatment
+    case AnimalMonitoring
+}
+
 class ActivityViewController: BaseViewController {
     
     var tableCells: [String] = ["SessionDefaultsTableViewCell", "SelectFormTypeTableViewCell"]
@@ -23,6 +32,12 @@ class ActivityViewController: BaseViewController {
         style()
         addListeners()
         tableView.alpha = 0
+        navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -55,6 +70,10 @@ class ActivityViewController: BaseViewController {
     
     @IBAction func closeAction(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func showDefineGeometry(for type: ActivityFormType) {
+        performSegue(withIdentifier: "showDefineGeometry", sender: self)
     }
     
     func style() {
@@ -121,26 +140,26 @@ extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = getFormTypeCell(indexPath: indexPath)
             cell.setup(onObservation: { [weak self] in
                 guard let _self = self else {return}
-                print("When Plant observation is clicked")
+                _self.showDefineGeometry(for: .PlantObservation)
             }, onTreatment: { [weak self] in
                 guard let _self = self else {return}
-                print("When Plant Treatment is clicked")
+                _self.showDefineGeometry(for: .PlantTreatment)
             }) { [weak self] in
                 guard let _self = self else {return}
-                print("When Plant Monitoring is clicked")
+                _self.showDefineGeometry(for: .PlantMonitoring)
             }
             return cell
         case 2:
             let cell = getFormTypeCell(indexPath: indexPath)
             cell.setup(onObservation: { [weak self] in
                 guard let _self = self else {return}
-                print("When Animal observation is clicked")
+                _self.showDefineGeometry(for: .AnimalObservation)
             }, onTreatment: { [weak self] in
                 guard let _self = self else {return}
-                print("When Animal Treatment is clicked")
+                _self.showDefineGeometry(for: .AnimalTreatment)
             }) { [weak self] in
                 guard let _self = self else {return}
-                print("When Animal Monitoring is clicked")
+                _self.showDefineGeometry(for: .AnimalMonitoring)
             }
             return cell
         default:
