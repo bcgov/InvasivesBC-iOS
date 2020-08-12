@@ -13,7 +13,7 @@ class SelectGeometryTypeTableViewCell: UITableViewCell, Theme {
     var completion: (()->Void)?
     
     @IBOutlet weak var iconContainer: UIImageView!
-    @IBOutlet weak var label: UILabel!
+//    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var button: UIButton!
     
     override func awakeFromNib() {
@@ -27,36 +27,35 @@ class SelectGeometryTypeTableViewCell: UITableViewCell, Theme {
     }
     
     func setup(type: DefineGeometryType, onTap: @escaping ()->Void) {
-        style()
+        
         completion = onTap
         switch type {
         case .Point:
             button.setTitle("Point Observation", for: .normal)
             iconContainer.image = UIImage(named: "PointObservation")
-            label.text = "Click on the approximate centre of your area and extend the radius feature to capture an area up to 100 sq meters."
+//            label.text = "Click on the approximate centre of your area and extend the radius feature to capture an area up to 100 sq meters."
         case .TwoPoint:
             button.setTitle("2 Point Box", for: .normal)
             iconContainer.image = UIImage(named: "2Point")
-            label.text = "Click on the approximate centre of your area then specify a height length and width value."
+//            label.text = "Click on the approximate centre of your area then specify a height length and width value."
         case .WayPoint:
             button.setTitle("Waypoint Path", for: .normal)
             iconContainer.image = UIImage(named: "waypoint")
-            label.text = "Define 2 or more points along the center of a path then specify a buffer width value."
+//            label.text = "Define 2 or more points along the center of a path then specify a buffer width value."
         case .Polygon:
             button.setTitle("Polygon", for: .normal)
             iconContainer.image = UIImage(named: "Polygon")
-            label.text = "Define 3 or more points along the boundary edge then return to your start point to close the polygon."
+//            label.text = "Define 3 or more points along the boundary edge then return to your start point to close the polygon."
         }
+        style()
     }
     
     
     func style() {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            label.isHidden = true
-        }
+        iconContainer.contentMode = .scaleAspectFit
         contentView.backgroundColor = .clear
         backgroundColor = .clear
         styleHollowButton(button: button)
-        label.font = UIFont.regular(size: 17)
+//        label.font = UIFont.regular(size: 17)
     }
 }
