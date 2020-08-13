@@ -7,30 +7,73 @@
 //
 
 import UIKit
+import Realm
+import RealmSwift
 import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        migrateRealm()
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         IQKeyboardManager.shared.enableAutoToolbar = false
         return true
     }
 
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    func applicationDidEnterBackground(_ application: UIApplication) {
+//        SyncService.shared.endListener()
     }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+//        SyncService.shared.beginListener()
+    }
+    
+    /// https://realm.io/docs/swift/latest/#migrations
+    func migrateRealm() {
+        guard let generatedSchemaVersion = generateAppIntegerVersion() else {
+            return
+        }
+        
+        let config = Realm.Configuration(schemaVersion: UInt64(generatedSchemaVersion),
+                                         migrationBlock: { migration, oldSchemaVersion in
+                                            // check oldSchemaVersion here, if we're newer call
+                                            // a method(s) specifically designed to migrate to
+                                            // the desired schema. ie `self.migrateSchemaV0toV1(migration)`
+                                            if (oldSchemaVersion < 4) {
+                                                // Nothing to do. Realm will automatically remove and add fields
+                                            }
+        },
+                                         shouldCompactOnLaunch: { totalBytes, usedBytes in
+                                            // totalBytes refers to the size of the file on disk in bytes (data + free space)
+                                            // usedBytes refers to the number of bytes used by data in the file
+                                            
+                                            // Compact if the file is over 100MB in size and less than 50% 'used'
+                                            let oneHundredMB = 100 * 1024 * 1024
+                                            return (totalBytes > oneHundredMB) && (Double(usedBytes) / Double(totalBytes)) < 0.5
+        })
+        
+        Realm.Configuration.defaultConfiguration = config
+    }
+    
+    /// App ingeget version is same as local db version in appdelegate's migrateRealm()
+    /// (Version * 10) + build
+    ///
+    /// - Returns: Integer representing application and local database version
+    func generateAppIntegerVersion() -> Int? {
+        // We get version and build numbers of app
+        guard let infoDict = Bundle.main.infoDictionary, let version = infoDict["CFBundleShortVersionString"] as? String, let build = infoDict["CFBundleVersion"] as? String  else {
+            return nil
+        }
+        
+        // comvert tp integer
+        let versionAsString = "\(version)".removeWhitespaces().replacingOccurrences(of: ".", with: "", options: NSString.CompareOptions.literal, range:nil)
+        guard let intVersion = Int(versionAsString), let intBuild = Int(build.removeWhitespaces())  else {
+            return nil
+        }
+        
+        return intVersion * 10 + intBuild
     }
 
 

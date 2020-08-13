@@ -42,7 +42,7 @@ class PlantObservationModel: BaseObject {
     @objc dynamic var firstName: String = ""
     @objc dynamic var lastName: String = ""
     @objc dynamic var time: String = ""
-    @objc dynamic var date: Date?
+    @objc dynamic var date: Date = Date()
     @objc dynamic var species: String = ""
     @objc dynamic var observationTypeCode: String = ""
     @objc dynamic var speciesAgencyCode: String = ""

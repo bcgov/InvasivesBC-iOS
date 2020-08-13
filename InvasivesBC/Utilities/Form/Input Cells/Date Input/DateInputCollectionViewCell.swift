@@ -26,6 +26,7 @@ class DateInputCollectionViewCell: BaseInputCell<DateInput>, UITextFieldDelegate
     // MARK: Setup
     override func initialize(with model: DateInput) {
         self.headerLabel.text = model.header
+        self.model = model
         textFieldText()
         let gesture = UITapGestureRecognizer(target: self, action:  #selector(self.onClick))
         self.textField.addGestureRecognizer(gesture)
