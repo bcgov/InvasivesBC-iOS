@@ -43,6 +43,11 @@ class GeometryPickerViewController: BaseViewController {
             guard let destination = segue.destination as? PlantObservationViewController else {return}
             // TODO:
             // Here we would set gemotry(selected in this component) for the form (destination)
+            let newPlantObservation = PlantObservationModel()
+            if let userId =  SettingsService.shared.getUserAuthId() {
+                newPlantObservation.userId = userId
+            }
+            destination.setup(editable: true, model: newPlantObservation)
         case .PlantMonitoring:
             return
         case .PlantTreatment:
