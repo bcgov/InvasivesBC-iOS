@@ -54,6 +54,7 @@ class CodeTableService {
     }
     
     public func getAll() -> [CodeTableModel] {
+        // get all the models of the speficied model type
         if let query = RealmRequests.getObject(CodeTableModel.self) {
             return query
         } else {
@@ -62,6 +63,7 @@ class CodeTableService {
     }
     
     public func get(type: String) -> CodeTableModel? {
+        // Get all objects of specified model type and filter where the variable equals the specified value
         guard let realm = try? Realm(), let object = realm.objects(CodeTableModel.self).filter("type = %@", type).first else {
             return nil
         }

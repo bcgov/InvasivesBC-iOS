@@ -45,7 +45,7 @@ class DoubleInputCollectionViewCell: BaseInputCell<DoubleInput>, UITextFieldDele
     override func initialize(with model: DoubleInput) {
         self.textField.keyboardType = .decimalPad
         self.headerLabel.text = model.header
-        if let value = model.value.get(type: model.type) as? Double, value > 0 {
+        if let value = model.value.get(type: model.type) as? Double, value != 0 {
             self.textField.text = "\(value)"
         } else {
             self.textField.text = ""

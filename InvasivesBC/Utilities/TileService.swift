@@ -82,7 +82,7 @@ class TileService {
     }
     
     private func googleSatelliteURL(for path: MKTileOverlayPath) -> URL? {
-        let stringURL = "http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x=\(path.x)&y=\(path.y)&z=\(path.z)"
+        let stringURL = "http://www.google.com/maps/vt?lyrs=s@189&gl=en&x=\(path.x)&y=\(path.y)&z=\(path.z)"
         guard let url = URL(string: stringURL) else {return nil}
         return url
     }

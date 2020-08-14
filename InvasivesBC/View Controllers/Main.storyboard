@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="712" height="934"/>
                             </mapView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="exe-uT-Ojy">
-                                <rect key="frame" x="616" y="32" width="80" height="144"/>
+                                <rect key="frame" x="616" y="32" width="80" height="182"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2F-sc-te2">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="30"/>
@@ -47,6 +47,13 @@
                                         <state key="normal" title="Status"/>
                                         <connections>
                                             <action selector="statusAction:" destination="Mce-T4-DxC" eventType="touchUpInside" id="C8Z-NZ-nla"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7P9-3b-l0u">
+                                        <rect key="frame" x="0.0" y="152" width="80" height="30"/>
+                                        <state key="normal" title="Test"/>
+                                        <connections>
+                                            <action selector="testPlantObservationButtonAction:" destination="Mce-T4-DxC" eventType="touchUpInside" id="IBf-q9-P21"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -91,6 +98,7 @@
                         <segue destination="78P-Hg-8xd" kind="presentation" identifier="showLayers" id="yfw-bG-9hN"/>
                         <segue destination="W2y-Jp-0bp" kind="presentation" identifier="showTools" id="nae-Iw-2SK"/>
                         <segue destination="u05-mU-DcW" kind="presentation" identifier="showStatus" id="3Nt-g0-Bs5"/>
+                        <segue destination="i9r-1S-blZ" kind="show" identifier="showPlantObservation" id="cFz-hp-WLC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X1I-Ok-yja" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -364,7 +372,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fvr-2i-Fi7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5585" y="-1668"/>
+            <point key="canvasLocation" x="4795" y="-2217"/>
         </scene>
         <!--Status View Controller-->
         <scene sceneID="yWg-8M-szx">
@@ -698,6 +706,9 @@
             <point key="canvasLocation" x="2024.8" y="-1231.0344827586207"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="cFz-hp-WLC"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.up.right.square" catalog="system" width="128" height="114"/>
         <image name="bclogo" width="172" height="148"/>
