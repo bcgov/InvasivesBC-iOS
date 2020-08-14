@@ -10,6 +10,7 @@ import Foundation
 
 extension PlantObservationModel {
     func getLocationandGeometryFields(editable: Bool) -> [InputItem] {
+        
         var fields: [InputItem] = []
         let latitude = DoubleInput(
             key: "latitude",

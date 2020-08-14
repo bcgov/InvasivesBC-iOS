@@ -124,6 +124,9 @@
 		29BE869124D0E8E1007D1A02 /* CodeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BE869024D0E8E1007D1A02 /* CodeObject.swift */; };
 		29C6DE0324D35851004E65D9 /* CodeTableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C6DE0224D35851004E65D9 /* CodeTableService.swift */; };
 		29C88BE224C9FDF3009513BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29C88BE124C9FDF3009513BD /* Main.storyboard */; };
+		29CE3FCD24E709DB00D0EF82 /* GeometryPickerMapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CE3FCC24E709DB00D0EF82 /* GeometryPickerMapDelegate.swift */; };
+		29CE3FCF24E70A2600D0EF82 /* GomometryPickerGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CE3FCE24E70A2600D0EF82 /* GomometryPickerGestures.swift */; };
+		29CE3FD124E70ECE00D0EF82 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CE3FD024E70ECE00D0EF82 /* StorageService.swift */; };
 		684D1A9C2B14F4D5B230289B /* Pods_InvasivesBC_InvasivesBCUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25CB9DF16CD6D35B2F8736EE /* Pods_InvasivesBC_InvasivesBCUITests.framework */; };
 		8D02A4B5754611E8238D4307 /* Pods_InvasivesBCTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD71B465E1AAB7B79DA86297 /* Pods_InvasivesBCTests.framework */; };
 		8DC748D6B5041D89CC4A9A18 /* Pods_InvasivesBC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB3CBAFC6EA79517990E6A6 /* Pods_InvasivesBC.framework */; };
@@ -273,6 +276,9 @@
 		29BE869024D0E8E1007D1A02 /* CodeObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodeObject.swift; path = InvasivesBC/DataModels/CodeObject.swift; sourceTree = SOURCE_ROOT; };
 		29C6DE0224D35851004E65D9 /* CodeTableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeTableService.swift; sourceTree = "<group>"; };
 		29C88BE124C9FDF3009513BD /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		29CE3FCC24E709DB00D0EF82 /* GeometryPickerMapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryPickerMapDelegate.swift; sourceTree = "<group>"; };
+		29CE3FCE24E70A2600D0EF82 /* GomometryPickerGestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GomometryPickerGestures.swift; sourceTree = "<group>"; };
+		29CE3FD024E70ECE00D0EF82 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		31C47DC21598612ECAEF3DB2 /* Pods-InvasivesBC.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBC.release.xcconfig"; path = "Target Support Files/Pods-InvasivesBC/Pods-InvasivesBC.release.xcconfig"; sourceTree = "<group>"; };
 		594FC44239AAC7ECB81AAEBD /* Pods-InvasivesBC-InvasivesBCUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBC-InvasivesBCUITests.release.xcconfig"; path = "Target Support Files/Pods-InvasivesBC-InvasivesBCUITests/Pods-InvasivesBC-InvasivesBCUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8D5FEC21BE0D5C28D007A7DF /* Pods-InvasivesBCTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBCTests.debug.xcconfig"; path = "Target Support Files/Pods-InvasivesBCTests/Pods-InvasivesBCTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -342,6 +348,8 @@
 			isa = PBXGroup;
 			children = (
 				1E42B4E824E31CAB006BACFD /* GeometryPickerViewController.swift */,
+				29CE3FCC24E709DB00D0EF82 /* GeometryPickerMapDelegate.swift */,
+				29CE3FCE24E70A2600D0EF82 /* GomometryPickerGestures.swift */,
 			);
 			path = "Geometry Picker";
 			sourceTree = "<group>";
@@ -788,6 +796,7 @@
 				29BE866D24D0DF49007D1A02 /* User */,
 				29BE866424D0DC3B007D1A02 /* Settings */,
 				29BE865B24D0D940007D1A02 /* AuthenticationService.swift */,
+				29CE3FD024E70ECE00D0EF82 /* StorageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1251,6 +1260,7 @@
 				296CBBC624CB7AC3002277D0 /* DoubleInputCollectionViewCell.swift in Sources */,
 				29A8325B24CB519900208F5F /* SelectFormTypeTableViewCell.swift in Sources */,
 				2933A89A24D0B120003E79F7 /* OptionsViewController.swift in Sources */,
+				29CE3FCD24E709DB00D0EF82 /* GeometryPickerMapDelegate.swift in Sources */,
 				1EAEFF5124E1BF3C00CAAD7A /* ToolsViewController.swift in Sources */,
 				29B44E8B24CA0E7D0029E518 /* Theme.swift in Sources */,
 				1E42B4E224E1F444006BACFD /* SelectGeometryTypeTableViewCell.swift in Sources */,
@@ -1265,10 +1275,12 @@
 				29BE867524D0E6D1007D1A02 /* SyncService.swift in Sources */,
 				2933A87D24D08DDB003E79F7 /* Notifications.swift in Sources */,
 				1E42B4DE24E1ED07006BACFD /* DefineGeometryViewController.swift in Sources */,
+				29CE3FCF24E70A2600D0EF82 /* GomometryPickerGestures.swift in Sources */,
 				296CBBAE24CB7AC3002277D0 /* InputTitleCollectionViewCell.swift in Sources */,
 				296CBBAB24CB7AC3002277D0 /* TextAreaInputCollectionViewCell.swift in Sources */,
 				29BE866F24D0DF49007D1A02 /* UserService.swift in Sources */,
 				29BE868724D0E77E007D1A02 /* APIService.swift in Sources */,
+				29CE3FD124E70ECE00D0EF82 /* StorageService.swift in Sources */,
 				29B577D224C9FBF300AB8365 /* SceneDelegate.swift in Sources */,
 				29BE868024D0E733007D1A02 /* BaseObject.swift in Sources */,
 				296CBBD124CB7BE6002277D0 /* FoundationExtension.swift in Sources */,
@@ -1440,7 +1452,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = L796QSLV3E;
 				INFOPLIST_FILE = InvasivesBC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1463,7 +1475,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = L796QSLV3E;
 				INFOPLIST_FILE = InvasivesBC/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

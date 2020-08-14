@@ -10,6 +10,97 @@ import Foundation
 import Realm
 import RealmSwift
 
+import MapKit
+class GeoJSONCoordinate: BaseObject {
+    @objc dynamic var latitude: Double = 0
+    @objc dynamic var longitude: Double = 0
+    
+    func toDictionary() -> [Double] {
+        return [longitude, latitude]
+    }
+}
+
+class GeoJSONGeometry: BaseObject {
+    @objc dynamic var type: String = ""
+    var coordinates: List<GeoJSONCoordinate> = List<GeoJSONCoordinate>()
+    
+    func toDictionary() -> [String: Any] {
+        var coordinatesDict: [[Double]] = [[Double]]()
+        for coordinate in coordinates {
+            coordinatesDict.append(coordinate.toDictionary())
+        }
+        let geometry: [String: Any] = [
+            "type": "Polygon",
+            "coordinates": coordinatesDict
+        ]
+        return [
+            "type": "Feature",
+            "properties": {},
+            "geometry": geometry
+        ]
+    }
+}
+
+class GeoJSON: BaseObject {
+    var geometries: List<GeoJSONGeometry> = List<GeoJSONGeometry>()
+    
+    func addGeometry(with coordinates: [CLLocation], type: DefineGeometryType) {
+        var geometryType = ""
+        switch type {
+        case .Point:
+            // TODO: GEOJSON does not support circle
+            geometryType = "Point"
+        case .TwoPoint:
+            geometryType = "Line"
+        case .WayPoint:
+            geometryType = "Polygon"
+        case .Polygon:
+            geometryType = "Polygon"
+        }
+        let geoCoordinates: List<GeoJSONCoordinate> = List<GeoJSONCoordinate>()
+        // Create array of GeoJSONCoordinate
+        for coordinate in coordinates {
+            let geoCoordinate = GeoJSONCoordinate()
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    geoCoordinate.latitude = coordinate.coordinate.latitude
+                    geoCoordinate.longitude = coordinate.coordinate.longitude
+                }
+            } catch let error as NSError {
+                print("** REALM ERROR")
+                print(error)
+            }
+            geoCoordinates.append(geoCoordinate)
+        }
+        ///
+        // Write Geometry Data
+        let geoJSONGeometry = GeoJSONGeometry()
+        do {
+            let realm = try Realm()
+            try realm.write {
+                geoJSONGeometry.type = geometryType
+                geoJSONGeometry.coordinates = geoCoordinates
+                self.geometries.append(geoJSONGeometry)
+            }
+        } catch let error as NSError {
+            print("** REALM ERROR")
+            print(error)
+        }
+    }
+    
+    func toDictionary() -> [String: Any] {
+        var fetures: [[String: Any]] = [[String: Any]]()
+        for geometry in geometries {
+            fetures.append(geometry.toDictionary())
+        }
+        return [
+              "type": "FeatureCollection",
+              "features": fetures
+        ]
+    }
+}
+
 class PlantObservationModel: BaseObject {
     
     @objc dynamic var userId: String = ""
@@ -86,6 +177,7 @@ class PlantObservationModel: BaseObject {
     @objc dynamic var negativeObservation: Bool = false
     @objc dynamic var aquaticObservation: Bool = false
     
+    var geoJSON: List<GeoJSON> = List<GeoJSON>()
     
     // MARK: Setters
     func set(value: Any, for key: String) {
@@ -117,5 +209,45 @@ class PlantObservationModel: BaseObject {
         }
     }
     
+    func add(geoJSON model: GeoJSON) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                self.geoJSON.removeAll()
+                self.geoJSON.append(model)
+            }
+        } catch let error as NSError {
+            print("** REALM ERROR")
+            print(error)
+        }
+    }
     
+    func addGeometry(with coordinates: [CLLocation], type: DefineGeometryType) {
+        let geoJSONModel = GeoJSON()
+        geoJSONModel.addGeometry(with: coordinates, type: type)
+        do {
+            let realm = try Realm()
+            try realm.write {
+                self.geoJSON.removeAll()
+                self.geoJSON.append(geoJSONModel)
+            }
+        } catch let error as NSError {
+            print("** REALM ERROR")
+            print(error)
+        }
+    }
+    
+    func add(latitude: Double, longitude: Double, area: Double) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                self.latitude = latitude
+                self.longitude = longitude
+                self.area = area
+            }
+        } catch let error as NSError {
+            print("** REALM ERROR")
+            print(error)
+        }
+    }
 }

@@ -14,6 +14,7 @@ private enum Segues: String {
     case showTools = "showTools"
     case showStatus = "showStatus"
     case showLayers = "showLayers"
+    case showPlantObservation = "showPlantObservation"
 }
 
 class LaunchViewController: BaseViewController {
@@ -23,6 +24,9 @@ class LaunchViewController: BaseViewController {
     var locationManager: CLLocationManager = CLLocationManager()
     var locationAuthorizationstatus: CLAuthorizationStatus?
     var currentLocation: CLLocation?
+    
+    // TEMP
+    var plantObservationToShow: PlantObservationModel?
     
     // MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -44,6 +48,23 @@ class LaunchViewController: BaseViewController {
         }
         
         print("***")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == Segues.showPlantObservation.rawValue, let model = plantObservationToShow else {return}
+        guard let plantObservationViewController = segue.destination as? PlantObservationViewController else { return }
+        plantObservationViewController.setup(editable: false, model: model)
+    }
+    
+    @IBAction func testPlantObservationButtonAction(_ sender: Any) {
+        let allPlantObservations = StorageService.shared.getAllForms(type: .PlantObservation)
+        if let last = allPlantObservations.last as? PlantObservationModel {
+            plantObservationToShow = last
+            performSegue(withIdentifier: Segues.showPlantObservation.rawValue, sender: self)
+        } else {
+            showAlert(with: "No Plant observations found", message: "Create a record first")
+        }
+        
     }
     
     @IBAction func layersAction(_ sender: Any) {

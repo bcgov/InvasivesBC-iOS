@@ -23,9 +23,25 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
     var formType: ActivityFormType?
     var geometryType: DefineGeometryType?
     
+    // point gemoetry variables
+    var point: CLLocationCoordinate2D?
+    var pointCache: MKAnnotation?
+    ///
+    
     // polygon gemoetry variables
     var polygonGeometryPoints: [CLLocationCoordinate2D] = []
     var polygonCache: MKPolygon?
+    let maxPolygonArea: Double = 10000
+    ///
+    
+    // waypoint geometry variables
+    var wayPointGeometryPoints: [CLLocationCoordinate2D] = []
+    var wayPointPolygonCache: MKPolygon?
+    ///
+    
+    // 2 point geometry variables
+    var twoPointGeometryPoints: [CLLocationCoordinate2D] = []
+    var twoPointLineCache: MKPolyline?
     ///
     
     @IBOutlet weak var mapView: MKMapView!
@@ -59,12 +75,20 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
         switch segueId {
         case .PlantObservation:
             guard let destination = segue.destination as? PlantObservationViewController else {return}
-            // TODO:
-            // Here we would set gemotry(selected in this component) for the form (destination)
             let newPlantObservation = PlantObservationModel()
-            if let userId =  SettingsService.shared.getUserAuthId() {
+            // Add User id - So when user logs out and different user logs in, we can differentiate the data
+            if let userId = SettingsService.shared.getUserAuthId() {
                 newPlantObservation.userId = userId
             }
+            // Add GeoJSON
+            if let geoJSON = getGeoJSON() {
+                newPlantObservation.add(geoJSON: geoJSON)
+            }
+            // Add lat, long and area
+            if let first = polygonGeometryPoints.first {
+                newPlantObservation.add(latitude: first.latitude, longitude: first.longitude, area: regionArea(locations: polygonGeometryPoints))
+            }
+            // Pass values to view controller
             destination.setup(editable: true, model: newPlantObservation)
         case .PlantMonitoring:
             return
@@ -147,12 +171,20 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
         instructionContainer.alpha = 1
         switch type {
         case .Point:
+            // TODO: Set page title here (appears in nav bar)
+            title = "Define Point geometry"
             instructionLabel.text = "Click on the approximate centre of your area and extend the radius feature to capture an area up to 100 sq meters."
         case .TwoPoint:
+            // TODO: Set page title here (appears in nav bar)
+            title = "Define 2 Point geometry"
             instructionLabel.text = "Define 2 or more points along the center of a path then specify a buffer width value."
         case .WayPoint:
+            // TODO: Set page title here (appears in nav bar)
+            title = "Define Waypoint"
             instructionLabel.text = "Click on the approximate centre of your area then specify a height length and width value."
         case .Polygon:
+            // TODO: Set page title here (appears in nav bar)
+            title = "Define Polygon"
             instructionLabel.text = "Define 3 or more points along the boundary edge then return to your start point to close the polygon."
         }
     }
@@ -188,164 +220,28 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
             nextButton.isHidden = polygonCache == nil
         }
     }
-}
-
-extension GeometryPickerViewController: MKMapViewDelegate {
     
-    func setupMap() {
-        setupTileRenderer()
-        mapView.delegate = self
-        mapView.showsUserLocation = true
-        
-        // TODO: Set lat long to Center of BC and change latitudinalMeters & longitudinalMeters appropriately
-        var noLocation = CLLocationCoordinate2D()
-        noLocation.latitude = 48.424251
-        noLocation.longitude = -123.365729
-        let viewRegion = MKCoordinateRegion.init(center: noLocation, latitudinalMeters: 10000, longitudinalMeters: 10000)
-        mapView.setRegion(viewRegion, animated: true)
-        
-//        setupLocation()
-        
-        // TODO: Set map's Zoom limit to match what BC Gov has
-    }
-    
-    func setupTileRenderer() {
-        let overlay = CustomMapOverlay()
-        overlay.canReplaceMapContent = true
-        mapView.addOverlay(overlay, level: .aboveLabels)
-        tileRenderer = MKTileOverlayRenderer(tileOverlay: overlay)
-    }
-    
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        print("map moved")
-    }
-    
-    // Customize Polygons, polylines and Tiles
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if overlay is MKPolygon {
-            let renderer = MKPolygonRenderer(overlay: overlay)
-            renderer.fillColor = UIColor.black.withAlphaComponent(0.3)
-            renderer.strokeColor = UIColor.black
-            renderer.lineWidth = 2
-            return renderer
-        } else if overlay is MKPolyline {
-            let renderer = MKPolylineRenderer(overlay: overlay)
-            renderer.strokeColor = UIColor.black
-            renderer.lineWidth = 2
-            return renderer
-        }
-        guard let custom = tileRenderer else {
-            return MKOverlayRenderer()
-        }
-        return custom
-    }
-    
-    // Customize annotion look
-    /*
-     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-     }
-     */
-    
-}
-
-// MARK: Gestures
-extension GeometryPickerViewController {
-    func addMapGestureRecognizer() {
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        gestureRecognizer.delegate = self
-        mapView.addGestureRecognizer(gestureRecognizer)
-    }
-    
-    @objc func handleTap(gestureRecognizer: UILongPressGestureRecognizer) {
-        guard let type = geometryType else {return}
-        let location = gestureRecognizer.location(in: mapView)
-        let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
-        
+    func getGeoJSON() -> GeoJSON? {
+        guard let type = geometryType else {return nil}
+        let geoJSON = GeoJSON()
         switch type {
         case .Point:
-            handleTapForPoint(at: coordinate)
+            guard let p = point else {return nil}
+            let location = CLLocation(latitude: p.latitude, longitude: p.longitude)
+            geoJSON.addGeometry(with: [location], type: type)
+            return geoJSON
         case .TwoPoint:
-            handleTapForTwoPoint(at: coordinate)
+            let locations = twoPointGeometryPoints.map({CLLocation(latitude: $0.latitude, longitude: $0.longitude)})
+            geoJSON.addGeometry(with: locations, type: type)
+            return geoJSON
         case .WayPoint:
-            handleTapForWayPoint(at: coordinate)
+            let locations = wayPointGeometryPoints.map({CLLocation(latitude: $0.latitude, longitude: $0.longitude)})
+            geoJSON.addGeometry(with: locations, type: type)
+            return geoJSON
         case .Polygon:
-            handleTapForPolygon(at: coordinate)
+            let locations = polygonGeometryPoints.map({CLLocation(latitude: $0.latitude, longitude: $0.longitude)})
+            geoJSON.addGeometry(with: locations, type: type)
+            return geoJSON
         }
-    }
-    
-    func handleTapForPoint(at location: CLLocationCoordinate2D) {
-        showAlert(with: "Geometry type not supported", message: "")
-    }
-    
-    func handleTapForTwoPoint(at location: CLLocationCoordinate2D) {
-        showAlert(with: "Geometry type not supported", message: "")
-    }
-    
-    func handleTapForWayPoint(at location: CLLocationCoordinate2D) {
-        showAlert(with: "Geometry type not supported", message: "")
-    }
-    
-    func handleTapForPolygon(at location: CLLocationCoordinate2D) {
-        guard canAddPolygonNode(at: location) else {return}
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = location
-        mapView.addAnnotation(annotation)
-        
-        polygonGeometryPoints.append(location)
-        
-        if polygonGeometryPoints.count >= 3 {
-            nextButton.isHidden = false
-            let polygon = MKPolygon(coordinates: polygonGeometryPoints, count: polygonGeometryPoints.count)
-            if let existing = polygonCache {
-                mapView.removeOverlay(existing)
-            }
-            polygonCache = polygon
-            mapView.addOverlay(polygon)
-        }
-        styleButtons()
-    }
-    
-    func canAddPolygonNode(at location: CLLocationCoordinate2D) -> Bool {
-        // - Max 20 points
-        if polygonGeometryPoints.count >= 20 {
-            showAlert(with: "Too many vertices", message: "The number of vertices used to record and draw the polygon is capped at 20 points")
-            return false
-        }
-        // - Distance between points must be more than 1 meter
-        if let last = polygonGeometryPoints.last {
-            let lastLocation = CLLocation(latitude: last.latitude, longitude: last.longitude)
-            let newLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
-            if lastLocation.distance(from: newLocation) < 1 {
-                showAlert(with: "Too close", message: "The minimum vertex distance is to be 1.0 meters.")
-                return false
-            }
-        }
-        
-        // - Computed area must be less than 20000
-        if polygonGeometryPoints.count >= 3 && regionArea(locations: polygonGeometryPoints) > 20000 {
-            showAlert(with: "Maximum area is 20000", message: "The maximum of 2000 sq meters.")
-            return false
-        }
-        
-        return true
-    }
-    
-    func regionArea(locations: [CLLocationCoordinate2D]) -> Double {
-        guard locations.count > 2 else { return 0 }
-        var area = 0.0
-        let kEarthRadius = 6378137.0
-        for i in 0..<locations.count {
-            let p1 = locations[i > 0 ? i - 1 : locations.count - 1]
-            let p2 = locations[i]
-
-            area += radians(degrees: p2.longitude - p1.longitude) * (2 + sin(radians(degrees: p1.latitude)) + sin(radians(degrees: p2.latitude)) )
-        }
-        area = -(area * kEarthRadius * kEarthRadius / 2)
-        return max(area, -area) // In order not to worry about is polygon clockwise or counterclockwise defined.
-    }
-    
-    func radians(degrees: Double) -> Double {
-        return degrees * .pi / 180
     }
 }

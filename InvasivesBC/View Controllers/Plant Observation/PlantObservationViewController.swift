@@ -96,9 +96,10 @@ class PlantObservationViewController: BaseViewController {
             tableView.reloadData()
         } else {
             // Button is for submitting
-            showAlert(with: "Cant submit yet", message: "")
+            savePlantObservation()
         }
     }
+    
     @IBAction func leftButtonAction(_ sender: Any) {
         self.editable = true
         tableView.reloadData()
@@ -107,6 +108,14 @@ class PlantObservationViewController: BaseViewController {
     func setup(editable: Bool, model: PlantObservationModel) {
         self.editable = editable
         self.model = model
+    }
+    
+    func savePlantObservation() {
+        guard let model = self.model else { return }
+        RealmRequests.saveObject(object: model)
+        model.set(shouldSync: true)
+        
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     func style() {
