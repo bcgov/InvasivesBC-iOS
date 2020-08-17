@@ -115,7 +115,13 @@ class PlantObservationViewController: BaseViewController {
         RealmRequests.saveObject(object: model)
         model.set(shouldSync: true)
         
-        self.navigationController?.popToRootViewController(animated: true)
+        let alertController = UIAlertController(title: "Plant observation", message:
+            "record saved", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Okay", style: .default))
+        self.present(alertController, animated: true, completion: nil)
+        print("observation saved")
+        //self.navigationController?.popToViewController(UIViewController.Type, animated: true)
+    
     }
     
     func style() {

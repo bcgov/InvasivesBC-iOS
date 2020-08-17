@@ -15,8 +15,8 @@ class CustomHeader: UIView {
     func setup(left: String, right: String, color: UIColor, textColor: UIColor? = .black) {
         leftField.text = left
         rightField.text = right
-        rightField.font = UIFont.bold(size: 14)
-        leftField.font = UIFont.regular(size: 14)
+        rightField.font = UIFont.regular(size: 14)
+        leftField.font = UIFont.bold(size: 14)
         rightField.textColor = textColor
         leftField.textColor = textColor
         self.backgroundColor = color

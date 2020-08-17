@@ -123,9 +123,9 @@ extension ActivityViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             customHeader.setup(left: "Session Default", right: "", color: UIColor.systemRed.withAlphaComponent(0.5))
         case 1:
-            customHeader.setup(left: "Plant", right: "Invasive/Terrestrial", color: UIColor.systemGreen.withAlphaComponent(0.5))
+            customHeader.setup(left: "Plant", right: "Invasive Terrestrial/Aquatic", color: UIColor.systemGreen.withAlphaComponent(0.5))
         case 2:
-            customHeader.setup(left: "Animal", right: "Invasive/Terrestrial", color: UIColor.systemGreen.withAlphaComponent(0.5))
+            customHeader.setup(left: "Animal", right: "Invasive Terrestrial/Aquatic", color: UIColor.systemGreen.withAlphaComponent(0.5))
         default:
             customHeader.setup(left: "", right: "", color: .systemGreen)
         }
