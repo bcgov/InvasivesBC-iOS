@@ -123,13 +123,7 @@ class PlantObservationViewController: BaseViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.navigationController?.popToRootViewController(animated: true)
         }
-
-
-        print("view controller is\(String(describing: self.presentingViewController))")
-       
-        
-        // self.dismiss(animated: true, completion: {})
-      //  self.navigationController?.popViewController(animated: true)
+  
     }
     
     func style() {

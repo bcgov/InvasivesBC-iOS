@@ -16,7 +16,7 @@ extension PlantObservationModel {
             key: "latitude",
             header: "Latitude",
             editable: editable,
-            value: self.latitude,
+            value: self.latitude.roundToDecimal(6),
             width: .Half
         )
         fields.append(latitude)
@@ -25,7 +25,7 @@ extension PlantObservationModel {
             key: "longitude",
             header: "Longitude",
             editable: editable,
-            value: self.longitude,
+            value: self.longitude.roundToDecimal(6),
             width: .Half
         )
         fields.append(longitude)
@@ -44,7 +44,7 @@ extension PlantObservationModel {
             key: "area",
             header: "Area m^2",
             editable: editable,
-            value: self.area,
+            value: self.area.roundToDecimal(1),
             width: .Half
         )
         fields.append(area)

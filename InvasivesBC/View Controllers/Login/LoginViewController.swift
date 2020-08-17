@@ -17,7 +17,7 @@ class LoginViewController: BaseViewController {
     }
     
     @IBAction func loginWithBCeIDAction(_ sender: Any) {
-        AuthenticationService.refreshEnviormentConstants(withIdpHint: "bceid")
+        AuthenticationService.refreshEnvironmentConstants(withIdpHint: "bceid")
         SettingsService.shared.setAuth(type: .BCeID)
         AuthenticationService.authenticate { (success) in
             if (!success) {
@@ -29,7 +29,7 @@ class LoginViewController: BaseViewController {
     }
     
     @IBAction func loginWithIdirAction(_ sender: Any) {
-        AuthenticationService.refreshEnviormentConstants(withIdpHint: "idir")
+        AuthenticationService.refreshEnvironmentConstants(withIdpHint: "idir")
         SettingsService.shared.setAuth(type: .Idir)
         AuthenticationService.authenticate { (success) in
             if (!success) {
