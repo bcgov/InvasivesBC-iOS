@@ -119,9 +119,17 @@ class PlantObservationViewController: BaseViewController {
             "record saved", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Okay", style: .default))
         self.present(alertController, animated: true, completion: nil)
-        print("observation saved")
-        //self.navigationController?.popToViewController(UIViewController.Type, animated: true)
     
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+
+
+        print("view controller is\(String(describing: self.presentingViewController))")
+       
+        
+        // self.dismiss(animated: true, completion: {})
+      //  self.navigationController?.popViewController(animated: true)
     }
     
     func style() {
