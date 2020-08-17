@@ -90,13 +90,13 @@ class GeoJSON: BaseObject {
     }
     
     func toDictionary() -> [String: Any] {
-        var fetures: [[String: Any]] = [[String: Any]]()
+        var features: [[String: Any]] = [[String: Any]]()
         for geometry in geometries {
-            fetures.append(geometry.toDictionary())
+            features.append(geometry.toDictionary())
         }
         return [
               "type": "FeatureCollection",
-              "features": fetures
+              "features": features
         ]
     }
 }
