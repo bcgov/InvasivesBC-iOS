@@ -30,15 +30,17 @@ extension PlantObservationModel {
         )
         fields.append(longitude)
         
-        let geometryType = DropdownInput(
-            key: "observationGeometryCode",
-            header: "Geometry Type",
-            editable: editable,
-            value: self.observationGeometryCode,
-            width: .Half,
-            dropdownItems: CodeTableService.shared.getDropdowns(type: "ObservationGeometryCode")
-        )
-        fields.append(geometryType)
+//        let geometryType = DropdownInput(
+//            key: "observationGeometryCode",
+//            header: "Geometry Type",
+//            editable: editable,
+//            value: self.observationGeometryCode,
+//            width: .Half
+//            //dropdownItems: CodeTableService.shared.getDropdowns(type: "ObservationGeometryCode")
+//        )
+//        fields.append(geometryType)
+        
+    
         
         let area = DoubleInput(
             key: "area",

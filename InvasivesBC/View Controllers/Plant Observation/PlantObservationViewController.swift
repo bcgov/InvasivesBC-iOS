@@ -93,6 +93,9 @@ class PlantObservationViewController: BaseViewController {
         if editable {
             // Button is for reviewing
             self.editable = false
+            self.openAllSections()
+           
+            
             tableView.reloadData()
         } else {
             // Button is for submitting
@@ -236,7 +239,7 @@ extension PlantObservationViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let type = PlantObservationSection.init(rawValue: indexPath.section) else {return UITableViewCell()}
         let cell = getSectionCell(indexPath: indexPath)
-        cell.setup(fields: getFields(for: type), delegagte: self)
+        cell.setup(fields: getFields(for: type), delegate: self)
         return cell
     }
 }

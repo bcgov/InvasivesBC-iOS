@@ -19,7 +19,10 @@ extension LaunchViewController: MKMapViewDelegate {
         // TODO: Set lat long to Center of BC and change latitudinalMeters & longitudinalMeters appropriately
         var noLocation = CLLocationCoordinate2D()
         noLocation.latitude = 48.424251
+        print("noLocation.Latitude is \(noLocation.latitude)")
         noLocation.longitude = -123.365729
+        
+      
         let viewRegion = MKCoordinateRegion.init(center: noLocation, latitudinalMeters: 10000, longitudinalMeters: 10000)
         mapView.setRegion(viewRegion, animated: true)
         

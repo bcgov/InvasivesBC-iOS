@@ -88,6 +88,9 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
             if let first = polygonGeometryPoints.first {
                 newPlantObservation.add(latitude: first.latitude, longitude: first.longitude, area: regionArea(locations: polygonGeometryPoints))
             }
+            print("first.latitude is \(newPlantObservation.latitude)")
+            
+            
             // Pass values to view controller
             destination.setup(editable: true, model: newPlantObservation)
         case .PlantMonitoring:

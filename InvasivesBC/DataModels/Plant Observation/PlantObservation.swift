@@ -250,4 +250,16 @@ class PlantObservationModel: BaseObject {
             print(error)
         }
     }
+    
+    func add(firstName: String) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                self.firstName = firstName
+            }
+        } catch let error as NSError {
+            print("** REALM ERROR")
+            print(error)
+        }
+    }
 }
