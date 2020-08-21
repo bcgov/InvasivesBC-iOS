@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GRDB
 
 
 enum PlantObservationSection: Int, CaseIterable {
@@ -39,6 +40,9 @@ class PlantObservationViewController: BaseViewController {
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTable()
@@ -51,7 +55,29 @@ class PlantObservationViewController: BaseViewController {
         style()
         styleForState()
         addListeners()
+        tryDB()
+    
     }
+    
+    
+    func tryDB(){
+        let dbQueue = self.delegate.dbQueue
+        try! dbQueue.read { db in
+        // Fetch database rows
+            let rows = try Row.fetchCursor(db, sql: "SELECT * FROM Activity")
+            print(rows.)
+        }
+        var testActivity: Activity = Activity(activity_type: "observation", activity_sub_type: "terrestrial/invasive", isFavorite: true, latitude: 64.0, longitude: -123.0)
+        try! dbQueue.write { db in
+        // Write database rows
+            try! testActivity.insert(db)
+            print("testActivity is \(testActivity)")
+        }
+        
+        
+        
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -49,7 +49,12 @@ extension Activity: MutablePersistableRecord {
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    var dbQueue: DatabaseQueue
+    override init(){
+        self.dbQueue = DatabaseQueue()
+    }
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         migrateRealm()
         setupDB()
@@ -68,20 +73,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func setupDB(){
-        
-        
         let databaseURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("db.sqlite")
-        let dbQueue = try! DatabaseQueue(path: databaseURL.path)
+        self.dbQueue = try! DatabaseQueue(path: databaseURL.path)
+        
         
         try! dbQueue.write { db in
 
             try db.execute(sql: """
-       drop table Activity;
-        """)
-        }
-
+                drop table Activity;
+                """)
 
             try db.create(table: "Activity") { t in
                 t.autoIncrementedPrimaryKey("id")
@@ -96,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let _: String = "banana"
         try! dbQueue.read { db in
         // Fetch database rows
-            let rows = try Row.fetchCursor(db, sql: "SELECT * FROM activity")
+            let rows = try Row.fetchCursor(db, sql: "SELECT * FROM Activity")
         }
         
         //test insert
