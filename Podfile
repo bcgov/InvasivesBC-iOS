@@ -6,6 +6,7 @@ target 'InvasivesBC' do
   use_frameworks!
 
   # Pods for InvasivesBC
+  pod 'GRDB.swift'
   pod 'IQKeyboardManagerSwift'
   pod 'ReachabilitySwift'
   pod 'Alamofire', '~> 4.7.3'

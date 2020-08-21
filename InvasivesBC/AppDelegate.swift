@@ -10,12 +10,49 @@ import UIKit
 import Realm
 import RealmSwift
 import IQKeyboardManagerSwift
+import GRDB
+
+struct Activity: Codable {
+    var id: Int64?
+    var activity_type: String
+    var activity_sub_type: String
+    var isFavorite: Bool
+    var latitude: Double
+    var longitude: Double
+
+}
+
+// SQL generation
+extension Activity: TableRecord {
+    /// The table columns
+    enum Columns {
+        static let id = Column(CodingKeys.id)
+        static let activityType = Column(CodingKeys.activity_type)
+        static let activitySubType = Column(CodingKeys.activity_sub_type)
+        static let isFavorite = Column(CodingKeys.isFavorite)
+        static let latitude = Column(CodingKeys.latitude)
+        static let longitude = Column(CodingKeys.longitude)
+    }
+}
+
+// Fetching methods
+extension Activity: FetchableRecord { }
+
+// Persistence methods
+extension Activity: MutablePersistableRecord {
+    // Update auto-incremented id upon successful insertion
+    mutating func didInsert(with rowID: Int64, for column: String?) {
+        id = rowID
+    }
+}
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         migrateRealm()
+        setupDB()
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         IQKeyboardManager.shared.enableAutoToolbar = false
@@ -28,6 +65,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(_ application: UIApplication) {
 //        SyncService.shared.beginListener()
+    }
+    
+    func setupDB(){
+        
+        
+        let databaseURL = try! FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("db.sqlite")
+        let dbQueue = try! DatabaseQueue(path: databaseURL.path)
+        
+        try! dbQueue.write { db in
+            try db.create(table: "Activity") { t in
+                t.autoIncrementedPrimaryKey("id")
+                t.column("activity_type", .text).notNull()
+                t.column("activity_sub_type", .text).notNull()
+                t.column("isFavorite", .boolean).notNull().defaults(to: false)
+                t.column("longitude", .double).notNull()
+                t.column("latitude", .double).notNull()
+            }
+        }
+        
+        let _: String = "banana"
+        try! dbQueue.read { db in
+        // Fetch database rows
+            let rows = try Row.fetchCursor(db, sql: "SELECT * FROM activity")
+        }
+        
+        //test insert
+        //let activity = Activity(activityType: "Observation", activitySubType: "Invasive Terrestrial Plant Observatin")
+        //try activity.insert(db)
+
+        
     }
     
     /// https://realm.io/docs/swift/latest/#migrations
