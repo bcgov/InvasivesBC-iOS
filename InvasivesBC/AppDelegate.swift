@@ -76,6 +76,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dbQueue = try! DatabaseQueue(path: databaseURL.path)
         
         try! dbQueue.write { db in
+
+            try db.execute(sql: """
+       drop table Activity;
+        """)
+        }
+
+
             try db.create(table: "Activity") { t in
                 t.autoIncrementedPrimaryKey("id")
                 t.column("activity_type", .text).notNull()
