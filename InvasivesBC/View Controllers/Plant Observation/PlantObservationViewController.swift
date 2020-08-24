@@ -65,7 +65,7 @@ class PlantObservationViewController: BaseViewController {
         try! dbQueue.read { db in
         // Fetch database rows
             let rows = try Row.fetchCursor(db, sql: "SELECT * FROM Activity")
-            print(rows.)
+          
         }
         var testActivity: Activity = Activity(activity_type: "observation", activity_sub_type: "terrestrial/invasive", isFavorite: true, latitude: 64.0, longitude: -123.0)
         try! dbQueue.write { db in

@@ -50,8 +50,11 @@ extension Activity: MutablePersistableRecord {
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var dbQueue: DatabaseQueue
+    var dbMigrator: DatabaseMigrator
+    
     override init(){
         self.dbQueue = DatabaseQueue()
+        self.dbMigrator = DatabaseMigrator()
     }
     
     
@@ -72,12 +75,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        SyncService.shared.beginListener()
     }
     
+    func checkIfFirstLaunch() -> Bool    {
+        //retrieve value from local store, if value doesn't exist then false is returned
+        let hasAlreadyLaunched: Bool = UserDefaults.standard.bool(forKey: "hasAlreadyLaunched")
+        
+        	
+        //check first launched
+        return hasAlreadyLaunched
+    }
+    
+    func setHasAlreadyLaunched()
+    {
+        UserDefaults.standard.set(true, forKey: "hasAlreadyLaunched")
+    }
+
+    
     func setupDB(){
         let databaseURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("db.sqlite")
         self.dbQueue = try! DatabaseQueue(path: databaseURL.path)
         
+        
+        if(checkIfFirstLaunch())
+        {
+            // dont run migrations
+        }
+        else
+        {
+            // run migrations here
+            var dbMigrationRegistrator: DBMigrationRegistrator = DBMigrationRegistrator(dbMigration: self.dbMigrator)
+            dbMigrationRegistrator.registerMigrations()
+            
+            setHasAlreadyLaunched()
+        }
+        
+        
+        
+
         
         try! dbQueue.write { db in
 
