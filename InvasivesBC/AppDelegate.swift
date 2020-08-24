@@ -72,6 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dbMigrationRegistrator.registerMigrations()
         
         
+        // run migrations if the app hasn't been launched before.
         if(checkIfFirstLaunch())
         {
             print("App has been launched before")
@@ -81,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         {
             do
             {
+                // CHOOSE a migration to move up to by replacing v1 with the right number
                 try dbMigrationRegistrator.migrator.migrate(dbQueue, upTo: "v1")
                 print("migrations run")
             }

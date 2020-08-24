@@ -10,12 +10,16 @@ import Foundation
 import GRDB
 
 struct Activity: Codable {
+    
     var id: Int64?
     var activity_type: String
     var activity_sub_type: String
     var isFavorite: Bool
     var latitude: Double
     var longitude: Double
+    var synched: Bool
+    var synch_error: Bool
+    var synch_error_string: String
 
 }
 
@@ -29,6 +33,9 @@ extension Activity: TableRecord {
         static let isFavorite = Column(CodingKeys.isFavorite)
         static let latitude = Column(CodingKeys.latitude)
         static let longitude = Column(CodingKeys.longitude)
+        static let synched = Column(CodingKeys.synched)
+        static let synch_error = Column(CodingKeys.synch_error)
+        static let synch_error_string = Column(CodingKeys.synch_error_string)
     }
 }
 

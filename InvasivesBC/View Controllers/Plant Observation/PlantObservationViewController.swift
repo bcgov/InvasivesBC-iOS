@@ -20,6 +20,17 @@ enum PlantObservationSection: Int, CaseIterable {
 
 class PlantObservationViewController: BaseViewController {
     
+    // set up blank record
+    var activityRecord = Activity(activity_type: "Observation",
+                                       activity_sub_type: "Terrestrial Plant",
+                                       isFavorite: false,
+                                       latitude: 0, longitude: 0,
+                                       synched: false,
+                                       synch_error: false,
+                                       synch_error_string: "")
+
+
+    
     var model: PlantObservationModel?
     
     var isSectionOpen: [PlantObservationSection: Bool] = [
@@ -55,26 +66,31 @@ class PlantObservationViewController: BaseViewController {
         style()
         styleForState()
         addListeners()
-        tryDB()
+        
+        
+        // just for dev and api testing.
+        updateRecord()
     
     }
     
     
-    func tryDB(){
+    func updateRecord(){
         let dbQueue = self.delegate.dbQueue
-        try! dbQueue.read { db in
+        
+        
+        /*try! dbQueue.read { db in
         // Fetch database rows
             let rows = try Row.fetchCursor(db, sql: "SELECT * FROM Activity")
           
-        }
-        var testActivity: Activity = Activity(activity_type: "observation", activity_sub_type: "terrestrial/invasive", isFavorite: true, latitude: 64.0, longitude: -123.0)
+        }*/
+        
+        self.activityRecord.latitude = 150
+        self.activityRecord.longitude = 50
+        
         try! dbQueue.write { db in
         // Write database rows
-            try! testActivity.insert(db)
-            print("testActivity is \(testActivity)")
+            try! self.activityRecord.insert(db)
         }
-        
-        
         
     }
     

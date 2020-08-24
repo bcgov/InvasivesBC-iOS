@@ -24,6 +24,7 @@ class DBMigrationRegistrator
     func registerMigrations()
     {
         // check out InvasivesBC\DataAccess\TypeDefinitions\Activity.swift
+        // these can be converted to pure SQL and kept as a string in another file also
         migrator.registerMigration("v1") { db in
             try db.create(table: "Activity") { t in
                 t.autoIncrementedPrimaryKey("id")
@@ -32,6 +33,9 @@ class DBMigrationRegistrator
                 t.column("isFavorite", .boolean).notNull().defaults(to: false)
                 t.column("longitude", .double).notNull()
                 t.column("latitude", .double).notNull()
+                t.column("synched", .boolean).notNull().defaults(to: false)
+                t.column("synch_error", .boolean).notNull().defaults(to: false)
+                t.column("synch_error_string", .text).notNull()
             }
         }
         
