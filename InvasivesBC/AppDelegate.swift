@@ -91,50 +91,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     func setupDB(){
+        
+        /// open db and connection queue
         let databaseURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("db.sqlite")
         self.dbQueue = try! DatabaseQueue(path: databaseURL.path)
         
         
+        // register migrations
+        var dbMigrationRegistrator: DBMigrationRegistrator = DBMigrationRegistrator(dbMigration: self.dbMigrator)
+        dbMigrationRegistrator.registerMigrations()
+        
+        
         if(checkIfFirstLaunch())
         {
+            print("App has been launched before")
             // dont run migrations
         }
         else
         {
-            // run migrations here
-            var dbMigrationRegistrator: DBMigrationRegistrator = DBMigrationRegistrator(dbMigration: self.dbMigrator)
-            dbMigrationRegistrator.registerMigrations()
+            do
+            {
+                try dbMigrationRegistrator.migrator.migrate(dbQueue, upTo: "v1")
+                print("migrations run")
+            }
+            catch
+            {
+                print("Unable to run migrations")
+                fatalError("Migration error call Mike Shasko")
+            }
             
             setHasAlreadyLaunched()
         }
         
-        
-        
-
-        
-        try! dbQueue.write { db in
-
-            try db.execute(sql: """
-                drop table Activity;
-                """)
-
-            try db.create(table: "Activity") { t in
-                t.autoIncrementedPrimaryKey("id")
-                t.column("activity_type", .text).notNull()
-                t.column("activity_sub_type", .text).notNull()
-                t.column("isFavorite", .boolean).notNull().defaults(to: false)
-                t.column("longitude", .double).notNull()
-                t.column("latitude", .double).notNull()
-            }
-        }
-        
         let _: String = "banana"
+    
+        /*
         try! dbQueue.read { db in
         // Fetch database rows
             let rows = try Row.fetchCursor(db, sql: "SELECT * FROM Activity")
         }
+        */
         
         //test insert
         //let activity = Activity(activityType: "Observation", activitySubType: "Invasive Terrestrial Plant Observatin")

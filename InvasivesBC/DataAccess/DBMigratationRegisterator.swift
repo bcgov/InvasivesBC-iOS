@@ -23,8 +23,15 @@ class DBMigrationRegistrator
     
     func registerMigrations()
     {
-        migrator.registerMigration("createLibrary") { db in
-             try Row.fetchAll(db, "SELECT * FROM persons")
+        migrator.registerMigration("v1") { db in
+            try db.create(table: "Activity") { t in
+                t.autoIncrementedPrimaryKey("id")
+                t.column("activity_type", .text).notNull()
+                t.column("activity_sub_type", .text).notNull()
+                t.column("isFavorite", .boolean).notNull().defaults(to: false)
+                t.column("longitude", .double).notNull()
+                t.column("latitude", .double).notNull()
+            }
         }
         
         
