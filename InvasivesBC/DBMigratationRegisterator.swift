@@ -20,9 +20,10 @@ class DBMigrationRegistrator
         self.migrator = dbMigration
     }
     
-    
+    // TODO: maybe move these into individual files when this gets big
     func registerMigrations()
     {
+        // check out InvasivesBC\DataAccess\TypeDefinitions\Activity.swift
         migrator.registerMigration("v1") { db in
             try db.create(table: "Activity") { t in
                 t.autoIncrementedPrimaryKey("id")
