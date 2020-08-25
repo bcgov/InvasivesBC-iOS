@@ -27,7 +27,7 @@ class DBMigrationRegistrator
         // these can be converted to pure SQL and kept as a string in another file also
         migrator.registerMigration("v1") { db in
             try db.create(table: "Activity") { t in
-                t.autoIncrementedPrimaryKey("id")
+                t.autoIncrementedPrimaryKey("local_id")
                 t.column("activity_type", .text).notNull()
                 t.column("activity_sub_type", .text).notNull()
                 t.column("isFavorite", .boolean).notNull().defaults(to: false)
@@ -38,6 +38,26 @@ class DBMigrationRegistrator
                 t.column("synch_error_string", .text).notNull()
                 t.column("first_name", .text).notNull()
             }
+        }
+            
+            
+            
+        migrator.registerMigration("v2") { db in
+                try db.create(table: "Observation") { t in
+                    t.autoIncrementedPrimaryKey("local_id")
+                     t.column("local_activity_id", .integer).notNull()
+                  
+                }
+            
+            try db.create(table: "TerrestrialPlant") { t in
+                t.autoIncrementedPrimaryKey("local_id")
+                 t.column("local_observation_id", .integer).notNull()
+              
+            }
+            
+            
+            
+            
         }
         
         

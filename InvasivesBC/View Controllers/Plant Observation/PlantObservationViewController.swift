@@ -29,10 +29,11 @@ class PlantObservationViewController: BaseViewController {
                                        synch_error: false,
                                        synch_error_string: "",
                                        first_name: "")
-
-
     
     
+    var observationRecord =  Observation(local_activity_id: 0)
+    
+    var terrestrialPlantRecord =  TerrestrialPlant( local_observation_id: 0)
     
     // the realm way to persist
     var model: PlantObservationModel?
@@ -97,6 +98,14 @@ class PlantObservationViewController: BaseViewController {
         try! dbQueue.write { db in
         // Write database rows
             try! self.activityRecord.insert(db)
+            print("activity id:\(self.activityRecord.local_id)")
+          
+            self.observationRecord.local_activity_id = self.activityRecord.local_id ?? 0
+            try! self.observationRecord.insert(db)
+            
+            self.terrestrialPlantRecord.local_observation_id = self.observationRecord.local_id ?? 0
+            try! self.terrestrialPlantRecord.insert(db)
+            
             print("An activity record is inserted, latitude is \(self.activityRecord.latitude)")
         }
         
@@ -296,6 +305,9 @@ extension PlantObservationViewController: UITableViewDataSource, UITableViewDele
         }
         return headerView
     }
+    
+    
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let type = PlantObservationSection.init(rawValue: indexPath.section) else {return UITableViewCell()}

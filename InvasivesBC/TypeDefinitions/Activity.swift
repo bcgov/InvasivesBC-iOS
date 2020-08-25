@@ -13,7 +13,7 @@ import GRDB
 
 struct Activity: Codable {
     
-    var id: Int64?
+    var local_id: Int64?
     var activity_type: String
     var activity_sub_type: String
     var isFavorite: Bool
@@ -30,7 +30,7 @@ struct Activity: Codable {
 extension Activity: TableRecord {
     /// The table columns
     enum Columns {
-        static let id = Column(CodingKeys.id)
+        static let local_id = Column(CodingKeys.local_id)
         static let activity_type = Column(CodingKeys.activity_type)
         static let activity_sub_type = Column(CodingKeys.activity_sub_type)
         static let isFavorite = Column(CodingKeys.isFavorite)
@@ -50,6 +50,6 @@ extension Activity: FetchableRecord { }
 extension Activity: MutablePersistableRecord {
     // Update auto-incremented id upon successful insertion
     mutating func didInsert(with rowID: Int64, for column: String?) {
-        id = rowID
+        local_id = rowID
     }
 }
