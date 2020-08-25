@@ -10,6 +10,7 @@ import Foundation
 import Realm
 import RealmSwift
 
+
 import MapKit
 class GeoJSONCoordinate: BaseObject {
     @objc dynamic var latitude: Double = 0

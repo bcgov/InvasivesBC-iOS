@@ -36,6 +36,7 @@ class DBMigrationRegistrator
                 t.column("synched", .boolean).notNull().defaults(to: false)
                 t.column("synch_error", .boolean).notNull().defaults(to: false)
                 t.column("synch_error_string", .text).notNull()
+                t.column("first_name", .text).notNull()
             }
         }
         

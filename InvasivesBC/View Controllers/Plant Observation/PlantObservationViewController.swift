@@ -27,11 +27,18 @@ class PlantObservationViewController: BaseViewController {
                                        latitude: 0, longitude: 0,
                                        synched: false,
                                        synch_error: false,
-                                       synch_error_string: "")
+                                       synch_error_string: "",
+                                       first_name: "")
 
 
     
+    
+    
+    // the realm way to persist
     var model: PlantObservationModel?
+    
+    // the grdb way:
+    var record: Activity?
     
     var isSectionOpen: [PlantObservationSection: Bool] = [
         .LocationandGeometry: true,
@@ -69,7 +76,7 @@ class PlantObservationViewController: BaseViewController {
         
         
         // just for dev and api testing.
-        updateRecord()
+        
     
     }
     
@@ -90,6 +97,7 @@ class PlantObservationViewController: BaseViewController {
         try! dbQueue.write { db in
         // Write database rows
             try! self.activityRecord.insert(db)
+            print("An activity record is inserted, latitude is \(self.activityRecord.latitude)")
         }
         
     }
@@ -126,6 +134,13 @@ class PlantObservationViewController: BaseViewController {
     @objc func inputItemValueChanged(notification: Notification) {
         guard let item: InputItem = notification.object as? InputItem else {return}
         // Set value in Realm object
+        
+        if item.key == "firstName"{
+            self.activityRecord.first_name = (item.value.get(type: item.type)) as! String
+        }
+        
+        
+        
         if let m = model {
             m.set(value: item.value.get(type: item.type) as Any, for: item.key)
         }
@@ -156,6 +171,10 @@ class PlantObservationViewController: BaseViewController {
     }
     
     func savePlantObservation() {
+        
+        updateRecord()
+        
+        
         guard let model = self.model else { return }
         RealmRequests.saveObject(object: model)
         model.set(shouldSync: true)
