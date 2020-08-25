@@ -35,7 +35,7 @@ class PlantObservationViewController: BaseViewController {
     
     var terrestrialPlantRecord =  TerrestrialPlant( local_observation_id: 0)
     
-    // the realm way to persist
+    // where fields for the form are defined
     var model: PlantObservationModel?
     
     // the grdb way:
@@ -81,16 +81,9 @@ class PlantObservationViewController: BaseViewController {
     
     }
     
-    
+    // MARK: Database commit
     func updateRecord(){
         let dbQueue = self.delegate.dbQueue
-        
-        
-        /*try! dbQueue.read { db in
-        // Fetch database rows
-            let rows = try Row.fetchCursor(db, sql: "SELECT * FROM Activity")
-          
-        }*/
         
         self.activityRecord.latitude = 150
         self.activityRecord.longitude = 50
@@ -139,19 +132,13 @@ class PlantObservationViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.inputItemValueChanged(notification:)), name: .InputItemValueChanged, object: nil)
     }
     
-    // MARK: Input Item Changed
+
+    //  MARK:  MAP UI Fields to GRDB Model on Field changed
     @objc func inputItemValueChanged(notification: Notification) {
         guard let item: InputItem = notification.object as? InputItem else {return}
-        // Set value in Realm object
         
         if item.key == "firstName"{
             self.activityRecord.first_name = (item.value.get(type: item.type)) as! String
-        }
-        
-        
-        
-        if let m = model {
-            m.set(value: item.value.get(type: item.type) as Any, for: item.key)
         }
     }
     
@@ -182,11 +169,6 @@ class PlantObservationViewController: BaseViewController {
     func savePlantObservation() {
         
         updateRecord()
-        
-        
-        guard let model = self.model else { return }
-        RealmRequests.saveObject(object: model)
-        model.set(shouldSync: true)
         
         let alertController = UIAlertController(title: "Plant observation", message:
             "record saved", preferredStyle: .alert)
