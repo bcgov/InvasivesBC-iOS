@@ -16,6 +16,8 @@ struct Activity: Codable {
     var local_id: Int64?
     var activity_type: String
     var activity_sub_type: String
+    var date: Date
+    
     var isFavorite: Bool
     var latitude: Double
     var longitude: Double
@@ -33,6 +35,9 @@ extension Activity: TableRecord {
         static let local_id = Column(CodingKeys.local_id)
         static let activity_type = Column(CodingKeys.activity_type)
         static let activity_sub_type = Column(CodingKeys.activity_sub_type)
+        static let date = Column(CodingKeys.date)
+        
+        
         static let isFavorite = Column(CodingKeys.isFavorite)
         static let latitude = Column(CodingKeys.latitude)
         static let longitude = Column(CodingKeys.longitude)

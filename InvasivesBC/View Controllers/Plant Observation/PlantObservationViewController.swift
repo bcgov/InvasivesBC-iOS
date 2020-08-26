@@ -23,6 +23,7 @@ class PlantObservationViewController: BaseViewController {
     // set up blank record
     var activityRecord = Activity(activity_type: "Observation",
                                        activity_sub_type: "Terrestrial Plant",
+                                       date: Date(),
                                        isFavorite: false,
                                        latitude: 0, longitude: 0,
                                        synched: false,
@@ -31,7 +32,25 @@ class PlantObservationViewController: BaseViewController {
                                        first_name: "")
     
     
-    var observationRecord =  Observation(local_activity_id: 0)
+    var observationRecord =  Observation(local_activity_id: 0,
+                                         negative_observation_ind: false,
+                                         aquatic_observation_ind: false,
+                                         primary_user_first_name: "",
+                                         primary_user_last_name: "",
+                                         secondary_user_first_name: "",
+                                         secondary_user_last_name: "",
+                                         species: "",
+                                         primary_file_id: "",
+                                         secondary_file_id: "",
+                                         location_comment: "",
+                                         general_observation_comment: "",
+                                         sample_taken_ind: false,
+                                         sample_label_number: ""
+                                         )
+    
+    
+    
+    
     
     var terrestrialPlantRecord =  TerrestrialPlant( local_observation_id: 0)
     
@@ -99,7 +118,6 @@ class PlantObservationViewController: BaseViewController {
             self.terrestrialPlantRecord.local_observation_id = self.observationRecord.local_id ?? 0
             try! self.terrestrialPlantRecord.insert(db)
             
-            print("An activity record is inserted, latitude is \(self.activityRecord.latitude)")
         }
         
     }
@@ -137,10 +155,49 @@ class PlantObservationViewController: BaseViewController {
     @objc func inputItemValueChanged(notification: Notification) {
         guard let item: InputItem = notification.object as? InputItem else {return}
         
-        if item.key == "firstName"{
-            self.activityRecord.first_name = (item.value.get(type: item.type)) as! String
+        switch item.key {
+    
+        case "negativeObservation":
+            self.observationRecord.negative_observation_ind = (item.value.get(type: item.type)) as! Bool
+        case "aquaticObservation":
+            self.observationRecord.aquatic_observation_ind = (item.value.get(type: item.type)) as! Bool
+        case "firstName":
+            self.observationRecord.primary_user_first_name = (item.value.get(type: item.type)) as! String
+        case "lastName":
+            self.observationRecord.primary_user_last_name = (item.value.get(type: item.type)) as! String
+        case "species":
+            self.observationRecord.species = (item.value.get(type: item.type)) as! String
+        case "primaryFileId":
+            self.observationRecord.primary_file_id = (item.value.get(type: item.type)) as! String
+        case "secondaryFileId":
+            self.observationRecord.secondary_file_id = (item.value.get(type: item.type)) as! String
+        case "locationComments":
+            self.observationRecord.location_comment = (item.value.get(type: item.type)) as! String
+        case "generalComments":
+            self.observationRecord.general_observation_comment = (item.value.get(type: item.type)) as! String
+            
+        case "sampleTaken":
+            self.observationRecord.sample_taken_ind = (item.value.get(type: item.type)) as! Bool
+        case "sampleNumber":
+            self.observationRecord.sample_label_number = (item.value.get(type: item.type)) as! String
+            
+        default:
+            print("random plant observation field")
         }
     }
+    
+//    
+//    var secondary_user_first_name: String
+//    var secondary_user_last_name: String
+//    var species: String
+//    var primary_file_id: String
+//    var secondary_file_id: String
+//    var location_comment: String
+//    var general_observation_comment: String
+//    var sample_taken_ind: String
+//    var sample_label_number: String
+//    
+    
     
     @IBAction func rightButtonAction(_ sender: Any) {
         if editable {
