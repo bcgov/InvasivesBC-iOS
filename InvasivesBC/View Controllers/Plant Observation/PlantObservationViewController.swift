@@ -24,12 +24,10 @@ class PlantObservationViewController: BaseViewController {
     var activityRecord = Activity(activity_type: "Observation",
                                        activity_sub_type: "Terrestrial Plant",
                                        date: Date(),
-                                       isFavorite: false,
-                                       latitude: 0, longitude: 0,
+                                       deviceRequestUID: "",
                                        synched: false,
                                        synch_error: false,
-                                       synch_error_string: "",
-                                       first_name: "")
+                                       synch_error_string: "")
     
     
     var observationRecord =  Observation(local_activity_id: 0,
@@ -45,14 +43,33 @@ class PlantObservationViewController: BaseViewController {
                                          location_comment: "",
                                          general_observation_comment: "",
                                          sample_taken_ind: false,
-                                         sample_label_number: ""
-                                         )
+                                         sample_label_number: "")
     
     
     
     
     
-    var terrestrialPlantRecord =  TerrestrialPlant( local_observation_id: 0)
+    var terrestrialPlantRecord =  TerrestrialPlant( local_observation_id: 0,
+                                                    species: "",
+                                                    distribution: "",
+                                                    density: "",
+                                                    soil_texture: "",
+                                                    slope: "",
+                                                    aspect: "",
+                                                    flowering: "",
+                                                    specific_use: "",
+                                                    proposed_action: "",
+                                                    seed_stage: "",
+                                                    plant_health: "",
+                                                    plant_life_stage: "",
+                                                    early_detection: "",
+                                                    research: "",
+                                                    well_on_site_ind: false,
+                                                    special_care_ind: false,
+                                                    biological_care_ind: false,
+                                                    legacy_site_ind: false,
+                                                    range_unit: "")
+    
     
     // where fields for the form are defined
     var model: PlantObservationModel?
@@ -103,9 +120,6 @@ class PlantObservationViewController: BaseViewController {
     // MARK: Database commit
     func updateRecord(){
         let dbQueue = self.delegate.dbQueue
-        
-        self.activityRecord.latitude = 150
-        self.activityRecord.longitude = 50
         
         try! dbQueue.write { db in
         // Write database rows
@@ -175,7 +189,6 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.location_comment = (item.value.get(type: item.type)) as! String
         case "generalComments":
             self.observationRecord.general_observation_comment = (item.value.get(type: item.type)) as! String
-            
         case "sampleTaken":
             self.observationRecord.sample_taken_ind = (item.value.get(type: item.type)) as! Bool
         case "sampleNumber":
@@ -185,18 +198,6 @@ class PlantObservationViewController: BaseViewController {
             print("random plant observation field")
         }
     }
-    
-//    
-//    var secondary_user_first_name: String
-//    var secondary_user_last_name: String
-//    var species: String
-//    var primary_file_id: String
-//    var secondary_file_id: String
-//    var location_comment: String
-//    var general_observation_comment: String
-//    var sample_taken_ind: String
-//    var sample_label_number: String
-//    
     
     
     @IBAction func rightButtonAction(_ sender: Any) {
