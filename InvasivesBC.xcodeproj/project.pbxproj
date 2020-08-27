@@ -134,6 +134,7 @@
 		A95A0D0324F5B79400BBD58C /* TerrestrialPlant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A0D0224F5B79400BBD58C /* TerrestrialPlant.swift */; };
 		A9DB485E24F443E1009634AD /* DBMigratationRegisterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB485D24F443E1009634AD /* DBMigratationRegisterator.swift */; };
 		A9DB486224F472C1009634AD /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB486124F472C1009634AD /* Activity.swift */; };
+		F43E83AD24F6DBA70055C946 /* SyncActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43E83AC24F6DBA70055C946 /* SyncActivity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -294,6 +295,7 @@
 		C45B11A0F814ACFB846210D5 /* Pods-InvasivesBC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBC.debug.xcconfig"; path = "Target Support Files/Pods-InvasivesBC/Pods-InvasivesBC.debug.xcconfig"; sourceTree = "<group>"; };
 		CD71B465E1AAB7B79DA86297 /* Pods_InvasivesBCTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InvasivesBCTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E72F82F40D1D7E54D79DE11E /* Pods-InvasivesBCTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBCTests.release.xcconfig"; path = "Target Support Files/Pods-InvasivesBCTests/Pods-InvasivesBCTests.release.xcconfig"; sourceTree = "<group>"; };
+		F43E83AC24F6DBA70055C946 /* SyncActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncActivity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -741,6 +743,7 @@
 		29B577CE24C9FBF300AB8365 /* InvasivesBC */ = {
 			isa = PBXGroup;
 			children = (
+				F43E83AB24F6DB550055C946 /* APIClient */,
 				A9DB485F24F47240009634AD /* DataAccess */,
 				29B577CF24C9FBF300AB8365 /* AppDelegate.swift */,
 				29B577D124C9FBF300AB8365 /* SceneDelegate.swift */,
@@ -952,6 +955,14 @@
 				CD71B465E1AAB7B79DA86297 /* Pods_InvasivesBCTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F43E83AB24F6DB550055C946 /* APIClient */ = {
+			isa = PBXGroup;
+			children = (
+				F43E83AC24F6DBA70055C946 /* SyncActivity.swift */,
+			);
+			path = APIClient;
 			sourceTree = "<group>";
 		};
 		F849CD543EF77FAE196BAC00 /* Pods */ = {
@@ -1309,6 +1320,7 @@
 				296CBBB724CB7AC3002277D0 /* TimeInputCollectionViewCell.swift in Sources */,
 				296CBBB024CB7AC3002277D0 /* RadioSwitchInputCollectionViewCell.swift in Sources */,
 				296CBBB824CB7AC3002277D0 /* SwitchInputCollectionViewCell.swift in Sources */,
+				F43E83AD24F6DBA70055C946 /* SyncActivity.swift in Sources */,
 				29B44E9324CA1F670029E518 /* TileService.swift in Sources */,
 				299F842B24CA32F5009A13D9 /* Fonts.swift in Sources */,
 				29BE867524D0E6D1007D1A02 /* SyncService.swift in Sources */,

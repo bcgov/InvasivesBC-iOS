@@ -60,6 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupDB(){
         
+        
         /// open db and connection queue
         let databaseURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)

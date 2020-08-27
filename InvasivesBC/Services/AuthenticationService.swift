@@ -11,7 +11,7 @@ import SingleSignOn
 
 class AuthenticationService {
     
-    private static var authServices: AuthServices = {
+    public static var authServices: AuthServices = {
         return AuthServices(baseUrl: SSO.baseUrl, redirectUri: SSO.redirectUri,
                             clientId: SSO.clientId, realm: SSO.realmName,
                             idpHint: SSO.idpHint)
