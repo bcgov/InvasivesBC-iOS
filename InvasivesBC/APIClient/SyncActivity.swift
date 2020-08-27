@@ -52,6 +52,26 @@ let headers: HTTPHeaders = [
   
     }
 }
+ 
+
+
+func transformActivityToJSON(input: Activity) -> NSString
+{
+    let encoder = JSONEncoder()
+    
+    let encodedData: Data = try! encoder.encode(input)
+    
+    guard var dictionary = try! JSONSerialization.jsonObject(with: encodedData, options: .allowFragments) as? [String: Any] else {
+        return "Unable to encode Activity"
+      }
+        
+    dictionary.removeValue(forKey: "local_id")
+    
+    let jsonData = try! JSONSerialization.data(withJSONObject: dictionary)
+    guard let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) else { return "banana" }
+    print(jsonString)
+    return jsonString
+}
     
 
 func convertStringToDictionary(text: String) -> [String:AnyObject]? {
@@ -68,67 +88,68 @@ func convertStringToDictionary(text: String) -> [String:AnyObject]? {
 
 let sample_request = """
 {
-    "activityType": "Observation",
-    "activitySubType": "Terrestrial Invasive Plant",
-    "date": "2019-04-12",
-    "deviceRequestUID": "string",
-    "locationAndGeometry": {
-      "anchorPointY": 48,
-      "anchorPointX": -125,
-      "area": 0,
-      "geometry": {
-          "type": "Feature",
-          "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-              [
-                [-125.6, 48.3],[-126.6, 48.3],[-126.6, 49.3],[-125.6, 48.3]
-              ]
-            ]},
-           "properties": {}
-      },
-      "jurisdiction": "string",
-      "agency": "string",
-      "observer1FirstName": "string",
-      "observer1LastName": "string",
-      "locationComment": "string",
-      "generalComment": "string",
-      "photoTaken": true
+  "activityType": "Observation",
+  "activitySubType": "Terrestrial Invasive Plant",
+  "date": "2019-04-12",
+  "deviceRequestUID": "string",
+  "locationAndGeometry": {
+    "anchorPointY": 48.3,
+    "anchorPointX": -125.6,
+    "area": 0,
+    "geometry": {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [-125.6, 48.3],[-126.6, 48.3],[-126.6, 49.3],[-125.6, 48.3]
+            ]
+          ]},
+         "properties": {}
     },
-    "activityTypeData": {
-        "negative_observation_ind": false,
-        "aquatic_observation_ind": false,
-        "primary_user_last_name": "mike",
-        "secondary_user_first_name": "mike",
-        "secondary_user_last_name": "mike",
-        "species": "banana",
-        "primary_file_id": "test",
-        "secondary_file_id": "test",
-        "location_comment": "test",
-        "general_observation_comment": "general comment",
-        "sample_taken_ind": true,
-        "sample_label_number": "string"
-    },
-    "activitySubTypeData": {
-        "species": "banana",
-        "distribution": 123,
-        "density": 123,
-        "soil_texture": 1,
-        "slope": 123,
-        "aspect": 123,
-        "flowering": true,
-        "specific_use": 123,
-        "proposed_action": 123,
-        "seed_stage": 123,
-        "plant_health": 123,
-        "plant_life_stage": 123,
-        "early_detection": 1,
-        "research": true,
-        "well_on_site_ind": true,
-        "special_care_ind": true,
-        "biological_care_ind": true,
-        "legacy_site_ind": true,
-        "range_unit": "Canyon"
-    }
+    "jurisdiction": "string",
+    "agency": "string",
+    "observer1FirstName": "string",
+    "observer1LastName": "string",
+    "locationComment": "string",
+    "generalComment": "string",
+    "photoTaken": true
+  },
+  "activityTypeData": {
+    "negative_observation_ind": false,
+    "aquatic_observation_ind": false,
+    "primary_user_last_name": "mike",
+    "secondary_user_first_name": "mike",
+    "secondary_user_last_name": "mike",
+    "species": "banana",
+    "primary_file_id": "test",
+    "secondary_file_id": "test",
+    "location_comment": "test",
+    "general_observation_comment": "general comment",
+    "sample_taken_ind": true,
+    "sample_label_number": "string"
+  },
+  "activitySubTypeData": {
+    "species": "banana",
+    "distribution": 123,
+    "density": 123,
+    "soil_texture": 1,
+    "slope": 123,
+    "aspect": 123,
+    "flowering": true,
+    "specific_use": 123,
+    "proposed_action": 123,
+    "seed_stage": 123,
+    "plant_health": 123,
+    "plant_life_stage": 123,
+    "early_detection": 1,
+    "research": true,
+    "well_on_site_ind": true,
+    "special_care_ind": true,
+    "biological_care_ind": true,
+    "legacy_site_ind": true,
+    "range_unit": "Canyon"
+  }
 }
+
 """
