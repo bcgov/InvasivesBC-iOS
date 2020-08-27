@@ -17,7 +17,7 @@ func getToken() -> String?
 
 
 func uploadActiitycompletion(activity: Activity) {
-guard let url = URL(string: "https://invasivesbc-api-mobile-831-8ecbmv-dev.pathfinder.gov.bc.ca/api/activity") else {
+guard let url = URL(string: "https://api-mobile-dev-invasivesbc.pathfinder.gov.bc.ca/api/activity") else {
   return
 }
     
@@ -73,17 +73,27 @@ let sample_request = """
     "date": "2019-04-12",
     "deviceRequestUID": "string",
     "locationAndGeometry": {
-        "anchorPointY": 0,
-        "anchorPointX": 0,
-        "area": 0,
-        "geometry": {},
-        "jurisdiction": "string",
-        "agency": "string",
-        "observer1FirstName": "string",
-        "observer1LastName": "string",
-        "locationComment": "string",
-        "generalComment": "string",
-        "photoTaken": true
+      "anchorPointY": 48,
+      "anchorPointX": -125,
+      "area": 0,
+      "geometry": {
+          "type": "Feature",
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [-125.6, 48.3],[-126.6, 48.3],[-126.6, 49.3],[-125.6, 48.3]
+              ]
+            ]},
+           "properties": {}
+      },
+      "jurisdiction": "string",
+      "agency": "string",
+      "observer1FirstName": "string",
+      "observer1LastName": "string",
+      "locationComment": "string",
+      "generalComment": "string",
+      "photoTaken": true
     },
     "activityTypeData": {
         "negative_observation_ind": false,
