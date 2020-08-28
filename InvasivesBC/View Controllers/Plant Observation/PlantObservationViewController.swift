@@ -31,6 +31,8 @@ class PlantObservationViewController: BaseViewController {
                                        first_name: "")
     
     
+    
+    
     var observationRecord =  Observation(local_activity_id: 0)
     
     var terrestrialPlantRecord =  TerrestrialPlant( local_observation_id: 0)
@@ -100,12 +102,12 @@ class PlantObservationViewController: BaseViewController {
             try! self.terrestrialPlantRecord.insert(db)
             
             
-            transformActivityToJSON(input: activityRecord)
+            
             
             uploadActiitycompletion(activity: self.activityRecord)
             print("An activity record is inserted, latitude is \(self.activityRecord.latitude)")
         }
-        
+        transformActivityToJSON(input: activityRecord)
     }
     
     
