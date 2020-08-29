@@ -181,21 +181,21 @@ class PlantObservationModel: BaseObject {
     var geoJSON: List<GeoJSON> = List<GeoJSON>()
     
     // MARK: Setters
-    func set(value: Any, for key: String) {
-        if self[key] == nil {
-            print("\(key) is nil")
-            return
-        }
-        do {
-            let realm = try Realm()
-            try realm.write {
-                self[key] = value
-            }
-        } catch let error as NSError {
-            print("** REALM ERROR")
-            print(error)
-        }
-    }
+//    func set(value: Any, for key: String) {
+//        if self[key] == nil {
+//            print("\(key) is nil")
+//            return
+//        }
+//        do {
+//            let realm = try Realm()
+//            try realm.write {
+//                self[key] = value
+//            }
+//        } catch let error as NSError {
+//            print("** REALM ERROR")
+//            print(error)
+//        }
+//    }
     
     func set(shouldSync should: Bool) {
         do {

@@ -90,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             catch
             {
                 print("Unable to run migrations")
-                fatalError("Migration error call Mike Shasko")
+                //fatalError("Migration error call Mike Shasko")
             }
             
             setHasAlreadyLaunched()

@@ -132,6 +132,7 @@
 		8DC748D6B5041D89CC4A9A18 /* Pods_InvasivesBC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB3CBAFC6EA79517990E6A6 /* Pods_InvasivesBC.framework */; };
 		A95A0CFB24F5AF5600BBD58C /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A0CFA24F5AF5600BBD58C /* Observation.swift */; };
 		A95A0D0324F5B79400BBD58C /* TerrestrialPlant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A0D0224F5B79400BBD58C /* TerrestrialPlant.swift */; };
+		A95A0D0624F5D34D00BBD58C /* ActivitySynch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95A0D0524F5D34D00BBD58C /* ActivitySynch.swift */; };
 		A9DB485E24F443E1009634AD /* DBMigratationRegisterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB485D24F443E1009634AD /* DBMigratationRegisterator.swift */; };
 		A9DB486224F472C1009634AD /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB486124F472C1009634AD /* Activity.swift */; };
 		F43E83AD24F6DBA70055C946 /* SyncActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43E83AC24F6DBA70055C946 /* SyncActivity.swift */; };
@@ -290,6 +291,7 @@
 		A20554623B3D59698EA2E8BB /* Pods-InvasivesBC-InvasivesBCUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBC-InvasivesBCUITests.debug.xcconfig"; path = "Target Support Files/Pods-InvasivesBC-InvasivesBCUITests/Pods-InvasivesBC-InvasivesBCUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A95A0CFA24F5AF5600BBD58C /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		A95A0D0224F5B79400BBD58C /* TerrestrialPlant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerrestrialPlant.swift; sourceTree = "<group>"; };
+		A95A0D0524F5D34D00BBD58C /* ActivitySynch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySynch.swift; sourceTree = "<group>"; };
 		A9DB485D24F443E1009634AD /* DBMigratationRegisterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBMigratationRegisterator.swift; sourceTree = "<group>"; };
 		A9DB486124F472C1009634AD /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		C45B11A0F814ACFB846210D5 /* Pods-InvasivesBC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBC.debug.xcconfig"; path = "Target Support Files/Pods-InvasivesBC/Pods-InvasivesBC.debug.xcconfig"; sourceTree = "<group>"; };
@@ -744,6 +746,7 @@
 			isa = PBXGroup;
 			children = (
 				F43E83AB24F6DB550055C946 /* APIClient */,
+				A95A0D0424F5D30F00BBD58C /* API */,
 				A9DB485F24F47240009634AD /* DataAccess */,
 				29B577CF24C9FBF300AB8365 /* AppDelegate.swift */,
 				29B577D124C9FBF300AB8365 /* SceneDelegate.swift */,
@@ -926,6 +929,14 @@
 				A95A0D0224F5B79400BBD58C /* TerrestrialPlant.swift */,
 			);
 			path = Observation;
+			sourceTree = "<group>";
+		};
+		A95A0D0424F5D30F00BBD58C /* API */ = {
+			isa = PBXGroup;
+			children = (
+				A95A0D0524F5D34D00BBD58C /* ActivitySynch.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		A9DB485F24F47240009634AD /* DataAccess */ = {
@@ -1311,6 +1322,7 @@
 				29A8325B24CB519900208F5F /* SelectFormTypeTableViewCell.swift in Sources */,
 				2933A89A24D0B120003E79F7 /* OptionsViewController.swift in Sources */,
 				29CE3FCD24E709DB00D0EF82 /* GeometryPickerMapDelegate.swift in Sources */,
+				A95A0D0624F5D34D00BBD58C /* ActivitySynch.swift in Sources */,
 				1EAEFF5124E1BF3C00CAAD7A /* ToolsViewController.swift in Sources */,
 				29B44E8B24CA0E7D0029E518 /* Theme.swift in Sources */,
 				1E42B4E224E1F444006BACFD /* SelectGeometryTypeTableViewCell.swift in Sources */,
