@@ -21,37 +21,38 @@ func uploadActivity(activity: Activity) {
         return
     }
     
-let headers: HTTPHeaders = [
-    "Authorization": "Bearer " + getToken()! ?? "tokenExpired",
+    
+    let headers: HTTPHeaders = [
+        "Authorization": "Bearer " + getToken()! ?? "tokenExpired",
         "Accept": "application/json",
         "ContentType": "application/json"
-]
+    ]
     
-
+    
     let thisReq = Alamofire.request(url,
-                  method: Alamofire.HTTPMethod.post,
-                  parameters: convertStringToDictionary(text: sample_request),
-                  encoding: JSONEncoding.default,
-                  headers: headers
-                  )
-.validate()
-.responseJSON { response in
-    
-    
-  guard response.result.isSuccess else {
-    print("ErrorBanana")
-    print("responseBanana\(response.result.value as? [String: Any])")
-    print("ErrorBanana\(response.error)")
-    return
-  }
-   // debugPrint(thisReq)
-    
-  
-    //print("responseBanana\(response.result.value as? [String: Any])")
-  
+                                    method: Alamofire.HTTPMethod.post,
+                                    parameters: convertStringToDictionary(text: sample_request),
+                                    encoding: JSONEncoding.default,
+                                    headers: headers
+    )
+        .validate()
+        .responseJSON { response in
+            
+            
+            guard response.result.isSuccess else {
+                print("ErrorBanana")
+                print("responseBanana\(response.result.value as? [String: Any])")
+                print("ErrorBanana\(response.error)")
+                return
+            }
+            // debugPrint(thisReq)
+            
+            
+            //print("responseBanana\(response.result.value as? [String: Any])")
+            
     }
 }
- 
+
 
 
 func transformActivityToJSON(input: Activity) -> NSString
@@ -65,45 +66,45 @@ func transformActivityToJSON(input: Activity) -> NSString
     let encodedActivityData: Data = try! encoder.encode(input)
     guard var activityDictionary = try! JSONSerialization.jsonObject(with: encodedActivityData, options: .allowFragments) as? [String: Any] else {
         return "Unable to encode Activity"
-      }
-    
-    // get related Activity Type Instance (Observation, Treatment, Monitoring)
-        // start with getting db connection:
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-
-      // get the right Activity Type instance and encode it
-    var encodedActivityTypeData: Data = Data()
-    switch input.activity_type {
-        case "Observation":
-            let relatedObservation = try! appDelegate.dbQueue.read { db in
-                try Observation.fetchOne(db,
-                                         sql: "SELECT * FROM observation WHERE local_activity_id = ?",
-                                         arguments: [input.local_id])!
-            }
-            encodedActivityTypeData = try! encoder.encode(relatedObservation)
-        default:
-            print("banana")
     }
     
-      //get that as a dictionary
+    // get related Activity Type Instance (Observation, Treatment, Monitoring)
+    // start with getting db connection:
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    // get the right Activity Type instance and encode it
+    var encodedActivityTypeData: Data = Data()
+    switch input.activity_type {
+    case "Observation":
+        let relatedObservation = try! appDelegate.dbQueue.read { db in
+            try Observation.fetchOne(db,
+                                     sql: "SELECT * FROM observation WHERE local_activity_id = ?",
+                                     arguments: [input.local_id])!
+        }
+        encodedActivityTypeData = try! encoder.encode(relatedObservation)
+    default:
+        print("banana")
+    }
+    
+    //get that as a dictionary
     guard var activityTypeDataDictionary = try! JSONSerialization.jsonObject(with: encodedActivityTypeData, options: .allowFragments) as? [String: Any] else {
-           return "Unable to encode ActivityTypeData"
-         }
-       
-      
+        return "Unable to encode ActivityTypeData"
+    }
+    
+    
     // strip out fields we don't want in request
     activityDictionary.removeValue(forKey: "local_id")
     activityTypeDataDictionary.removeValue(forKey: "local_id")
     
     // nest the objects as they need to be for the POST:
     activityDictionary["activityTypeData"] = activityTypeDataDictionary
-
+    
     let jsonData = try! JSONSerialization.data(withJSONObject: activityDictionary, options: [.sortedKeys, .prettyPrinted])
     guard let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) else { return "banana" }
     print(jsonString)
     return jsonString
 }
-    
+
 
 func convertStringToDictionary(text: String) -> [String:AnyObject]? {
     if let data = text.data(using: .utf8) {
