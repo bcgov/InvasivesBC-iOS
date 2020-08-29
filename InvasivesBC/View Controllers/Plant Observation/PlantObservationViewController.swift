@@ -100,8 +100,9 @@ class PlantObservationViewController: BaseViewController {
     
     }
     
+    
     // MARK: Database commit
-    func updateRecord(){
+    func insertRecord(){
         let dbQueue = self.delegate.dbQueue
         
         self.activityRecord.latitude = 150
@@ -118,7 +119,7 @@ class PlantObservationViewController: BaseViewController {
             self.terrestrialPlantRecord.local_observation_id = self.observationRecord.local_id ?? 0
             try! self.terrestrialPlantRecord.insert(db)
             
-            //uploadActiitycompletion(activity: self.activityRecord)
+            uploadActivity(activity: self.activityRecord)
             print("An activity record is inserted, latitude is \(self.activityRecord.latitude)")
         }
     }
@@ -181,9 +182,8 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.sample_taken_ind = (item.value.get(type: item.type)) as! Bool
         case "sampleNumber":
             self.observationRecord.sample_label_number = (item.value.get(type: item.type)) as! String
-            
         default:
-            print("Didn't have an API field to map to, name of UI field key was:\(item.key)")
+            print("Didn't have a database field to map to, name of UI field key was:\(item.key)")
         }
     }
     
@@ -226,7 +226,7 @@ class PlantObservationViewController: BaseViewController {
     
     func savePlantObservation() {
         
-        updateRecord()
+        insertRecord()
         
         let alertController = UIAlertController(title: "Plant observation", message:
             "record saved", preferredStyle: .alert)

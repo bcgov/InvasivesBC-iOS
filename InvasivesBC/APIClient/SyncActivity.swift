@@ -16,10 +16,10 @@ func getToken() -> String?
 }
 
 
-func uploadActiitycompletion(activity: Activity) {
-guard let url = URL(string: "https://api-mobile-dev-invasivesbc.pathfinder.gov.bc.ca/api/activity") else {
-  return
-}
+func uploadActivity(activity: Activity) {
+    guard let url = URL(string: "https://api-mobile-dev-invasivesbc.pathfinder.gov.bc.ca/api/activity") else {
+        return
+    }
     
 let headers: HTTPHeaders = [
     "Authorization": "Bearer " + getToken()! ?? "tokenExpired",
