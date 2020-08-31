@@ -24,7 +24,7 @@ class PlantObservationViewController: BaseViewController {
     var activityRecord = Activity(activity_type: "Observation",
                                        activity_sub_type: "Terrestrial Plant",
                                        date: Date(),
-                                       deviceRequestUID: "",
+                                       deviceRequestUID: "DeviceUID123",
                                        synched: false,
                                        synch_error: false,
                                        synch_error_string: "")
@@ -170,7 +170,14 @@ class PlantObservationViewController: BaseViewController {
         guard let item: InputItem = notification.object as? InputItem else {return}
         
         switch item.key {
-    
+//        case "activityType":
+//            self.activityRecord.activity_type = "Observation"
+//        case "activitySubType":
+//            self.activityRecord.activity_sub_type = "Terrestrial Invasive Plant"
+        case "date":
+            self.activityRecord.date = (item.value.get(type: item.type)) as! Date
+//        case "deviceRequestUID":
+//            self.activityRecord.deviceRequestUID = "DeviceUID123"
         case "negativeObservation":
             self.observationRecord.negative_observation_ind = (item.value.get(type: item.type)) as! Bool
         case "aquaticObservation":
@@ -196,7 +203,7 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.sample_label_number = (item.value.get(type: item.type)) as! String
         case "speciesDistributionCode":
             self.terrestrialPlantRecord.distribution = (item.value.get(type: item.type)) as! String
-        case "density":
+        case "speciesDensityCode":
             self.terrestrialPlantRecord.density = (item.value.get(type: item.type)) as! String
         case "soilTextureCode":
             self.terrestrialPlantRecord.soil_texture = (item.value.get(type: item.type)) as! String
@@ -206,9 +213,9 @@ class PlantObservationViewController: BaseViewController {
             self.terrestrialPlantRecord.aspect = (item.value.get(type: item.type)) as! String
         case "flowering":
             self.terrestrialPlantRecord.flowering = (item.value.get(type: item.type)) as! String
-        case "specific_use":
+        case "specificUseCode":
             self.terrestrialPlantRecord.specific_use = (item.value.get(type: item.type)) as! String
-        case "proposed_action":
+        case "proposedActionCode":
             self.terrestrialPlantRecord.proposed_action = (item.value.get(type: item.type)) as! String
         case "seedStage":
             self.terrestrialPlantRecord.seed_stage = (item.value.get(type: item.type)) as! String

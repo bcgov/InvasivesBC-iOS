@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         // register migrations
-        var dbMigrationRegistrator: DBMigrationRegistrator = DBMigrationRegistrator(dbMigration: self.dbMigrator)
+        var dbMigrationRegistrator: DBMigrationRegistrar = DBMigrationRegistrar(dbMigration: self.dbMigrator)
         dbMigrationRegistrator.registerMigrations()
         
         

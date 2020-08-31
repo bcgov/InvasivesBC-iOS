@@ -11,7 +11,7 @@ import GRDB
 
 
 
-class DBMigrationRegistrator
+class DBMigrationRegistrar
 {
     var migrator: DatabaseMigrator
     
@@ -37,8 +37,7 @@ class DBMigrationRegistrator
                 t.column("synch_error_string", .text).notNull()
             }
         }
-            
-            
+        
             
         migrator.registerMigration("v2") { db in
                 try db.create(table: "Observation") { t in
@@ -59,35 +58,30 @@ class DBMigrationRegistrator
                     t.column("sample_label_number", .text).check{ length($0) <= 50}
                 }
             
-            try db.create(table: "TerrestrialPlant") { t in
-                t.autoIncrementedPrimaryKey("local_id")
-                t.column("local_observation_id", .integer).notNull()
-                t.column("species", .text)
-                t.column("distribution", .text)
-                t.column("density", .text)
-                t.column("soil_texture", .text)
-                t.column("slope", .text)
-                t.column("aspect", .text)
-                t.column("flowering", .boolean)
-                t.column("specific_use", .text)
-                t.column("proposed_action", .text)
-                t.column("seed_stage", .text)
-                t.column("plant_health", .text)
-                t.column("plant_life_stage", .text)
-                t.column("early_detection", .boolean)
-                t.column("research", .boolean)
-                t.column("well_on_site_ind", .boolean)
-                t.column("biological_care_ind", .boolean)
-                t.column("special_care_ind", .boolean)
-                t.column("legacy_site_ind", .boolean)
-                t.column("range_unit", .text).check{ length($0) <= 20}
-                
-              
-            }
-            
+                try db.create(table: "TerrestrialPlant") { t in
+                    t.autoIncrementedPrimaryKey("local_id")
+                    t.column("local_observation_id", .integer).notNull()
+                    t.column("species", .text)
+                    t.column("distribution", .text)
+                    t.column("density", .text)
+                    t.column("soil_texture", .text)
+                    t.column("slope", .text)
+                    t.column("aspect", .text)
+                    t.column("flowering", .boolean).defaults(to: false)
+                    t.column("specific_use", .text)
+                    t.column("proposed_action", .text)
+                    t.column("seed_stage", .text)
+                    t.column("plant_health", .text)
+                    t.column("plant_life_stage", .text)
+                    t.column("early_detection", .boolean).defaults(to: false)
+                    t.column("research", .boolean).defaults(to: false)
+                    t.column("well_on_site_ind", .boolean).defaults(to: false)
+                    t.column("biological_care_ind", .boolean).defaults(to: false)
+                    t.column("special_care_ind", .boolean).defaults(to: false)
+                    t.column("legacy_site_ind", .boolean).defaults(to: false)
+                    t.column("range_unit", .text).check{ length($0) <= 20}
+                }
         }
-        
-        
         
     }
     
