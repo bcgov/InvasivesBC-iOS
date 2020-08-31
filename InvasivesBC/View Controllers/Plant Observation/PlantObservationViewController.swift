@@ -24,12 +24,10 @@ class PlantObservationViewController: BaseViewController {
     var activityRecord = Activity(activity_type: "Observation",
                                        activity_sub_type: "Terrestrial Plant",
                                        date: Date(),
-                                       isFavorite: false,
-                                       latitude: 0, longitude: 0,
+                                       deviceRequestUID: "DeviceUID123",
                                        synched: false,
                                        synch_error: false,
-                                       synch_error_string: "",
-                                       first_name: "")
+                                       synch_error_string: "")
     
     
     var observationRecord =  Observation(local_activity_id: 0,
@@ -45,14 +43,33 @@ class PlantObservationViewController: BaseViewController {
                                          location_comment: "",
                                          general_observation_comment: "",
                                          sample_taken_ind: false,
-                                         sample_label_number: ""
-                                         )
+                                         sample_label_number: "")
     
     
     
     
     
-    var terrestrialPlantRecord =  TerrestrialPlant( local_observation_id: 0)
+    var terrestrialPlantRecord =  TerrestrialPlant( local_observation_id: 0,
+                                                    species: "",
+                                                    distribution: "",
+                                                    density: "",
+                                                    soil_texture: "",
+                                                    slope: "",
+                                                    aspect: "",
+                                                    flowering: "",
+                                                    specific_use: "",
+                                                    proposed_action: "",
+                                                    seed_stage: "",
+                                                    plant_health: "",
+                                                    plant_life_stage: "",
+                                                    early_detection: false,
+                                                    research: false,
+                                                    well_on_site_ind: false,
+                                                    special_care_ind: false,
+                                                    biological_care_ind: false,
+                                                    legacy_site_ind: false,
+                                                    range_unit: "")
+    
     
     // where fields for the form are defined
     var model: PlantObservationModel?
@@ -105,9 +122,6 @@ class PlantObservationViewController: BaseViewController {
     func insertRecord(){
         let dbQueue = self.delegate.dbQueue
         
-        self.activityRecord.latitude = 150
-        self.activityRecord.longitude = 50
-        
         try! dbQueue.write { db in
         // Write database rows
             try! self.activityRecord.insert(db)
@@ -158,7 +172,10 @@ class PlantObservationViewController: BaseViewController {
         guard let item: InputItem = notification.object as? InputItem else {return}
         
         switch item.key {
-    
+        case "date":
+            self.activityRecord.date = (item.value.get(type: item.type)) as! Date
+//        case "deviceRequestUID":
+//            self.activityRecord.deviceRequestUID = "DeviceUID123"
         case "negativeObservation":
             self.observationRecord.negative_observation_ind = (item.value.get(type: item.type)) as! Bool
         case "aquaticObservation":
@@ -169,6 +186,7 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.primary_user_last_name = (item.value.get(type: item.type)) as! String
         case "species":
             self.observationRecord.species = (item.value.get(type: item.type)) as! String
+            self.terrestrialPlantRecord.species = (item.value.get(type: item.type)) as! String
         case "primaryFileId":
             self.observationRecord.primary_file_id = (item.value.get(type: item.type)) as! String
         case "secondaryFileId":
@@ -177,27 +195,50 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.location_comment = (item.value.get(type: item.type)) as! String
         case "generalComments":
             self.observationRecord.general_observation_comment = (item.value.get(type: item.type)) as! String
-            
         case "sampleTaken":
             self.observationRecord.sample_taken_ind = (item.value.get(type: item.type)) as! Bool
         case "sampleNumber":
             self.observationRecord.sample_label_number = (item.value.get(type: item.type)) as! String
+        case "speciesDistributionCode":
+            self.terrestrialPlantRecord.distribution = (item.value.get(type: item.type)) as! String
+        case "speciesDensityCode":
+            self.terrestrialPlantRecord.density = (item.value.get(type: item.type)) as! String
+        case "soilTextureCode":
+            self.terrestrialPlantRecord.soil_texture = (item.value.get(type: item.type)) as! String
+        case "slopeCode":
+            self.terrestrialPlantRecord.slope = (item.value.get(type: item.type)) as! String
+        case "aspectCode":
+            self.terrestrialPlantRecord.aspect = (item.value.get(type: item.type)) as! String
+        case "flowering":
+            self.terrestrialPlantRecord.flowering = (item.value.get(type: item.type)) as! String
+        case "specificUseCode":
+            self.terrestrialPlantRecord.specific_use = (item.value.get(type: item.type)) as! String
+        case "proposedActionCode":
+            self.terrestrialPlantRecord.proposed_action = (item.value.get(type: item.type)) as! String
+        case "seedStage":
+            self.terrestrialPlantRecord.seed_stage = (item.value.get(type: item.type)) as! String
+        case "plantHealth":
+            self.terrestrialPlantRecord.plant_health = (item.value.get(type: item.type)) as! String
+        case "lifeStageCode":
+            self.terrestrialPlantRecord.plant_life_stage = (item.value.get(type: item.type)) as! String
+        case "earlyDetection":
+            self.terrestrialPlantRecord.early_detection = (item.value.get(type: item.type)) as! Bool
+        case "research":
+            self.terrestrialPlantRecord.research = (item.value.get(type: item.type)) as! Bool
+        case "wellOnSite":
+            self.terrestrialPlantRecord.well_on_site_ind = (item.value.get(type: item.type)) as! Bool
+        case "specialCare":
+            self.terrestrialPlantRecord.special_care_ind = (item.value.get(type: item.type)) as! Bool
+        case "biologicalCare":
+            self.terrestrialPlantRecord.biological_care_ind = (item.value.get(type: item.type)) as! Bool
+        case "legacySite":
+            self.terrestrialPlantRecord.legacy_site_ind = (item.value.get(type: item.type)) as! Bool
+        case "rangeUnit":
+            self.terrestrialPlantRecord.range_unit = (item.value.get(type: item.type)) as! String            
         default:
             print("Didn't have a database field to map to, name of UI field key was:\(item.key)")
         }
     }
-    
-//    
-//    var secondary_user_first_name: String
-//    var secondary_user_last_name: String
-//    var species: String
-//    var primary_file_id: String
-//    var secondary_file_id: String
-//    var location_comment: String
-//    var general_observation_comment: String
-//    var sample_taken_ind: String
-//    var sample_label_number: String
-//    
     
     
     @IBAction func rightButtonAction(_ sender: Any) {
