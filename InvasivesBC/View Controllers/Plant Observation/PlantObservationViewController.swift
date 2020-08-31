@@ -62,8 +62,8 @@ class PlantObservationViewController: BaseViewController {
                                                     seed_stage: "",
                                                     plant_health: "",
                                                     plant_life_stage: "",
-                                                    early_detection: "",
-                                                    research: "",
+                                                    early_detection: false,
+                                                    research: false,
                                                     well_on_site_ind: false,
                                                     special_care_ind: false,
                                                     biological_care_ind: false,
@@ -181,6 +181,7 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.primary_user_last_name = (item.value.get(type: item.type)) as! String
         case "species":
             self.observationRecord.species = (item.value.get(type: item.type)) as! String
+            self.terrestrialPlantRecord.species = (item.value.get(type: item.type)) as! String
         case "primaryFileId":
             self.observationRecord.primary_file_id = (item.value.get(type: item.type)) as! String
         case "secondaryFileId":
@@ -193,7 +194,42 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.sample_taken_ind = (item.value.get(type: item.type)) as! Bool
         case "sampleNumber":
             self.observationRecord.sample_label_number = (item.value.get(type: item.type)) as! String
-            
+        case "speciesDistributionCode":
+            self.terrestrialPlantRecord.distribution = (item.value.get(type: item.type)) as! String
+        case "density":
+            self.terrestrialPlantRecord.density = (item.value.get(type: item.type)) as! String
+        case "soilTextureCode":
+            self.terrestrialPlantRecord.soil_texture = (item.value.get(type: item.type)) as! String
+        case "slopeCode":
+            self.terrestrialPlantRecord.slope = (item.value.get(type: item.type)) as! String
+        case "aspectCode":
+            self.terrestrialPlantRecord.aspect = (item.value.get(type: item.type)) as! String
+        case "flowering":
+            self.terrestrialPlantRecord.flowering = (item.value.get(type: item.type)) as! String
+        case "specific_use":
+            self.terrestrialPlantRecord.specific_use = (item.value.get(type: item.type)) as! String
+        case "proposed_action":
+            self.terrestrialPlantRecord.proposed_action = (item.value.get(type: item.type)) as! String
+        case "seedStage":
+            self.terrestrialPlantRecord.seed_stage = (item.value.get(type: item.type)) as! String
+        case "plantHealth":
+            self.terrestrialPlantRecord.plant_health = (item.value.get(type: item.type)) as! String
+        case "lifeStageCode":
+            self.terrestrialPlantRecord.plant_life_stage = (item.value.get(type: item.type)) as! String
+        case "earlyDetection":
+            self.terrestrialPlantRecord.early_detection = (item.value.get(type: item.type)) as! Bool
+        case "research":
+            self.terrestrialPlantRecord.research = (item.value.get(type: item.type)) as! Bool
+        case "wellOnSite":
+            self.terrestrialPlantRecord.well_on_site_ind = (item.value.get(type: item.type)) as! Bool
+        case "specialCare":
+            self.terrestrialPlantRecord.special_care_ind = (item.value.get(type: item.type)) as! Bool
+        case "biologicalCare":
+            self.terrestrialPlantRecord.biological_care_ind = (item.value.get(type: item.type)) as! Bool
+        case "legacySite":
+            self.terrestrialPlantRecord.legacy_site_ind = (item.value.get(type: item.type)) as! Bool
+        case "rangeUnit":
+            self.terrestrialPlantRecord.range_unit = (item.value.get(type: item.type)) as! String            
         default:
             print("random plant observation field")
         }

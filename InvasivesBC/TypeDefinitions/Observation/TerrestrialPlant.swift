@@ -26,8 +26,8 @@ struct TerrestrialPlant: Codable {
     var seed_stage: String
     var plant_health: String
     var plant_life_stage: String
-    var early_detection: String
-    var research: String
+    var early_detection: Bool
+    var research: Bool
     var well_on_site_ind: Bool
     var special_care_ind: Bool
     var biological_care_ind: Bool
