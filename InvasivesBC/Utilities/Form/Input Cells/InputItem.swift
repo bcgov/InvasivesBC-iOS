@@ -216,6 +216,7 @@ class ViewField: InputItem {
     var dependency: [InputDependency] = []
     var computation: FieldComputation?
     
+    
     init(header: String, computation: FieldComputation? = nil, width: InputItemWidthSize? = .Full) {
         self.header = header
         self.computation = computation ?? nil

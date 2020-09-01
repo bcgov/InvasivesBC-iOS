@@ -20,14 +20,14 @@ class SectionTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    func setup(fields: [InputItem], delegagte: InputDelegate) {
+    func setup(fields: [InputItem], delegate: InputDelegate) {
         let group = InputGroupView()
         if let current = inputGroup {
             current.removeFromSuperview()
              inputGroup = nil
         }
         self.inputGroup = group
-        self.inputGroup?.initialize(with: fields, delegate: delegagte, in: container)
+        self.inputGroup?.initialize(with: fields, delegate: delegate, in: container)
         containerHeightConstraint.constant = InputGroupView.estimateContentHeight(for: fields)
         style()
     }

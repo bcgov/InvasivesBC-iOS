@@ -10,6 +10,7 @@ import Foundation
 import Realm
 import RealmSwift
 
+
 import MapKit
 class GeoJSONCoordinate: BaseObject {
     @objc dynamic var latitude: Double = 0
@@ -180,21 +181,21 @@ class PlantObservationModel: BaseObject {
     var geoJSON: List<GeoJSON> = List<GeoJSON>()
     
     // MARK: Setters
-    func set(value: Any, for key: String) {
-        if self[key] == nil {
-            print("\(key) is nil")
-            return
-        }
-        do {
-            let realm = try Realm()
-            try realm.write {
-                self[key] = value
-            }
-        } catch let error as NSError {
-            print("** REALM ERROR")
-            print(error)
-        }
-    }
+//    func set(value: Any, for key: String) {
+//        if self[key] == nil {
+//            print("\(key) is nil")
+//            return
+//        }
+//        do {
+//            let realm = try Realm()
+//            try realm.write {
+//                self[key] = value
+//            }
+//        } catch let error as NSError {
+//            print("** REALM ERROR")
+//            print(error)
+//        }
+//    }
     
     func set(shouldSync should: Bool) {
         do {
@@ -244,6 +245,18 @@ class PlantObservationModel: BaseObject {
                 self.latitude = latitude
                 self.longitude = longitude
                 self.area = area
+            }
+        } catch let error as NSError {
+            print("** REALM ERROR")
+            print(error)
+        }
+    }
+    
+    func add(firstName: String) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                self.firstName = firstName
             }
         } catch let error as NSError {
             print("** REALM ERROR")

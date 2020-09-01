@@ -10,12 +10,25 @@ import UIKit
 import Realm
 import RealmSwift
 import IQKeyboardManagerSwift
+import GRDB
+
+
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    var dbQueue: DatabaseQueue
+    var dbMigrator: DatabaseMigrator
+    
+    override init(){
+        self.dbQueue = DatabaseQueue()
+        self.dbMigrator = DatabaseMigrator()
+    }
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         migrateRealm()
+        setupDB()
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         IQKeyboardManager.shared.enableAutoToolbar = false
@@ -28,6 +41,75 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillEnterForeground(_ application: UIApplication) {
 //        SyncService.shared.beginListener()
+    }
+    
+    func checkIfFirstLaunch() -> Bool    {
+        //retrieve value from local store, if value doesn't exist then false is returned
+        let hasAlreadyLaunched: Bool = UserDefaults.standard.bool(forKey: "hasAlreadyLaunched")
+        
+        	
+        //check first launched
+        return hasAlreadyLaunched
+    }
+    
+    func setHasAlreadyLaunched()
+    {
+        UserDefaults.standard.set(true, forKey: "hasAlreadyLaunched")
+    }
+
+    
+    func setupDB(){
+        
+        
+        /// open db and connection queue
+        let databaseURL = try! FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("db.sqlite")
+        self.dbQueue = try! DatabaseQueue(path: databaseURL.path)
+        
+        
+        // register migrations
+        var dbMigrationRegistrar: DBMigrationRegistrar = DBMigrationRegistrar(dbMigration: self.dbMigrator)
+        dbMigrationRegistrar.registerMigrations()
+        
+        
+        // run migrations if the app hasn't been launched before.
+        if(checkIfFirstLaunch())
+        {
+            print("App has been launched before")
+            // dont run migrations
+        }
+        else
+        {
+            do
+            {
+                // CHOOSE a migration to move up to by replacing v1 with the right number
+                try dbMigrationRegistrar.migrator.migrate(dbQueue, upTo: "v2")
+                print("migrations run")
+            }
+            catch
+            {
+                print("Unable to run migrations")
+                //fatalError("Migration error call Mike Shasko")
+            }
+            
+            setHasAlreadyLaunched()
+        }
+        
+        let _: String = "banana"
+    
+        /*
+        try! dbQueue.read { db in
+        // Fetch database rows
+            let rows = try Row.fetchCursor(db, sql: "SELECT * FROM Activity")
+        }
+        */
+        
+        //test insert
+        //let activity = Activity(activityType: "Observation", activitySubType: "Invasive Terrestrial Plant Observatin")
+        //try activity.insert(db)
+
+        
     }
     
     /// https://realm.io/docs/swift/latest/#migrations

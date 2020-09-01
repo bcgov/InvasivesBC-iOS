@@ -42,6 +42,7 @@ class LoginViewController: BaseViewController {
     
     func afterLogin() {
         SettingsService.shared.setUserAuthId()
+        print("user session \(String(describing: SettingsService.shared.setUserAuthId.self))")
         self.dismiss(animated: true, completion: nil)
     }
     

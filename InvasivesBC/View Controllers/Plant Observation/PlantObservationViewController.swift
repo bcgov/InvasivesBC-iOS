@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import GRDB
+import MapKit
 
 
 enum PlantObservationSection: Int, CaseIterable {
@@ -19,7 +21,62 @@ enum PlantObservationSection: Int, CaseIterable {
 
 class PlantObservationViewController: BaseViewController {
     
+    // set up blank record
+     var activityRecord = Activity(activity_type: "Observation",
+                                          activity_sub_type: "Terrestrial Plant",
+                                          deviceRequestUID: "DeviceUID123",
+                                          date: Date(),
+                                          synched: false,
+                                          synch_error: false,
+                                          synch_error_string: "")
+    
+    
+    
+    var observationRecord =  Observation(local_activity_id: 0,
+    negative_observation_ind: false,
+    aquatic_observation_ind: false,
+    primary_user_first_name: "",
+    primary_user_last_name: "",
+    secondary_user_first_name: "",
+    secondary_user_last_name: "",
+    species: "",
+    primary_file_id: "",
+    secondary_file_id: "",
+    location_comment: "",
+    general_observation_comment: "",
+    sample_taken_ind: false,
+    sample_label_number: "")
+    
+    
+    
+    
+    
+    var terrestrialPlantRecord =  TerrestrialPlant( local_activity_id: 0,
+    species: "",
+    distribution: "",
+    density: "",
+    soil_texture: "",
+    slope: "",
+    aspect: "",
+    flowering: "",
+    specific_use: "",
+    proposed_action: "",
+    seed_stage: "",
+    plant_health: "",
+    plant_life_stage: "",
+    early_detection: false,
+    research: false,
+    well_on_site_ind: false,
+    special_care_ind: false,
+    biological_care_ind: false,
+    legacy_site_ind: false,
+    range_unit: "")
+    
+    // where fields for the form are defined
     var model: PlantObservationModel?
+    
+    // the grdb way:
+    var record: Activity?
     
     var isSectionOpen: [PlantObservationSection: Bool] = [
         .LocationandGeometry: true,
@@ -39,6 +96,9 @@ class PlantObservationViewController: BaseViewController {
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTable()
@@ -51,7 +111,33 @@ class PlantObservationViewController: BaseViewController {
         style()
         styleForState()
         addListeners()
+        
+        
+        // just for dev and api testing.
+        
+    
     }
+    
+    
+    // MARK: Database commit
+    func insertRecord(){
+        let dbQueue = self.delegate.dbQueue
+        
+        try! dbQueue.write { db in
+        // Write database rows
+            try! self.activityRecord.insert(db)
+            print("activity id:\(self.activityRecord.local_id)")
+          
+            self.observationRecord.local_activity_id = self.activityRecord.local_id ?? 0
+            try! self.observationRecord.insert(db)
+            
+            self.terrestrialPlantRecord.local_activity_id = self.observationRecord.local_id ?? 0
+            try! self.terrestrialPlantRecord.insert(db)
+            
+            
+        }
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -80,24 +166,93 @@ class PlantObservationViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.inputItemValueChanged(notification:)), name: .InputItemValueChanged, object: nil)
     }
     
-    // MARK: Input Item Changed
+
+    //  MARK:  MAP UI Fields to GRDB Model on Field changed
     @objc func inputItemValueChanged(notification: Notification) {
         guard let item: InputItem = notification.object as? InputItem else {return}
-        // Set value in Realm object
-        if let m = model {
-            m.set(value: item.value.get(type: item.type) as Any, for: item.key)
+        
+        switch item.key {
+        case "date":
+                   self.activityRecord.date = (item.value.get(type: item.type)) as! Date
+        case "negativeObservation":
+            self.observationRecord.negative_observation_ind = (item.value.get(type: item.type)) as! Bool
+        case "aquaticObservation":
+            self.observationRecord.aquatic_observation_ind = (item.value.get(type: item.type)) as! Bool
+        case "firstName":
+            self.observationRecord.primary_user_first_name = (item.value.get(type: item.type)) as! String
+        case "lastName":
+            self.observationRecord.primary_user_last_name = (item.value.get(type: item.type)) as! String
+        case "species":
+            self.observationRecord.species = (item.value.get(type: item.type)) as! String
+            self.terrestrialPlantRecord.species = (item.value.get(type: item.type)) as! String
+        case "primaryFileId":
+            self.observationRecord.primary_file_id = (item.value.get(type: item.type)) as! String
+        case "secondaryFileId":
+            self.observationRecord.secondary_file_id = (item.value.get(type: item.type)) as! String
+        case "locationComments":
+            self.observationRecord.location_comment = (item.value.get(type: item.type)) as! String
+        case "generalComments":
+            self.observationRecord.general_observation_comment = (item.value.get(type: item.type)) as! String
+        case "sampleTaken":
+            self.observationRecord.sample_taken_ind = (item.value.get(type: item.type)) as! Bool
+        case "sampleNumber":
+            self.observationRecord.sample_label_number = (item.value.get(type: item.type)) as! String
+        case "speciesDistributionCode":
+            self.terrestrialPlantRecord.distribution = (item.value.get(type: item.type)) as! String
+        case "speciesDensityCode":
+            self.terrestrialPlantRecord.density = (item.value.get(type: item.type)) as! String
+        case "soilTextureCode":
+            self.terrestrialPlantRecord.soil_texture = (item.value.get(type: item.type)) as! String
+        case "slopeCode":
+            self.terrestrialPlantRecord.slope = (item.value.get(type: item.type)) as! String
+        case "aspectCode":
+            self.terrestrialPlantRecord.aspect = (item.value.get(type: item.type)) as! String
+        case "flowering":
+            self.terrestrialPlantRecord.flowering = (item.value.get(type: item.type)) as! String
+        case "specificUseCode":
+            self.terrestrialPlantRecord.specific_use = (item.value.get(type: item.type)) as! String
+        case "proposedActionCode":
+            self.terrestrialPlantRecord.proposed_action = (item.value.get(type: item.type)) as! String
+        case "seedStage":
+            self.terrestrialPlantRecord.seed_stage = (item.value.get(type: item.type)) as! String
+        case "plantHealth":
+            self.terrestrialPlantRecord.plant_health = (item.value.get(type: item.type)) as! String
+        case "lifeStageCode":
+            self.terrestrialPlantRecord.plant_life_stage = (item.value.get(type: item.type)) as! String
+        case "earlyDetection":
+            self.terrestrialPlantRecord.early_detection = (item.value.get(type: item.type)) as! Bool
+        case "research":
+            self.terrestrialPlantRecord.research = (item.value.get(type: item.type)) as! Bool
+        case "wellOnSite":
+            self.terrestrialPlantRecord.well_on_site_ind = (item.value.get(type: item.type)) as! Bool
+        case "specialCare":
+            self.terrestrialPlantRecord.special_care_ind = (item.value.get(type: item.type)) as! Bool
+        case "biologicalCare":
+            self.terrestrialPlantRecord.biological_care_ind = (item.value.get(type: item.type)) as! Bool
+        case "legacySite":
+            self.terrestrialPlantRecord.legacy_site_ind = (item.value.get(type: item.type)) as! Bool
+        case "rangeUnit":
+            self.terrestrialPlantRecord.range_unit = (item.value.get(type: item.type)) as! String
+        default:
+            print("Didn't have a database field to map to, name of UI field key was:\(item.key)")
         }
     }
     
+    
     @IBAction func rightButtonAction(_ sender: Any) {
-        if editable {
-            // Button is for reviewing
-            self.editable = false
-            tableView.reloadData()
-        } else {
-            // Button is for submitting
-            savePlantObservation()
-        }
+        savePlantObservation()
+        
+//        if editable {
+//            // Button is for reviewing
+//            self.editable = false
+//            self.openAllSections()
+//
+//
+//            tableView.reloadData()
+//        } else {
+//            // Button is for submitting
+//            savePlantObservation()
+//        }
     }
     
     @IBAction func leftButtonAction(_ sender: Any) {
@@ -111,9 +266,8 @@ class PlantObservationViewController: BaseViewController {
     }
     
     func savePlantObservation() {
-        guard let model = self.model else { return }
-        RealmRequests.saveObject(object: model)
-        model.set(shouldSync: true)
+        
+        insertRecord()
         
         let alertController = UIAlertController(title: "Plant observation", message:
             "record saved", preferredStyle: .alert)
@@ -132,13 +286,18 @@ class PlantObservationViewController: BaseViewController {
     
     func styleForState() {
         guard leftButton != nil, rightButton != nil else {return}
-        if editable {
-            leftButton.isHidden = true
-            rightButton.setTitle("Proceed to review", for: .normal)
-        } else {
-            leftButton.isHidden = false
-            rightButton.setTitle("Submit", for: .normal)
-        }
+        rightButton.setTitle("Submit", for: .normal)
+        rightButton.center = self.view.center
+        leftButton.alpha = 0
+        
+        //if editable {
+            //leftButton.isHidden = true
+            //rightButton.setTitle("Proceed to review", for: .normal)
+           // rightButton.setTitle("Submit", for: .normal)
+       // } else {
+            //leftButton.isHidden = false
+            //rightButton.setTitle("Submit", for: .normal)
+       // }
     }
     
     func closeAllSections() {
@@ -233,10 +392,13 @@ extension PlantObservationViewController: UITableViewDataSource, UITableViewDele
         return headerView
     }
     
+    
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let type = PlantObservationSection.init(rawValue: indexPath.section) else {return UITableViewCell()}
         let cell = getSectionCell(indexPath: indexPath)
-        cell.setup(fields: getFields(for: type), delegagte: self)
+        cell.setup(fields: getFields(for: type), delegate: self)
         return cell
     }
 }
