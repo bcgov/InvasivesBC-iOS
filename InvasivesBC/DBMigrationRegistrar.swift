@@ -27,8 +27,8 @@ class DBMigrationRegistrar
         migrator.registerMigration("v1") { db in
             try db.create(table: "Activity") { t in
                 t.autoIncrementedPrimaryKey("local_id")
-                t.column("activity_type", .text).notNull()
-                t.column("activity_sub_type", .text).notNull()
+                t.column("activityType", .text).notNull()
+                t.column("activitySubType", .text).notNull()
                 t.column("date", .date).notNull()
                 t.column("deviceRequestUID", .text).notNull()
                 t.column("synched", .boolean).notNull().defaults(to: false)

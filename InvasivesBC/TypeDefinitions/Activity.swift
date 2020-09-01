@@ -14,8 +14,8 @@ import GRDB
 struct Activity: Codable {
     
     var local_id: Int64?
-    var activity_type: String
-    var activity_sub_type: String
+    var activityType: String
+    var activitySubType: String
     var deviceRequestUID: String
     var date: Date
     var synched: Bool
@@ -30,8 +30,8 @@ extension Activity: TableRecord {
     /// The table columns
     enum Columns {
         static let local_id = Column(CodingKeys.local_id)
-        static let activity_type = Column(CodingKeys.activity_type)
-        static let activity_sub_type = Column(CodingKeys.activity_sub_type)
+        static let activityType = Column(CodingKeys.activityType)
+        static let activitySubType = Column(CodingKeys.activitySubType)
         static let deviceRequestUID = Column(CodingKeys.deviceRequestUID)
         static let date = Column(CodingKeys.date)
         static let synched = Column(CodingKeys.synched)
