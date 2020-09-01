@@ -123,9 +123,6 @@ class PlantObservationViewController: BaseViewController {
     func insertRecord(){
         let dbQueue = self.delegate.dbQueue
         
-       // self.activityRecord.latitude = 50
-       // self.activityRecord.longitude = 50
-        
         try! dbQueue.write { db in
         // Write database rows
             try! self.activityRecord.insert(db)
@@ -196,7 +193,6 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.location_comment = (item.value.get(type: item.type)) as! String
         case "generalComments":
             self.observationRecord.general_observation_comment = (item.value.get(type: item.type)) as! String
-            
         case "sampleTaken":
             self.observationRecord.sample_taken_ind = (item.value.get(type: item.type)) as! Bool
         case "sampleNumber":
@@ -241,18 +237,6 @@ class PlantObservationViewController: BaseViewController {
             print("Didn't have a database field to map to, name of UI field key was:\(item.key)")
         }
     }
-    
-//    
-//    var secondary_user_first_name: String
-//    var secondary_user_last_name: String
-//    var species: String
-//    var primary_file_id: String
-//    var secondary_file_id: String
-//    var location_comment: String
-//    var general_observation_comment: String
-//    var sample_taken_ind: String
-//    var sample_label_number: String
-//    
     
     
     @IBAction func rightButtonAction(_ sender: Any) {
