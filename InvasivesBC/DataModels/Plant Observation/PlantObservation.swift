@@ -41,7 +41,7 @@ class GeoJSONGeometry: BaseObject {
         ]
     }
 }
-
+// MARK: Add a geometry
 class GeoJSON: BaseObject {
     var geometries: List<GeoJSONGeometry> = List<GeoJSONGeometry>()
     

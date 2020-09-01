@@ -24,8 +24,8 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
     var geometryType: DefineGeometryType?
     
     // point gemoetry variables
-    var point: CLLocationCoordinate2D?
-    var pointCache: MKAnnotation?
+    var singlepPointGeometry: [CLLocationCoordinate2D] = []
+    var singlepointCache: MKAnnotation?
     ///
     
     // polygon gemoetry variables
@@ -126,6 +126,13 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
         switch type {
         case .Point:
             // TODO:
+            singlepPointGeometry.removeAll()
+            if let polygon = polygonCache {
+                mapView.removeOverlay(polygon)
+                polygonCache = nil
+            }
+            mapView.removeAnnotations(mapView.annotations)
+            styleButtons()
             return
         case .TwoPoint:
             // TODO:
@@ -207,8 +214,8 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
         switch type {
         case .Point:
             // TODO:
-            clearButton.isHidden = true
-            nextButton.isHidden = true
+            clearButton.isHidden = singlepPointGeometry.isEmpty
+            nextButton.isHidden = singlepointCache == nil
             return
         case .TwoPoint:
             // TODO:
@@ -231,9 +238,8 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
         let geoJSON = GeoJSON()
         switch type {
         case .Point:
-            guard let p = point else {return nil}
-            let location = CLLocation(latitude: p.latitude, longitude: p.longitude)
-            geoJSON.addGeometry(with: [location], type: type)
+            let locations = singlepPointGeometry.map({CLLocation(latitude: $0.latitude, longitude: $0.longitude)})
+            geoJSON.addGeometry(with: locations, type: type)
             return geoJSON
         case .TwoPoint:
             let locations = twoPointGeometryPoints.map({CLLocation(latitude: $0.latitude, longitude: $0.longitude)})
