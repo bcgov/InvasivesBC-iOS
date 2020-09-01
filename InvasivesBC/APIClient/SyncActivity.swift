@@ -31,7 +31,7 @@ func uploadActivity(activity: Activity) {
     
     let thisReq = Alamofire.request(url,
                                     method: Alamofire.HTTPMethod.post,
-                                    parameters: convertStringToDictionary(text: sample_request),
+                                    parameters: convertStringToDictionary(text: transformActivityToJSON(input: activity) as String),
                                     encoding: JSONEncoding.default,
                                     headers: headers
     )
@@ -91,17 +91,39 @@ func transformActivityToJSON(input: Activity) -> NSString
         return "Unable to encode ActivityTypeData"
     }
     
+    // get the right Activity Type instance and encode it
+    var encodedActivitySubTypeData: Data = Data()
+    switch input.activity_sub_type {
+    case "TerrestrialPlant":
+        let relatedTerrestrialPlantObservation = try! appDelegate.dbQueue.read { db in
+            try TerrestrialPlant.fetchOne(db,
+                                     sql: "SELECT * FROM terrestrialplant WHERE local_activity_id = ?",
+                                     arguments: [input.local_id])!
+        }
+        encodedActivitySubTypeData = try! encoder.encode(relatedTerrestrialPlantObservation)
+    default:
+        print("banana")
+    }
+    
+    //get that as a dictionary
+    guard var activitySubTypeDataDictionary = try! JSONSerialization.jsonObject(with: encodedActivitySubTypeData, options: .allowFragments) as? [String: Any] else {
+        return "Unable to encode ActivitySubTypeData"
+    }
+    
+    
     
     // strip out fields we don't want in request
     activityDictionary.removeValue(forKey: "local_id")
     activityTypeDataDictionary.removeValue(forKey: "local_id")
+    activitySubTypeDataDictionary.removeValue(forKey: "local_id")
     
     // nest the objects as they need to be for the POST:
     activityDictionary["activityTypeData"] = activityTypeDataDictionary
+    activityDictionary["activitySubTypeData"] = activitySubTypeDataDictionary
     
     let jsonData = try! JSONSerialization.data(withJSONObject: activityDictionary, options: [.sortedKeys, .prettyPrinted])
     guard let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) else { return "banana" }
-    print(jsonString)
+    print("activity sent to the API: \(jsonString)")
     return jsonString
 }
 

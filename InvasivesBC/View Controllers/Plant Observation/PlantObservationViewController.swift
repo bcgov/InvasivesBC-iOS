@@ -8,6 +8,7 @@
 
 import UIKit
 import GRDB
+import MapKit
 
 
 enum PlantObservationSection: Int, CaseIterable {
@@ -21,38 +22,55 @@ enum PlantObservationSection: Int, CaseIterable {
 class PlantObservationViewController: BaseViewController {
     
     // set up blank record
-    var activityRecord = Activity(activity_type: "Observation",
-                                       activity_sub_type: "Terrestrial Plant",
-                                       date: Date(),
-                                       isFavorite: false,
-                                       latitude: 0, longitude: 0,
-                                       synched: false,
-                                       synch_error: false,
-                                       synch_error_string: "",
-                                       first_name: "")
+     var activityRecord = Activity(activity_type: "Observation",
+                                          activity_sub_type: "Terrestrial Plant",
+                                          deviceRequestUID: "DeviceUID123",
+                                          date: Date(),
+                                          synched: false,
+                                          synch_error: false,
+                                          synch_error_string: "")
+    
     
     
     var observationRecord =  Observation(local_activity_id: 0,
-                                         negative_observation_ind: false,
-                                         aquatic_observation_ind: false,
-                                         primary_user_first_name: "",
-                                         primary_user_last_name: "",
-                                         secondary_user_first_name: "",
-                                         secondary_user_last_name: "",
-                                         species: "",
-                                         primary_file_id: "",
-                                         secondary_file_id: "",
-                                         location_comment: "",
-                                         general_observation_comment: "",
-                                         sample_taken_ind: false,
-                                         sample_label_number: ""
-                                         )
+    negative_observation_ind: false,
+    aquatic_observation_ind: false,
+    primary_user_first_name: "",
+    primary_user_last_name: "",
+    secondary_user_first_name: "",
+    secondary_user_last_name: "",
+    species: "",
+    primary_file_id: "",
+    secondary_file_id: "",
+    location_comment: "",
+    general_observation_comment: "",
+    sample_taken_ind: false,
+    sample_label_number: "")
     
     
     
     
     
-    var terrestrialPlantRecord =  TerrestrialPlant( local_observation_id: 0)
+    var terrestrialPlantRecord =  TerrestrialPlant( local_activity_id: 0,
+    species: "",
+    distribution: "",
+    density: "",
+    soil_texture: "",
+    slope: "",
+    aspect: "",
+    flowering: "",
+    specific_use: "",
+    proposed_action: "",
+    seed_stage: "",
+    plant_health: "",
+    plant_life_stage: "",
+    early_detection: false,
+    research: false,
+    well_on_site_ind: false,
+    special_care_ind: false,
+    biological_care_ind: false,
+    legacy_site_ind: false,
+    range_unit: "")
     
     // where fields for the form are defined
     var model: PlantObservationModel?
@@ -105,8 +123,8 @@ class PlantObservationViewController: BaseViewController {
     func insertRecord(){
         let dbQueue = self.delegate.dbQueue
         
-        self.activityRecord.latitude = 150
-        self.activityRecord.longitude = 50
+       // self.activityRecord.latitude = 50
+       // self.activityRecord.longitude = 50
         
         try! dbQueue.write { db in
         // Write database rows
@@ -116,11 +134,10 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.local_activity_id = self.activityRecord.local_id ?? 0
             try! self.observationRecord.insert(db)
             
-            self.terrestrialPlantRecord.local_observation_id = self.observationRecord.local_id ?? 0
+            self.terrestrialPlantRecord.local_activity_id = self.observationRecord.local_id ?? 0
             try! self.terrestrialPlantRecord.insert(db)
             
-            uploadActivity(activity: self.activityRecord)
-            print("An activity record is inserted, latitude is \(self.activityRecord.latitude)")
+            
         }
     }
     
@@ -158,7 +175,8 @@ class PlantObservationViewController: BaseViewController {
         guard let item: InputItem = notification.object as? InputItem else {return}
         
         switch item.key {
-    
+        case "date":
+                   self.activityRecord.date = (item.value.get(type: item.type)) as! Date
         case "negativeObservation":
             self.observationRecord.negative_observation_ind = (item.value.get(type: item.type)) as! Bool
         case "aquaticObservation":
@@ -169,6 +187,7 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.primary_user_last_name = (item.value.get(type: item.type)) as! String
         case "species":
             self.observationRecord.species = (item.value.get(type: item.type)) as! String
+            self.terrestrialPlantRecord.species = (item.value.get(type: item.type)) as! String
         case "primaryFileId":
             self.observationRecord.primary_file_id = (item.value.get(type: item.type)) as! String
         case "secondaryFileId":
@@ -182,6 +201,42 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.sample_taken_ind = (item.value.get(type: item.type)) as! Bool
         case "sampleNumber":
             self.observationRecord.sample_label_number = (item.value.get(type: item.type)) as! String
+        case "speciesDistributionCode":
+            self.terrestrialPlantRecord.distribution = (item.value.get(type: item.type)) as! String
+        case "speciesDensityCode":
+            self.terrestrialPlantRecord.density = (item.value.get(type: item.type)) as! String
+        case "soilTextureCode":
+            self.terrestrialPlantRecord.soil_texture = (item.value.get(type: item.type)) as! String
+        case "slopeCode":
+            self.terrestrialPlantRecord.slope = (item.value.get(type: item.type)) as! String
+        case "aspectCode":
+            self.terrestrialPlantRecord.aspect = (item.value.get(type: item.type)) as! String
+        case "flowering":
+            self.terrestrialPlantRecord.flowering = (item.value.get(type: item.type)) as! String
+        case "specificUseCode":
+            self.terrestrialPlantRecord.specific_use = (item.value.get(type: item.type)) as! String
+        case "proposedActionCode":
+            self.terrestrialPlantRecord.proposed_action = (item.value.get(type: item.type)) as! String
+        case "seedStage":
+            self.terrestrialPlantRecord.seed_stage = (item.value.get(type: item.type)) as! String
+        case "plantHealth":
+            self.terrestrialPlantRecord.plant_health = (item.value.get(type: item.type)) as! String
+        case "lifeStageCode":
+            self.terrestrialPlantRecord.plant_life_stage = (item.value.get(type: item.type)) as! String
+        case "earlyDetection":
+            self.terrestrialPlantRecord.early_detection = (item.value.get(type: item.type)) as! Bool
+        case "research":
+            self.terrestrialPlantRecord.research = (item.value.get(type: item.type)) as! Bool
+        case "wellOnSite":
+            self.terrestrialPlantRecord.well_on_site_ind = (item.value.get(type: item.type)) as! Bool
+        case "specialCare":
+            self.terrestrialPlantRecord.special_care_ind = (item.value.get(type: item.type)) as! Bool
+        case "biologicalCare":
+            self.terrestrialPlantRecord.biological_care_ind = (item.value.get(type: item.type)) as! Bool
+        case "legacySite":
+            self.terrestrialPlantRecord.legacy_site_ind = (item.value.get(type: item.type)) as! Bool
+        case "rangeUnit":
+            self.terrestrialPlantRecord.range_unit = (item.value.get(type: item.type)) as! String
         default:
             print("Didn't have a database field to map to, name of UI field key was:\(item.key)")
         }
@@ -201,17 +256,19 @@ class PlantObservationViewController: BaseViewController {
     
     
     @IBAction func rightButtonAction(_ sender: Any) {
-        if editable {
-            // Button is for reviewing
-            self.editable = false
-            self.openAllSections()
-           
-            
-            tableView.reloadData()
-        } else {
-            // Button is for submitting
-            savePlantObservation()
-        }
+        savePlantObservation()
+        
+//        if editable {
+//            // Button is for reviewing
+//            self.editable = false
+//            self.openAllSections()
+//
+//
+//            tableView.reloadData()
+//        } else {
+//            // Button is for submitting
+//            savePlantObservation()
+//        }
     }
     
     @IBAction func leftButtonAction(_ sender: Any) {
@@ -245,13 +302,18 @@ class PlantObservationViewController: BaseViewController {
     
     func styleForState() {
         guard leftButton != nil, rightButton != nil else {return}
-        if editable {
-            leftButton.isHidden = true
-            rightButton.setTitle("Proceed to review", for: .normal)
-        } else {
-            leftButton.isHidden = false
-            rightButton.setTitle("Submit", for: .normal)
-        }
+        rightButton.setTitle("Submit", for: .normal)
+        rightButton.center = self.view.center
+        leftButton.alpha = 0
+        
+        //if editable {
+            //leftButton.isHidden = true
+            //rightButton.setTitle("Proceed to review", for: .normal)
+           // rightButton.setTitle("Submit", for: .normal)
+       // } else {
+            //leftButton.isHidden = false
+            //rightButton.setTitle("Submit", for: .normal)
+       // }
     }
     
     func closeAllSections() {

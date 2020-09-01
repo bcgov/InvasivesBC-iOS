@@ -80,7 +80,16 @@ class LaunchViewController: BaseViewController {
     }
     
     @IBAction func statusAction(_ sender: Any) {
-        performSegue(withIdentifier: Segues.showStatus.rawValue, sender: self)
+        //performSegue(withIdentifier: Segues.showStatus.rawValue, sender: self)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        let activity = try! appDelegate.dbQueue.read { db in
+            try Activity.fetchOne(db,
+                                     sql: "SELECT * FROM activity LIMIT 1")
+        }
+        
+        uploadActivity(activity: activity!)
     }
     
     @IBAction func locationAction(_ sender: Any) {

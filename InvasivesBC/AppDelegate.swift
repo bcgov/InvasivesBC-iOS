@@ -69,8 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         // register migrations
-        var dbMigrationRegistrator: DBMigrationRegistrator = DBMigrationRegistrator(dbMigration: self.dbMigrator)
-        dbMigrationRegistrator.registerMigrations()
+        var dbMigrationRegistrar: DBMigrationRegistrar = DBMigrationRegistrar(dbMigration: self.dbMigrator)
+        dbMigrationRegistrar.registerMigrations()
         
         
         // run migrations if the app hasn't been launched before.
@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             do
             {
                 // CHOOSE a migration to move up to by replacing v1 with the right number
-                try dbMigrationRegistrator.migrator.migrate(dbQueue, upTo: "v2")
+                try dbMigrationRegistrar.migrator.migrate(dbQueue, upTo: "v2")
                 print("migrations run")
             }
             catch
