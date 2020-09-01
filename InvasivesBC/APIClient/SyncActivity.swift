@@ -40,16 +40,9 @@ func uploadActivity(activity: Activity) {
             
             
             guard response.result.isSuccess else {
-                print("ErrorBanana")
-                print("responseBanana\(response.result.value as? [String: Any])")
-                print("ErrorBanana\(response.error)")
+                print("ErrorBody\(response.data?.json)")
                 return
             }
-            // debugPrint(thisReq)
-            
-            
-            //print("responseBanana\(response.result.value as? [String: Any])")
-            
     }
 }
 
@@ -60,6 +53,11 @@ func transformActivityToJSON(input: Activity) -> NSString
     // used to convert GRDB structs/tables to dictionaries
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.prettyPrinted,.sortedKeys]
+    // to get json dates:
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    //formatter.timeStyle =  .none
+    encoder.dateEncodingStrategy = .formatted(formatter)
     
     
     // get activity struct as a copy of a dictionary to make it easy to edit
@@ -74,7 +72,7 @@ func transformActivityToJSON(input: Activity) -> NSString
     
     // get the right Activity Type instance and encode it
     var encodedActivityTypeData: Data = Data()
-    switch input.activity_type {
+    switch input.activityType {
     case "Observation":
         let relatedObservation = try! appDelegate.dbQueue.read { db in
             try Observation.fetchOne(db,
@@ -93,7 +91,7 @@ func transformActivityToJSON(input: Activity) -> NSString
     
     // get the right Activity Type instance and encode it
     var encodedActivitySubTypeData: Data = Data()
-    switch input.activity_sub_type {
+    switch input.activitySubType {
     case "Terrestrial Plant":
         let relatedTerrestrialPlantObservation = try! appDelegate.dbQueue.read { db in
             try TerrestrialPlant.fetchOne(db,
@@ -111,9 +109,15 @@ func transformActivityToJSON(input: Activity) -> NSString
     }
     
     
+    print("activityDate\(activityDictionary["date"])")
+    
     
     // strip out fields we don't want in request
     activityDictionary.removeValue(forKey: "local_id")
+    activityDictionary.removeValue(forKey: "synched")
+    activityDictionary.removeValue(forKey: "synch")
+    activityDictionary.removeValue(forKey: "synch_error")
+    activityDictionary.removeValue(forKey: "synch_error_string")
     activityTypeDataDictionary.removeValue(forKey: "local_id")
     activitySubTypeDataDictionary.removeValue(forKey: "local_id")
     

@@ -22,8 +22,8 @@ enum PlantObservationSection: Int, CaseIterable {
 class PlantObservationViewController: BaseViewController {
     
     // set up blank record
-     var activityRecord = Activity(activity_type: "Observation",
-                                          activity_sub_type: "Terrestrial Plant",
+     var activityRecord = Activity(activityType: "Observation",
+                                          activitySubType: "Terrestrial Plant",
                                           deviceRequestUID: "DeviceUID123",
                                           date: Date(),
                                           synched: false,
