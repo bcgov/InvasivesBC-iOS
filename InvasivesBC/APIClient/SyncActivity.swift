@@ -94,7 +94,7 @@ func transformActivityToJSON(input: Activity) -> NSString
     // get the right Activity Type instance and encode it
     var encodedActivitySubTypeData: Data = Data()
     switch input.activity_sub_type {
-    case "TerrestrialPlant":
+    case "Terrestrial Plant":
         let relatedTerrestrialPlantObservation = try! appDelegate.dbQueue.read { db in
             try TerrestrialPlant.fetchOne(db,
                                      sql: "SELECT * FROM terrestrialplant WHERE local_activity_id = ?",
