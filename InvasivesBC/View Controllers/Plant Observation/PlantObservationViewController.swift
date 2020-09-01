@@ -131,7 +131,7 @@ class PlantObservationViewController: BaseViewController {
             self.observationRecord.local_activity_id = self.activityRecord.local_id ?? 0
             try! self.observationRecord.insert(db)
             
-            self.terrestrialPlantRecord.local_activity_id = self.observationRecord.local_id ?? 0
+            self.terrestrialPlantRecord.local_activity_id = self.activityRecord.local_id ?? 0
             try! self.terrestrialPlantRecord.insert(db)
             
             
