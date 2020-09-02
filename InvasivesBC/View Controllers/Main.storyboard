@@ -44,7 +44,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sS7-ol-AiU">
                                         <rect key="frame" x="0.0" y="114" width="80" height="30"/>
-                                        <state key="normal" title="Status"/>
+                                        <state key="normal" title="Synch"/>
                                         <connections>
                                             <action selector="statusAction:" destination="Mce-T4-DxC" eventType="touchUpInside" id="C8Z-NZ-nla"/>
                                         </connections>
@@ -103,7 +103,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X1I-Ok-yja" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="506" y="-1140"/>
+            <point key="canvasLocation" x="505.46875" y="-1140.234375"/>
         </scene>
         <!--Layers View Controller-->
         <scene sceneID="khE-9Q-Eoe">
