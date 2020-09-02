@@ -21,14 +21,17 @@ enum PlantObservationSection: Int, CaseIterable {
 
 class PlantObservationViewController: BaseViewController {
     
+    // MARK:
+    var locationAndGeometryRecord: LocationAndGeometry?
+    
     // set up blank record
      var activityRecord = Activity(activityType: "Observation",
-                                          activitySubType: "Terrestrial Plant",
-                                          deviceRequestUID: "DeviceUID123",
-                                          date: Date(),
-                                          synched: false,
-                                          synch_error: false,
-                                          synch_error_string: "")
+     activitySubType: "Terrestrial Plant",
+     deviceRequestUID: "DeviceUID123",
+     date: Date(),
+     synched: false,
+     synch_error: false,
+     synch_error_string: "")
     
     
     
@@ -46,9 +49,6 @@ class PlantObservationViewController: BaseViewController {
     general_observation_comment: "",
     sample_taken_ind: false,
     sample_label_number: "")
-    
-    
-    
     
     
     var terrestrialPlantRecord =  TerrestrialPlant( local_activity_id: 0,
@@ -134,6 +134,8 @@ class PlantObservationViewController: BaseViewController {
             self.terrestrialPlantRecord.local_activity_id = self.activityRecord.local_id ?? 0
             try! self.terrestrialPlantRecord.insert(db)
             
+            self.locationAndGeometryRecord?.local_activity_id = self.activityRecord.local_id ?? 0
+            try! self.locationAndGeometryRecord?.insert(db)
             
         }
     }
@@ -264,6 +266,11 @@ class PlantObservationViewController: BaseViewController {
         self.editable = editable
         self.model = model
     }
+    
+    func setup(locationAndGeometryRecord: LocationAndGeometry) {
+        self.locationAndGeometryRecord = locationAndGeometryRecord
+    }
+    
     
     func savePlantObservation() {
         

@@ -86,7 +86,7 @@ class LaunchViewController: BaseViewController {
         
         let activity = try! appDelegate.dbQueue.read { db in
             try Activity.fetchOne(db,
-                                     sql: "SELECT * FROM activity LIMIT 1")
+                                     sql: "SELECT * FROM activity order by local_id desc LIMIT 1")
         }
         
         uploadActivity(activity: activity!)

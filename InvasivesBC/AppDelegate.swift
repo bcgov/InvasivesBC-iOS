@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             do
             {
                 // CHOOSE a migration to move up to by replacing v1 with the right number
-                try dbMigrationRegistrar.migrator.migrate(dbQueue, upTo: "v2")
+                try dbMigrationRegistrar.migrator.migrate(dbQueue, upTo: "v3")
                 print("migrations run")
             }
             catch
