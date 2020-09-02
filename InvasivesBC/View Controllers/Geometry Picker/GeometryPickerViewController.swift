@@ -75,6 +75,8 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
         switch segueId {
         case .PlantObservation:
             guard let destination = segue.destination as? PlantObservationViewController else {return}
+            
+            // REALM:
             let newPlantObservation = PlantObservationModel()
             // Add User id - So when user logs out and different user logs in, we can differentiate the data
             if let userId = SettingsService.shared.getUserAuthId() {
@@ -87,14 +89,22 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
             // Add lat, long and area
             if let first = polygonGeometryPoints.first {
                 newPlantObservation.add(latitude: first.latitude, longitude: first.longitude, area: regionArea(locations: polygonGeometryPoints))
+                
+                            
             }
             print("first.latitude is \(newPlantObservation.latitude)")
             print("first.longitude is \(newPlantObservation.longitude)")
             print("first.area is \(newPlantObservation.area)")
             
             
+            let GRDBFriendlyCoordinates = polygonGeometryPoints.map { [$0.latitude, $0.longitude]}
+            // GRDB
+            let locationAndGeometryRecord = LocationAndGeometry(local_activity_id: 0, anchorPointY: polygonGeometryPoints[0].latitude, anchorPointX: polygonGeometryPoints[0].longitude, area: 0, geometry: Geometry(type: "Polygon", coordinates_Poly: GRDBFriendlyCoordinates))
+            
             // Pass values to view controller
             destination.setup(editable: true, model: newPlantObservation)
+            destination.setup(locationAndGeometryRecord: locationAndGeometryRecord)
+            
         case .PlantMonitoring:
             return
         case .PlantTreatment:

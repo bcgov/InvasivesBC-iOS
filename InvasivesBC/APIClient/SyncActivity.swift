@@ -2,7 +2,7 @@
 //  SyncActivity.swift
 //  InvasivesBC
 //
-//  Created by Nancy Mac Air on 2020-08-26.
+//  Created by Micheal Wells on 2020-08-26.
 //  Copyright © 2020 Government of British Columbia. All rights reserved.
 //
 
@@ -47,7 +47,7 @@ func uploadActivity(activity: Activity) {
 }
 
 
-
+// TODO: this can be refactored by nesting GRDB Record Structs vs db linking them.  Would also allow it to be run during a db read/write.
 func transformActivityToJSON(input: Activity) -> NSString
 {
     // used to convert GRDB structs/tables to dictionaries
@@ -109,9 +109,25 @@ func transformActivityToJSON(input: Activity) -> NSString
     }
     
     
-    print("activityDate\(activityDictionary["date"])")
+    var encodedLocationAndGeometryData: Data = Data()
+       
+    let relatedLocationAndGeometry = try! appDelegate.dbQueue.read { db in
+            try LocationAndGeometry.fetchOne(db,
+                                        sql: "SELECT * FROM locationAndGeometry WHERE local_activity_id = ?",
+                                        arguments: [input.local_id])!
+           }
+    encodedLocationAndGeometryData = try! encoder.encode(relatedLocationAndGeometry)
+
+       
+       
+       //get that as a dictionary
+    guard var locationAndGeometryDictionary = try! JSONSerialization.jsonObject(with: encodedLocationAndGeometryData, options: .allowFragments) as? [String: Any] else {
+        return "Unable to encode LocationAndGeometryData"
+    }
     
     
+    
+    //TODO come up with a scheme to filter these based on naming or other attribute
     // strip out fields we don't want in request
     activityDictionary.removeValue(forKey: "local_id")
     activityDictionary.removeValue(forKey: "synched")
@@ -121,9 +137,37 @@ func transformActivityToJSON(input: Activity) -> NSString
     activityTypeDataDictionary.removeValue(forKey: "local_id")
     activitySubTypeDataDictionary.removeValue(forKey: "local_id")
     
+    locationAndGeometryDictionary.removeValue(forKey: "local_id")
+    locationAndGeometryDictionary.removeValue(forKey: "local_activity_id")
+    
+    
+    //relabel poly / point for the api
+    switch relatedLocationAndGeometry.geometry.type
+    {
+    case "Point":
+        if var pointGeom = locationAndGeometryDictionary["geometry"] as! [String: AnyObject]?
+        {
+            
+            pointGeom["coordinates"] = pointGeom["coordinates_Point"]
+            pointGeom.removeValue(forKey: "coordinates_Point")
+            locationAndGeometryDictionary["geometry"] = pointGeom
+        }
+    default :
+        if var pointGeom = locationAndGeometryDictionary["geometry"] as! [String: AnyObject]?
+        {
+            
+            pointGeom["coordinates"] = pointGeom["coordinates_Poly"]
+            pointGeom.removeValue(forKey: "coordinates_Poly")
+            locationAndGeometryDictionary["geometry"] = pointGeom
+        }
+    }
+    
     // nest the objects as they need to be for the POST:
     activityDictionary["activityTypeData"] = activityTypeDataDictionary
     activityDictionary["activitySubTypeData"] = activitySubTypeDataDictionary
+    
+    
+    activityDictionary["locationAndGeometry"] = locationAndGeometryDictionary
     
     let jsonData = try! JSONSerialization.data(withJSONObject: activityDictionary, options: [.sortedKeys, .prettyPrinted])
     guard let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) else { return "banana" }
@@ -139,6 +183,17 @@ func convertStringToDictionary(text: String) -> [String:AnyObject]? {
             return json
         } catch {
             print("Something went wrong")
+        }
+    }
+    return nil
+}
+
+func convertToDictionary(text: String) -> [String: Any]? {
+    if let data = text.data(using: .utf8) {
+        do {
+            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        } catch {
+            print(error.localizedDescription)
         }
     }
     return nil

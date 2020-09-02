@@ -82,6 +82,16 @@ class DBMigrationRegistrar
                 }
         }
         
+        migrator.registerMigration("v3") { db in
+                try db.create(table: "LocationAndGeometry") { t in
+                    t.autoIncrementedPrimaryKey("local_id")
+                    t.column("local_activity_id", .integer).notNull()
+                    t.column("anchorPointX", .double).notNull()
+                    t.column("anchorPointY", .double).notNull()
+                    t.column("area", .double).notNull()
+                    t.column("geometry")
+            }
+        }
     }
     
 }

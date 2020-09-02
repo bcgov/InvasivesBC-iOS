@@ -135,6 +135,7 @@
 		A9DB485E24F443E1009634AD /* DBMigrationRegistrar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB485D24F443E1009634AD /* DBMigrationRegistrar.swift */; };
 		A9DB486224F472C1009634AD /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9DB486124F472C1009634AD /* Activity.swift */; };
 		F43E83AD24F6DBA70055C946 /* SyncActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43E83AC24F6DBA70055C946 /* SyncActivity.swift */; };
+		F43E83B424FF11230055C946 /* LocationAndGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43E83B324FF11230055C946 /* LocationAndGeometry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,6 +297,7 @@
 		CD71B465E1AAB7B79DA86297 /* Pods_InvasivesBCTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InvasivesBCTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E72F82F40D1D7E54D79DE11E /* Pods-InvasivesBCTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvasivesBCTests.release.xcconfig"; path = "Target Support Files/Pods-InvasivesBCTests/Pods-InvasivesBCTests.release.xcconfig"; sourceTree = "<group>"; };
 		F43E83AC24F6DBA70055C946 /* SyncActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncActivity.swift; sourceTree = "<group>"; };
+		F43E83B324FF11230055C946 /* LocationAndGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAndGeometry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -943,6 +945,7 @@
 				A9DB486124F472C1009634AD /* Activity.swift */,
 				A95A0CFA24F5AF5600BBD58C /* Observation.swift */,
 				A95A0D0024F5B6F900BBD58C /* Observation */,
+				F43E83B324FF11230055C946 /* LocationAndGeometry.swift */,
 			);
 			path = TypeDefinitions;
 			sourceTree = "<group>";
@@ -1298,6 +1301,7 @@
 				296CBBA324CB7AC3002277D0 /* InputGroup.swift in Sources */,
 				29BE868F24D0E8AA007D1A02 /* AwaitingAccessResponse.swift in Sources */,
 				296CBBBA24CB7AC3002277D0 /* InputItem.swift in Sources */,
+				F43E83B424FF11230055C946 /* LocationAndGeometry.swift in Sources */,
 				294927D924D0C8BE006E39EF /* CustomHeader.swift in Sources */,
 				294927DD24D0D72F006E39EF /* LoginViewController.swift in Sources */,
 				29BE866124D0DA56007D1A02 /* SSOConstants.swift in Sources */,
