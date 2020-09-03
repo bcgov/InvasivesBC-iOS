@@ -8,14 +8,16 @@
 
 import Foundation
 import Alamofire
+import GRDB
 
+// MARK: Auth
 func getToken() -> String?
 {
     guard let token = AuthenticationService.authServices.credentials?.accessToken else { return nil }
     return token
 }
 
-
+// MARK: Call /activity Endpoint
 func uploadActivity(activity: Activity) {
     guard let url = URL(string: "https://api-mobile-dev-invasivesbc.pathfinder.gov.bc.ca/api/activity") else {
         return
@@ -47,10 +49,22 @@ func uploadActivity(activity: Activity) {
 }
 
 
-// TODO: this can be refactored by nesting GRDB Record Structs vs db linking them.  Would also allow it to be run during a db read/write.
+// MARK: TRANSFORM DATA TO JSON:
+
+/* Cole's Notes:
+ *   If you add a new field to an existing activity type and/or sub type it is included by default.
+
+ *  If you want to exclude or change a field (like an id the API doesn't want) skip to 'Strip fields from JSON' mark or look at how a re-label works for geometries in
+    getRelatedLocationAndGeometryAsDictionary (this is also where you would add a new geometry type if it works different than Polygon - the default).
+ 
+ *  If you are adding a new Activity Type or Sub type you need to add queries to the switches in:
+        getRelatedActivityTypeDataAsDictionary and getRelatedActivitySubTypeDataAsDictionary
+ */
+
+
 func transformActivityToJSON(input: Activity) -> NSString
 {
-    // used to convert GRDB structs/tables to dictionaries
+    // MARK: Setup encoder:
     let encoder = JSONEncoder()
     encoder.outputFormatting = [.prettyPrinted,.sortedKeys]
     // to get json dates:
@@ -60,75 +74,16 @@ func transformActivityToJSON(input: Activity) -> NSString
     encoder.dateEncodingStrategy = .formatted(formatter)
     
     
-    // get activity struct as a copy of a dictionary to make it easy to edit
-    let encodedActivityData: Data = try! encoder.encode(input)
-    guard var activityDictionary = try! JSONSerialization.jsonObject(with: encodedActivityData, options: .allowFragments) as? [String: Any] else {
-        return "Unable to encode Activity"
-    }
-    
-    // get related Activity Type Instance (Observation, Treatment, Monitoring)
-    // start with getting db connection:
+    // MARK: DB record to Dictionaries:
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    // get the right Activity Type instance and encode it
-    var encodedActivityTypeData: Data = Data()
-    switch input.activityType {
-    case "Observation":
-        let relatedObservation = try! appDelegate.dbQueue.read { db in
-            try Observation.fetchOne(db,
-                                     sql: "SELECT * FROM observation WHERE local_activity_id = ?",
-                                     arguments: [input.local_id])!
-        }
-        encodedActivityTypeData = try! encoder.encode(relatedObservation)
-    default:
-        print("banana")
-    }
-    
-    //get that as a dictionary
-    guard var activityTypeDataDictionary = try! JSONSerialization.jsonObject(with: encodedActivityTypeData, options: .allowFragments) as? [String: Any] else {
-        return "Unable to encode ActivityTypeData"
-    }
-    
-    // get the right Activity Type instance and encode it
-    var encodedActivitySubTypeData: Data = Data()
-    switch input.activitySubType {
-    case "Terrestrial Plant":
-        let relatedTerrestrialPlantObservation = try! appDelegate.dbQueue.read { db in
-            try TerrestrialPlant.fetchOne(db,
-                                     sql: "SELECT * FROM terrestrialplant WHERE local_activity_id = ?",
-                                     arguments: [input.local_id])!
-        }
-        encodedActivitySubTypeData = try! encoder.encode(relatedTerrestrialPlantObservation)
-    default:
-        print("banana")
-    }
-    
-    //get that as a dictionary
-    guard var activitySubTypeDataDictionary = try! JSONSerialization.jsonObject(with: encodedActivitySubTypeData, options: .allowFragments) as? [String: Any] else {
-        return "Unable to encode ActivitySubTypeData"
-    }
+    var activityDictionary = encodeToDictionary(record: input, encoder: encoder)
+    var activityTypeDataDictionary = getRelatedActivityTypeDataAsDictionary(activity: input, dbQueue: appDelegate.dbQueue, encoder: encoder)
+    var activitySubTypeDataDictionary = getRelatedActivitySubTypeDataAsDictionary(activity: input, dbQueue: appDelegate.dbQueue, encoder: encoder)
+    var locationAndGeometryDictionary = getRelatedLocationAndGeometryAsDictionary(activity: input, dbQueue: appDelegate.dbQueue, encoder: encoder)
     
     
-    var encodedLocationAndGeometryData: Data = Data()
-       
-    let relatedLocationAndGeometry = try! appDelegate.dbQueue.read { db in
-            try LocationAndGeometry.fetchOne(db,
-                                        sql: "SELECT * FROM locationAndGeometry WHERE local_activity_id = ?",
-                                        arguments: [input.local_id])!
-           }
-    encodedLocationAndGeometryData = try! encoder.encode(relatedLocationAndGeometry)
-
-       
-       
-       //get that as a dictionary
-    guard var locationAndGeometryDictionary = try! JSONSerialization.jsonObject(with: encodedLocationAndGeometryData, options: .allowFragments) as? [String: Any] else {
-        return "Unable to encode LocationAndGeometryData"
-    }
-    
-    
-    
-    //TODO come up with a scheme to filter these based on naming or other attribute
-    // strip out fields we don't want in request
+    // MARK: Strip fields from JSON
     activityDictionary.removeValue(forKey: "local_id")
     activityDictionary.removeValue(forKey: "synched")
     activityDictionary.removeValue(forKey: "synch")
@@ -136,12 +91,80 @@ func transformActivityToJSON(input: Activity) -> NSString
     activityDictionary.removeValue(forKey: "synch_error_string")
     activityTypeDataDictionary.removeValue(forKey: "local_id")
     activitySubTypeDataDictionary.removeValue(forKey: "local_id")
-    
     locationAndGeometryDictionary.removeValue(forKey: "local_id")
     locationAndGeometryDictionary.removeValue(forKey: "local_activity_id")
     
     
-    //relabel poly / point for the api
+    // MARK: Build JSON
+    activityDictionary["activityTypeData"] = activityTypeDataDictionary
+    activityDictionary["activitySubTypeData"] = activitySubTypeDataDictionary
+    activityDictionary["locationAndGeometry"] = locationAndGeometryDictionary
+    
+    let jsonData = try! JSONSerialization.data(withJSONObject: activityDictionary, options: [.sortedKeys, .prettyPrinted])
+    guard let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) else { return "banana" }
+    print("activity sent to the API: \(jsonString)")
+    return jsonString
+}
+
+
+// MARK: Helper functions
+func encodeToDictionary<T: Codable>(record: T, encoder: JSONEncoder) -> Dictionary<String,Any>
+{
+    let encodedData: Data = try! encoder.encode(record)
+    guard var dict = try! JSONSerialization.jsonObject(with: encodedData, options: .allowFragments) as? [String: Any] else { return Dictionary<String,Any>() }
+    return dict
+}
+
+
+func getRelatedActivityTypeDataAsDictionary(activity: Activity, dbQueue: DatabaseQueue, encoder: JSONEncoder) -> Dictionary<String,Any>
+{
+    var activityTypeDataDictionary = Dictionary<String,Any>()
+    // MARK: New activity types here
+       switch activity.activityType {
+       case "Observation":
+           let relatedObservation = try! dbQueue.read { db in
+               try Observation.fetchOne(db,
+                                        sql: "SELECT * FROM observation WHERE local_activity_id = ?",
+                                        arguments: [activity.local_id])!
+           }
+          activityTypeDataDictionary = encodeToDictionary(record: relatedObservation, encoder: encoder)
+       default:
+           print("No such activity type:  \(activity.activityType)")
+       }
+    return activityTypeDataDictionary
+}
+
+
+func getRelatedActivitySubTypeDataAsDictionary(activity: Activity, dbQueue: DatabaseQueue, encoder: JSONEncoder) -> Dictionary<String,Any>
+{
+    // MARK: New activity sub types here
+
+    var activitySubTypeDataDictionary = Dictionary<String,Any>()
+    switch activity.activitySubType {
+    case "Terrestrial Plant":
+        let relatedTerrestrialPlantObservation = try! dbQueue.read { db in
+            try TerrestrialPlant.fetchOne(db,
+                                     sql: "SELECT * FROM terrestrialplant WHERE local_activity_id = ?",
+                                     arguments: [activity.local_id])!
+        }
+        activitySubTypeDataDictionary = encodeToDictionary(record: relatedTerrestrialPlantObservation, encoder: encoder)
+    default:
+          print("No such activity sub type: \(activity.activitySubType)")
+    }
+    return activitySubTypeDataDictionary
+}
+
+
+func getRelatedLocationAndGeometryAsDictionary(activity: Activity, dbQueue: DatabaseQueue, encoder: JSONEncoder) -> Dictionary<String,Any>
+{
+    let relatedLocationAndGeometry = try! dbQueue.read { db in
+            try LocationAndGeometry.fetchOne(db,
+                                        sql: "SELECT * FROM locationAndGeometry WHERE local_activity_id = ?",
+                                        arguments: [activity.local_id])!
+           }
+    var locationAndGeometryDictionary = encodeToDictionary(record: relatedLocationAndGeometry, encoder: encoder)
+    
+    // MARK: New geometries here
     switch relatedLocationAndGeometry.geometry.type
     {
     case "Point":
@@ -161,18 +184,7 @@ func transformActivityToJSON(input: Activity) -> NSString
             locationAndGeometryDictionary["geometry"] = pointGeom
         }
     }
-    
-    // nest the objects as they need to be for the POST:
-    activityDictionary["activityTypeData"] = activityTypeDataDictionary
-    activityDictionary["activitySubTypeData"] = activitySubTypeDataDictionary
-    
-    
-    activityDictionary["locationAndGeometry"] = locationAndGeometryDictionary
-    
-    let jsonData = try! JSONSerialization.data(withJSONObject: activityDictionary, options: [.sortedKeys, .prettyPrinted])
-    guard let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) else { return "banana" }
-    print("activity sent to the API: \(jsonString)")
-    return jsonString
+    return locationAndGeometryDictionary
 }
 
 
@@ -198,71 +210,3 @@ func convertToDictionary(text: String) -> [String: Any]? {
     }
     return nil
 }
-
-let sample_request = """
-{
-  "activityType": "Observation",
-  "activitySubType": "Terrestrial Invasive Plant",
-  "date": "2019-04-12",
-  "deviceRequestUID": "string",
-  "locationAndGeometry": {
-    "anchorPointY": 48.3,
-    "anchorPointX": -125.6,
-    "area": 0,
-    "geometry": {
-        "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [-125.6, 48.3],[-126.6, 48.3],[-126.6, 49.3],[-125.6, 48.3]
-            ]
-          ]},
-         "properties": {}
-    },
-    "jurisdiction": "string",
-    "agency": "string",
-    "observer1FirstName": "string",
-    "observer1LastName": "string",
-    "locationComment": "string",
-    "generalComment": "string",
-    "photoTaken": true
-  },
-  "activityTypeData": {
-    "negative_observation_ind": false,
-    "aquatic_observation_ind": false,
-    "primary_user_last_name": "mike",
-    "secondary_user_first_name": "mike",
-    "secondary_user_last_name": "mike",
-    "species": "banana",
-    "primary_file_id": "test",
-    "secondary_file_id": "test",
-    "location_comment": "test",
-    "general_observation_comment": "general comment",
-    "sample_taken_ind": true,
-    "sample_label_number": "string"
-  },
-  "activitySubTypeData": {
-    "species": "banana",
-    "distribution": 123,
-    "density": 123,
-    "soil_texture": 1,
-    "slope": 123,
-    "aspect": 123,
-    "flowering": true,
-    "specific_use": 123,
-    "proposed_action": 123,
-    "seed_stage": 123,
-    "plant_health": 123,
-    "plant_life_stage": 123,
-    "early_detection": 1,
-    "research": true,
-    "well_on_site_ind": true,
-    "special_care_ind": true,
-    "biological_care_ind": true,
-    "legacy_site_ind": true,
-    "range_unit": "Canyon"
-  }
-}
-
-"""
