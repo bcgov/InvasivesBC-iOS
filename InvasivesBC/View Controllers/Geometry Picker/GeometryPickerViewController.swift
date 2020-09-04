@@ -97,7 +97,7 @@ class GeometryPickerViewController: BaseViewController, UIGestureRecognizerDeleg
             print("first.area is \(newPlantObservation.area)")
             
             
-            let GRDBFriendlyCoordinates = polygonGeometryPoints.map { [$0.latitude, $0.longitude]}
+            let GRDBFriendlyCoordinates = polygonGeometryPoints.map { [$0.longitude, $0.latitude]}
             // GRDB
             let locationAndGeometryRecord = LocationAndGeometry(local_activity_id: 0, anchorPointY: polygonGeometryPoints[0].latitude, anchorPointX: polygonGeometryPoints[0].longitude, area: 0, geometry: Geometry(type: "Polygon", coordinates_Poly: GRDBFriendlyCoordinates))
             
