@@ -9,10 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-    defaults:
-       run:
-         working-directory: InvasivesBC-Ionic   
+    runs-on: ubuntu-latest 
     
     strategy:
       matrix:
@@ -32,9 +29,11 @@ jobs:
       with:
         java-version: 1.8
     - name: Install Ionic
+      working-directory: InvasivesBC-Ionic  
       run: |
         npm install -g @ionic/cli
     - name: Build App
+      working-directory: InvasivesBC-Ionic  
       run: |
         ionic build
         npx cap update android
